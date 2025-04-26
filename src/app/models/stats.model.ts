@@ -19,4 +19,4 @@ export interface Character {
   stats: {
     [key in keyof Stats]: StatProgress;
   };
-} 
+}

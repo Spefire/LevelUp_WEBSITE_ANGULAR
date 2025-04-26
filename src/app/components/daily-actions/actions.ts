@@ -16,39 +16,39 @@ export const listActions: Action[] = [
     description: 'Faire une séance de musculation',
     xpRewards: {
       force: 10,
-      tenacite: 5
-    }
+      tenacite: 5,
+    },
   },
   {
     name: 'Yoga',
     description: 'Pratiquer le yoga',
     xpRewards: {
       habilete: 10,
-      intelligence: 5
-    }
+      intelligence: 5,
+    },
   },
   {
     name: 'Course à pied',
     description: 'Faire une course',
     xpRewards: {
       tenacite: 10,
-      force: 5
-    }
+      force: 5,
+    },
   },
   {
     name: 'Hygiène personnelle',
     description: 'Prendre soin de son hygiène',
     xpRewards: {
       charisme: 10,
-      tenacite: 5
-    }
+      tenacite: 5,
+    },
   },
   {
     name: 'Méditation',
     description: 'Pratiquer la méditation',
     xpRewards: {
       intelligence: 10,
-      habilete: 5
-    }
-  }
+      habilete: 5,
+    },
+  },
 ];

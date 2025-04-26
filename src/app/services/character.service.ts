@@ -1,22 +1,24 @@
 import { Injectable } from '@angular/core';
+
 import { BehaviorSubject, Observable } from 'rxjs';
+
 import { Character, Stats } from '../models/stats.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CharacterService {
   private characterSubject = new BehaviorSubject<Character>({
-      currentXP: 0,
-      level: 1,
-      xpToNextLevel: 100,
-      stats: {
-        force: { currentXP: 0, level: 1, xpToNextLevel: 20 },
-        habilete: { currentXP: 0, level: 1, xpToNextLevel: 20 },
-        tenacite: { currentXP: 0, level: 1, xpToNextLevel: 20 },
-        charisme: { currentXP: 0, level: 1, xpToNextLevel: 20 },
-        intelligence: { currentXP: 0, level: 1, xpToNextLevel: 20 }
-      }
+    currentXP: 0,
+    level: 1,
+    xpToNextLevel: 100,
+    stats: {
+      force: { currentXP: 0, level: 1, xpToNextLevel: 20 },
+      habilete: { currentXP: 0, level: 1, xpToNextLevel: 20 },
+      tenacite: { currentXP: 0, level: 1, xpToNextLevel: 20 },
+      charisme: { currentXP: 0, level: 1, xpToNextLevel: 20 },
+      intelligence: { currentXP: 0, level: 1, xpToNextLevel: 20 },
+    },
   });
 
   constructor() {
@@ -72,4 +74,4 @@ export class CharacterService {
     this.characterSubject.next(newCharacter);
     localStorage.setItem('character', JSON.stringify(newCharacter));
   }
-} 
+}

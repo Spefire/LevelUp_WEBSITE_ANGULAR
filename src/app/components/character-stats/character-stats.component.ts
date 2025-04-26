@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CharacterService } from '../../services/character.service';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+
 import { Character } from '../../models/stats.model';
+import { CharacterService } from '../../services/character.service';
 
 @Component({
   selector: 'app-character-stats',
@@ -19,4 +20,4 @@ export class CharacterStatsComponent implements OnInit {
       this.character = character;
     });
   }
-} 
+}
