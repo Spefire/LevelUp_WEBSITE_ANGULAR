@@ -10,5 +10,5 @@ import { DailyActionsComponent } from './components/daily-actions/daily-actions.
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Level Up';
+  title = 'Next Level Up';
 }
