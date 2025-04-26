@@ -1,36 +1,7 @@
 <div class="app-container">
-  <lu-page-header
-    label="Next Level Up"
-    description="Développez votre personnage en accomplissant des actions quotidiennes"
-  >
-    <ng-container pageHeaderActions>
-      <button type="button" luButton="text" disabled>
-        <lu-icon icon="menuDots" alt="Voir plus d'options" />
-      </button>
-    </ng-container>
-    <ng-container pageHeaderNavigation>
-      <lu-horizontal-navigation>
-        <a
-          *luHorizontalNavigationLink
-          class="horizontalNavigation-list-item-action"
-          routerLink="/home"
-          routerLinkActive="active"
-          ariaCurrentWhenActive="page"
-          >Statistiques</a
-        >
-        <a
-          *luHorizontalNavigationLink
-          class="horizontalNavigation-list-item-action"
-          routerLink="/actions"
-          routerLinkActive="active"
-          ariaCurrentWhenActive="page"
-          >Actions</a
-        >
-      </lu-horizontal-navigation>
-    </ng-container>
-  </lu-page-header>
-
-  <main class="pr-u-marginTop200">
+  <app-header />
+  <main>
     <router-outlet></router-outlet>
   </main>
+  <app-footer />
 </div>

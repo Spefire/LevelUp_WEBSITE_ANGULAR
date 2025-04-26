@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Character } from '@src/models/character.model';
+import { Stats } from '@src/models/stats.model';
 
-import { Character, Stats } from '../models/stats.model';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

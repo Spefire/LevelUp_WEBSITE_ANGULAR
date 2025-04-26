@@ -1,25 +1,13 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 
-import { ButtonComponent } from '@lucca-front/ng/button';
-import { HorizontalNavigationComponent, HorizontalNavigationLinkDirective } from '@lucca-front/ng/horizontal-navigation';
-import { IconComponent } from '@lucca-front/ng/icon';
-import { PageHeaderComponent } from '@lucca-front/ng/page-header';
+import { FooterComponent } from '@src/components/footer/footer.component';
+import { HeaderComponent } from '@src/components/header/header.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    RouterOutlet,
-    RouterLink,
-    RouterLinkActive,
-    PageHeaderComponent,
-    ButtonComponent,
-    IconComponent,
-    HorizontalNavigationComponent,
-    HorizontalNavigationLinkDirective,
-  ],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {}

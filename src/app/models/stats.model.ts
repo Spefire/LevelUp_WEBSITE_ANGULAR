@@ -11,12 +11,3 @@ export interface StatProgress {
   level: number;
   xpToNextLevel: number;
 }
-
-export interface Character {
-  currentXP: number;
-  level: number;
-  xpToNextLevel: number;
-  stats: {
-    [key in keyof Stats]: StatProgress;
-  };
-}

@@ -1,16 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
-import { Character } from '../../models/stats.model';
-import { CharacterService } from '../../services/character.service';
+import { PageHeaderComponent } from '@lucca-front/ng/page-header';
+
+import { Character } from '@src/models/character.model';
+import { CharacterService } from '@src/services/character.service';
 
 @Component({
-  selector: 'app-character-stats',
-  imports: [CommonModule],
-  templateUrl: './character-stats.component.html',
+  selector: 'character-page',
+  imports: [CommonModule, PageHeaderComponent],
+  templateUrl: './character.page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CharacterStatsComponent implements OnInit {
+export class CharacterPage implements OnInit {
   character: Character;
 
   constructor(private characterService: CharacterService) {}

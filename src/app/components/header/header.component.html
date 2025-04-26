@@ -1,0 +1,34 @@
+<div class="mobileHeader">
+  <a class="link" routerLink="/home">
+    <lu-icon icon="buildingHouse" alt="Retour vers l'accueil" />
+  </a>
+  <div class="mobileHeader-title">
+    <h1 class="mobileHeader-title-main">Next Level Up</h1>
+    <div class="mobileHeader-title-sub">Développez votre personnage en accomplissant des actions quotidiennes</div>
+  </div>
+  <div class="mobileHeader-actions">
+    <button type="button" luButton="text" [luDropdown]="dropdown">
+      <lu-icon icon="menuDots" alt="Voir plus d'options" />
+    </button>
+    <lu-dropdown #dropdown>
+      <li class="dropdown-list-option">
+        <a routerLink="/params" class="dropdown-list-option-action" luDropdownItem>
+          <lu-icon icon="settingsTools" />
+          Paramètres
+        </a>
+      </li>
+      <li class="dropdown-list-option">
+        <button type="button" class="dropdown-list-option-action is-disabled" luDropdownItem>
+          <lu-icon icon="bell" />
+          Notifications
+        </button>
+      </li>
+      <li class="dropdown-list-option">
+        <button type="button" class="dropdown-list-option-action is-disabled" luDropdownItem>
+          <lu-icon icon="arrowLogout" />
+          Déconnexion
+        </button>
+      </li>
+    </lu-dropdown>
+  </div>
+</div>

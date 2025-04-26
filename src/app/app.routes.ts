@@ -3,15 +3,26 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
+    loadComponent: () => import('./pages/character/character.page').then(m => m.CharacterPage),
   },
   {
-    path: 'home',
-    loadComponent: () => import('./components/character-stats/character-stats.component').then(m => m.CharacterStatsComponent),
+    path: 'quests',
+    loadComponent: () => import('./pages/quests/quests.page').then(m => m.QuestsPage),
   },
   {
-    path: 'actions',
-    loadComponent: () => import('./components/daily-actions/daily-actions.component').then(m => m.DailyActionsComponent),
+    path: 'dungeons',
+    loadComponent: () => import('./pages/dungeons/dungeons.page').then(m => m.DungeonsPage),
+  },
+  {
+    path: 'inventory',
+    loadComponent: () => import('./pages/inventory/inventory.page').then(m => m.InventoryPage),
+  },
+  {
+    path: 'params',
+    loadComponent: () => import('./pages/params/params.page').then(m => m.ParamsPage),
+  },
+  {
+    path: '**',
+    redirectTo: '',
   },
 ];

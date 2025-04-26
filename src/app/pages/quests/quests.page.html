@@ -1,6 +1,13 @@
-<h2>Actions</h2>
+<lu-page-header label="Quêtes" description="Choisissez dans la liste vos quêtes en cours, ou créez-en vous une.">
+  <ng-container pageHeaderActions>
+    <button type="button" luButton="text" disabled>
+      <lu-icon icon="menuDots" />
+      Créer une quête
+    </button>
+  </ng-container>
+</lu-page-header>
 
-<section class="card pr-u-marginTop200">
+<section class="card">
   <h3>Actions quotidiennes</h3>
   <div class="grid" style="--grid-columns: 4; --grid-colspan: 4">
     @for (action of listActions; track action) {
