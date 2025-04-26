@@ -6,22 +6,17 @@ export interface Stats {
   intelligence: number;
 }
 
-export interface StatsProgress {
+export interface StatProgress {
   currentXP: number;
   level: number;
   xpToNextLevel: number;
 }
 
 export interface Character {
-  stats: Stats;
-  progress: StatsProgress;
-  weeklyProgress: {
-    [key: string]: number; // XP gagnée par jour
+  currentXP: number;
+  level: number;
+  xpToNextLevel: number;
+  stats: {
+    [key in keyof Stats]: StatProgress;
   };
-  monthlyBosses: {
-    id: string;
-    name: string;
-    requiredStats: Stats;
-    completed: boolean;
-  }[];
 } 

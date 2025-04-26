@@ -7,20 +7,16 @@ import { Character, Stats } from '../models/stats.model';
 })
 export class CharacterService {
   private characterSubject = new BehaviorSubject<Character>({
-    stats: {
-      force: 1,
-      habilete: 1,
-      tenacite: 1,
-      charisme: 1,
-      intelligence: 1
-    },
-    progress: {
       currentXP: 0,
       level: 1,
-      xpToNextLevel: 100
-    },
-    weeklyProgress: {},
-    monthlyBosses: []
+      xpToNextLevel: 100,
+      stats: {
+        force: { currentXP: 0, level: 1, xpToNextLevel: 20 },
+        habilete: { currentXP: 0, level: 1, xpToNextLevel: 20 },
+        tenacite: { currentXP: 0, level: 1, xpToNextLevel: 20 },
+        charisme: { currentXP: 0, level: 1, xpToNextLevel: 20 },
+        intelligence: { currentXP: 0, level: 1, xpToNextLevel: 20 }
+      }
   });
 
   constructor() {
@@ -40,51 +36,42 @@ export class CharacterService {
     const newStats = { ...currentCharacter.stats };
     let totalXP = 0;
 
-    // Mettre à jour les stats
+    // Mettre à jour les stats et leur progression
     Object.entries(stats).forEach(([stat, value]) => {
       if (value > 0) {
-        newStats[stat as keyof Stats] += value;
+        newStats[stat as keyof Stats].currentXP += value;
         totalXP += value;
+
+        // Mettre à jour la progression de la stat
+        const statProgress = { ...currentCharacter.stats[stat as keyof Stats] };
+        statProgress.currentXP += value;
+
+        // Vérifier le level up de la stat
+        if (statProgress.currentXP >= statProgress.xpToNextLevel) {
+          statProgress.level += 1;
+          statProgress.currentXP -= statProgress.xpToNextLevel;
+          statProgress.xpToNextLevel = Math.floor(statProgress.xpToNextLevel * 1.5);
+        }
+
+        currentCharacter.stats[stat as keyof Stats] = statProgress;
       }
     });
 
-    // Mettre à jour la progression
-    const newProgress = { ...currentCharacter.progress };
-    newProgress.currentXP += totalXP;
+    // Mettre à jour la progression globale
+    currentCharacter.currentXP += totalXP;
 
-    // Vérifier le level up
-    if (newProgress.currentXP >= newProgress.xpToNextLevel) {
-      newProgress.level += 1;
-      newProgress.currentXP -= newProgress.xpToNextLevel;
-      newProgress.xpToNextLevel = Math.floor(newProgress.xpToNextLevel * 1.5);
+    // Vérifier le level up global
+    if (currentCharacter.currentXP >= currentCharacter.xpToNextLevel) {
+      currentCharacter.level += 1;
+      currentCharacter.currentXP -= currentCharacter.xpToNextLevel;
+      currentCharacter.xpToNextLevel = Math.floor(currentCharacter.xpToNextLevel * 1.5);
     }
-
-    // Mettre à jour la progression hebdomadaire
-    const today = new Date().toISOString().split('T')[0];
-    const newWeeklyProgress = { ...currentCharacter.weeklyProgress };
-    newWeeklyProgress[today] = (newWeeklyProgress[today] || 0) + totalXP;
 
     const updatedCharacter: Character = {
       ...currentCharacter,
       stats: newStats,
-      progress: newProgress,
-      weeklyProgress: newWeeklyProgress
     };
 
-    this.characterSubject.next(updatedCharacter);
-    localStorage.setItem('character', JSON.stringify(updatedCharacter));
-  }
-
-  completeMonthlyBoss(bossId: string): void {
-    const currentCharacter = this.characterSubject.value;
-    const updatedBosses = currentCharacter.monthlyBosses.map(boss => 
-      boss.id === bossId ? { ...boss, completed: true } : boss
-    );
-
-    const updatedCharacter: Character = {
-      ...currentCharacter,
-      monthlyBosses: updatedBosses
-    };
 
     this.characterSubject.next(updatedCharacter);
     localStorage.setItem('character', JSON.stringify(updatedCharacter));
