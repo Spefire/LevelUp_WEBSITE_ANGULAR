@@ -39,41 +39,37 @@ export class CharacterService {
     // Mettre à jour les stats et leur progression
     Object.entries(stats).forEach(([stat, value]) => {
       if (value > 0) {
-        newStats[stat as keyof Stats].currentXP += value;
-        totalXP += value;
-
         // Mettre à jour la progression de la stat
         const statProgress = { ...currentCharacter.stats[stat as keyof Stats] };
         statProgress.currentXP += value;
+        totalXP += value;
 
         // Vérifier le level up de la stat
-        if (statProgress.currentXP >= statProgress.xpToNextLevel) {
+        while (statProgress.currentXP >= statProgress.xpToNextLevel) {
           statProgress.level += 1;
           statProgress.currentXP -= statProgress.xpToNextLevel;
           statProgress.xpToNextLevel = Math.floor(statProgress.xpToNextLevel * 1.5);
         }
 
-        currentCharacter.stats[stat as keyof Stats] = statProgress;
+        newStats[stat as keyof Stats] = statProgress;
       }
     });
 
     // Mettre à jour la progression globale
-    currentCharacter.currentXP += totalXP;
+    const newCharacter = { ...currentCharacter };
+    newCharacter.currentXP += totalXP;
 
     // Vérifier le level up global
-    if (currentCharacter.currentXP >= currentCharacter.xpToNextLevel) {
-      currentCharacter.level += 1;
-      currentCharacter.currentXP -= currentCharacter.xpToNextLevel;
-      currentCharacter.xpToNextLevel = Math.floor(currentCharacter.xpToNextLevel * 1.5);
+    while (newCharacter.currentXP >= newCharacter.xpToNextLevel) {
+      newCharacter.level += 1;
+      newCharacter.currentXP -= newCharacter.xpToNextLevel;
+      newCharacter.xpToNextLevel = Math.floor(newCharacter.xpToNextLevel * 1.5);
     }
 
-    const updatedCharacter: Character = {
-      ...currentCharacter,
-      stats: newStats,
-    };
+    // Mettre à jour le personnage
+    newCharacter.stats = newStats;
 
-
-    this.characterSubject.next(updatedCharacter);
-    localStorage.setItem('character', JSON.stringify(updatedCharacter));
+    this.characterSubject.next(newCharacter);
+    localStorage.setItem('character', JSON.stringify(newCharacter));
   }
 } 
