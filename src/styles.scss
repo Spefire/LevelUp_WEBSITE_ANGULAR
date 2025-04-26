@@ -1,48 +1,19 @@
-:root {
-    // Colors
-    --color-primary: #3498db;
-    --color-primary-dark: #2980b9;
-    --color-secondary: #2c3e50;
-    --color-text: #7f8c8d;
-    --color-background: #ecf0f1;
-    --color-white: #ffffff;
-    --color-success: #2ecc71;
-    --color-success-light: #59cc89;
-    --color-error: #e74c3c;
-    --color-warning: #f1c40f;
+@use "styles/_components.scss";
 
-    // Spacing
-    --spacing-xs: 0.25rem; // 4px
-    --spacing-sm: 0.5rem; // 8px
-    --spacing-md: 1rem; // 16px
-    --spacing-lg: 1.5rem; // 24px
-    --spacing-xl: 2rem; // 32px
-    --spacing-xxl: 2.5rem; // 40px
-
-    // Border radius
-    --border-radius-sm: 0.25rem; // 4px
-    --border-radius-md: 0.5rem; // 8px
-    --border-radius-lg: 1rem; // 16px
-
-    // Shadows
-    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
-
-    // Transitions
-    --transition-fast: 0.2s ease;
-    --transition-normal: 0.3s ease;
-    --transition-slow: 0.5s ease;
-
-    // Container
-    --container-max-width: 75rem; // 1200px
-    --container-padding: var(--spacing-md);
-
-    // Typography
-    --font-size-xs: 0.75rem; // 12px
-    --font-size-sm: 0.875rem; // 14px
-    --font-size-md: 1rem; // 16px
-    --font-size-lg: 1.25rem; // 20px
-    --font-size-xl: 1.5rem; // 24px
-    --font-size-xxl: 2rem; // 32px
-}
+// Icons
+@forward "@lucca-front/icons/src/main";
+// SCSS
+@forward "@lucca-front/scss/src/main";
+@forward "@lucca-front/scss/src/components/button";
+@forward "@lucca-front/scss/src/components/callout";
+@forward "@lucca-front/scss/src/components/card";
+@forward "@lucca-front/scss/src/components/checkbox";
+@forward "@lucca-front/scss/src/components/field";
+@forward "@lucca-front/scss/src/components/form";
+@forward "@lucca-front/scss/src/components/grid";
+@forward "@lucca-front/scss/src/components/horizontalNavigation";
+@forward "@lucca-front/scss/src/components/progress";
+@forward "@lucca-front/scss/src/components/table";
+@forward "@lucca-front/scss/src/components/title";
+// Angular
+@forward "@lucca-front/ng/src/main";

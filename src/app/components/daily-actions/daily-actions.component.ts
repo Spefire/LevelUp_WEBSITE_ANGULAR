@@ -7,7 +7,6 @@ import { Action, listActions } from '@src/components/daily-actions/actions';
   selector: 'app-daily-actions',
   imports: [CommonModule],
   templateUrl: './daily-actions.component.html',
-  styleUrls: ['./daily-actions.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DailyActionsComponent {

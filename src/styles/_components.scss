@@ -1,0 +1,28 @@
+.pageHeader {
+    --components-pageHeader-padding: 0 !important;
+}
+
+.card {
+    padding: var(--pr-t-spacings-200);
+    margin-block-end: 0 !important;
+
+    &.mod-actions {
+        padding: var(--pr-t-spacings-100);
+    }
+
+    &:not(.mod-actions) {
+        border: none !important;
+        box-shadow: var(--pr-t-elevation-shadow-raised);
+    }
+}
+
+.progress {
+    --components-progress-margin-vertical: 0 !important;
+    --components-progress-height: var(--sizes-M-lineHeight) !important;
+    font-size: var(--sizes-M-fontSize) !important;
+    color: var(--palettes-neutral-0) !important;
+
+    .progress-bar {
+        overflow: hidden;
+    }
+}

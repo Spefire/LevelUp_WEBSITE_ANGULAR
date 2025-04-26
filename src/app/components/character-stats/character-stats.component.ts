@@ -7,7 +7,6 @@ import { Character } from '../../models/stats.model';
   selector: 'app-character-stats',
   imports: [CommonModule],
   templateUrl: './character-stats.component.html',
-  styleUrls: ['./character-stats.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CharacterStatsComponent implements OnInit {
