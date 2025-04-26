@@ -28,7 +28,7 @@
               "src/assets",
               "src/manifest.webmanifest"
             ],
-            "styles": [],
+            "styles": ["src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -72,26 +72,6 @@
             }
           },
           "defaultConfiguration": "development"
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "buildTarget": "next-level-up:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
-            "tsConfig": "tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [],
-            "scripts": []
-          }
         }
       }
     }

@@ -1,51 +1,54 @@
 .daily-actions {
-  padding: 20px;
+  padding: var(--spacing-md);
 }
 
 .actions-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(15.625rem, 1fr));
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
 }
 
 .action-card {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: var(--color-white);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
 }
 
 .action-card h3 {
-  margin: 0 0 10px 0;
-  color: #a159e4;
+  margin: 0 0 var(--spacing-sm) 0;
+  color: var(--color-secondary);
+  font-size: var(--font-size-lg);
 }
 
 .action-card p {
-  margin: 0 0 15px 0;
-  color: #666;
+  margin: 0 0 var(--spacing-md) 0;
+  color: var(--color-text);
+  font-size: var(--font-size-md);
 }
 
 .xp-rewards {
-  margin: 10px 0;
-  font-size: 14px;
-  color: #4caf50;
+  margin: var(--spacing-sm) 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-success);
 }
 
 .xp-rewards span {
-  margin-right: 10px;
+  margin-right: var(--spacing-sm);
 }
 
 button {
-  background: #2196f3;
-  color: white;
+  background: var(--color-primary);
+  color: var(--color-white);
   border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-sm);
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background var(--transition-normal);
+  font-size: var(--font-size-md);
 }
 
 button:hover {
-  background: #1976d2;
+  background: var(--color-primary-dark);
 }
