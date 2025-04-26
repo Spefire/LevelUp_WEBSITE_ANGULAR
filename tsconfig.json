@@ -1,0 +1,62 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    // Type Checking
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": false,
+    "strictPropertyInitialization": false,
+    "useUnknownInCatchVariables": true,
+    // Modules
+    "allowUmdGlobalAccess": false,
+    "baseUrl": "./",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "noResolve": false,
+    "resolveJsonModule": true,
+    "paths": {
+      "@src/*": ["./src/app/*"]
+    },
+    // Emit
+    "declaration": false,
+    "downlevelIteration": true,
+    "emitDeclarationOnly": false,
+    "importHelpers": true,
+    "importsNotUsedAsValues": "remove",
+    "newLine": "crlf",
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "sourceMap": true,
+    // JavaScript Support
+    "allowJs": false,
+    "checkJs": false,
+    // JavaScript Support
+    "disableSizeLimit": false,
+    "plugins": [],
+    // Interop Constraints
+    "allowSyntheticDefaultImports": false,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": false,
+    // Language and Environment
+    "experimentalDecorators": true,
+    "lib": ["ESNext", "dom"],
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    // Completeness
+    "skipLibCheck": true
+  },
+  "angularCompilerOptions": {
+    "strictTemplates": true
+  }
+}

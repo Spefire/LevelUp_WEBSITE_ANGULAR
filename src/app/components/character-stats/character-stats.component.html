@@ -1,0 +1,19 @@
+<div class="character-stats">
+  <h2>Vos Statistiques</h2>
+  <div class="stats-grid">
+    <div class="stat-item" *ngFor="let stat of stats | keyvalue">
+      <h3>{{ stat.key | titlecase }}</h3>
+      <div class="stat-value">{{ stat.value }}</div>
+    </div>
+  </div>
+  
+  <div class="progress-section">
+    <h3>Progression</h3>
+    <p>Niveau: {{ character.progress.level }}</p>
+    <div class="xp-bar">
+      <div class="xp-fill" [style.width.%]="(character.progress.currentXP / character.progress.xpToNextLevel) * 100">
+        {{ character.progress.currentXP }}/{{ character.progress.xpToNextLevel }} XP
+      </div>
+    </div>
+  </div>
+</div>

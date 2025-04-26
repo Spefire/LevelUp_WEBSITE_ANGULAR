@@ -1,0 +1,84 @@
+{
+  /*
+    Extensions requises :
+    Angular Snippets
+    ESLint
+    Prettier
+    Peacock
+    SCSS Formatter
+    */
+
+  // Paramètres concernant la recherche de l'éditeur
+  "search.exclude": {
+    "**/.angular/*": true,
+    "**/dist/*": true,
+    "**/dist-prod/*": true,
+    "**/node_modules/*": true,
+    "**/package-lock.json": true,
+    "**/src/assets/icomoon/demo.html": true,
+    "**/src/assets/icomoon/selection.json": true
+  },
+  // Paramètres pour le formatage à la sauvegarde (ESLint et SCSS Formatter)
+  "eslint.codeAction.showDocumentation": {
+    "enable": true
+  },
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.addMissingImports.ts": "explicit",
+    "source.removeUnusedImports": "explicit"
+  },
+  "eslint.useFlatConfig": true,
+  "prettier.enable": true,
+  "[html]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[scss]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "sibiraj-s.vscode-scss-formatter"
+  },
+  // Paramètres pour les imports
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.preferences.autoImportFileExcludePatterns": ["./dist/*", "./dist-prod/*"],
+  // Paramètres de customisation (Peacock)
+  "peacock.color": "#a159e4",
+  "workbench.colorCustomizations": {
+    "tab.activeBorderTop": "#ffffff",
+    "tab.activeBackground": "#000000",
+    "tab.activeForeground": "#ffffff",
+    "list.inactiveSelectionBackground": "#000000",
+    "list.inactiveSelectionForeground": "#ffffff",
+    "list.inactiveFocusOutline": "#ffffff",
+    "list.focusOutline": "#ffffff",
+    "activityBar.activeBackground": "#ba85eb",
+    "activityBar.background": "#ba85eb",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#f6e0c8",
+    "activityBarBadge.foreground": "#15202b",
+    "commandCenter.border": "#e7e7e799",
+    "sash.hoverBorder": "#ba85eb",
+    "statusBar.background": "#a159e4",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#ba85eb",
+    "statusBarItem.remoteBackground": "#a159e4",
+    "statusBarItem.remoteForeground": "#e7e7e7",
+    "titleBar.activeBackground": "#a159e4",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#a159e499",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "arrowParens": "avoid",
+  "endOfLine": "auto",
+  "importOrder": ["^@angular/(.*)$", "^@(?!src)(.*)$", "^@src/(.*)$", "^[a-zA-Z]", "^\\.\\./", "^\\./"],
+  "importOrderCaseInsensitive": true,
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "importOrderParserPlugins": ["decorators-legacy", "typescript"],
+  "overrides": [
+    {
+      "files": "*.html",
+      "options": {
+        "parser": "angular",
+        "printWidth": 120
+      }
+    },
+    {
+      "files": "*.ts",
+      "options": {
+        "parser": "typescript"
+      }
+    }
+  ],
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "printWidth": 160,
+  "singleQuote": true,
+  "trailingComma": "es5"
+}

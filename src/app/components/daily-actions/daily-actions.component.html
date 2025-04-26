@@ -1,0 +1,15 @@
+<div class="daily-actions">
+  <h2>Actions Quotidiennes</h2>
+  <div class="actions-grid">
+    <div class="action-card" *ngFor="let action of listActions">
+      <h3>{{ action.name }}</h3>
+      <p>{{ action.description }}</p>
+      <div class="xp-rewards">
+        <span *ngFor="let reward of action.xpRewards | keyvalue">
+          {{ reward.key | titlecase }}: +{{ reward.value }}
+        </span>
+      </div>
+      <button (click)="completeAction(action)">Compléter</button>
+    </div>
+  </div>
+</div>
