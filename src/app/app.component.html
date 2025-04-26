@@ -2,10 +2,15 @@
     <header>
         <h1>Next Level Up</h1>
         <p>Développez votre personnage en accomplissant des actions quotidiennes</p>
+        <nav>
+            <ul>
+                <li><a routerLink="/home" routerLinkActive="active">Stats</a></li>
+                <li><a routerLink="/actions" routerLinkActive="active">Actions</a></li>
+            </ul>
+        </nav>
     </header>
 
     <main>
-        <app-character-stats></app-character-stats>
-        <app-daily-actions></app-daily-actions>
+        <router-outlet></router-outlet>
     </main>
 </div>
