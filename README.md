@@ -1,4 +1,4 @@
-# Etincelles website
+# Next Level Up website
 
 ## Development server
 
