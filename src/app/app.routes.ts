@@ -22,6 +22,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/params/params.page').then(m => m.ParamsPage),
   },
   {
+    path: 'legacy',
+    loadComponent: () => import('./pages/legacy/legacy.page').then(m => m.LegacyPage),
+  },
+  {
     path: '**',
     redirectTo: '',
   },

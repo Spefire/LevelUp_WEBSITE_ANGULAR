@@ -1,0 +1,10 @@
+@use "@lucca-front/scss/src/commons/utils/media";
+
+.navSide {
+  display: none;
+
+  @include media.min("M") {
+    display: flex;
+    margin-top: var(--commons-nav-header);
+  }
+}

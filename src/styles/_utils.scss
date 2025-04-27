@@ -1,0 +1,25 @@
+@use "@lucca-front/scss/src/commons/utils/media";
+
+.u-displayNoneAtMediaMinM {
+    display: none !important;
+
+    @include media.min("M") {
+        display: block !important;
+    }
+}
+
+.u-displayFlexAtMediaMaxM {
+    display: none !important;
+
+    @include media.max("M") {
+        display: flex !important;
+    }
+}
+
+.u-displayNoneAtMediaMaxM {
+    display: none !important;
+
+    @include media.max("M") {
+        display: block !important;
+    }
+}

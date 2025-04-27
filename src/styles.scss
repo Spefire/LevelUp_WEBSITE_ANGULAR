@@ -1,9 +1,9 @@
-@use "styles/_components.scss";
-
 // Icons
 @forward "@lucca-front/icons/src/main";
+
 // SCSS
 @forward "@lucca-front/scss/src/main";
+@forward "@lucca-front/scss/src/components/avatar";
 @forward "@lucca-front/scss/src/components/button";
 @forward "@lucca-front/scss/src/components/callout";
 @forward "@lucca-front/scss/src/components/card";
@@ -14,15 +14,20 @@
 @forward "@lucca-front/scss/src/components/horizontalNavigation";
 @forward "@lucca-front/scss/src/components/mobileHeader";
 @forward "@lucca-front/scss/src/components/mobileNavigation";
+@forward "@lucca-front/scss/src/components/navside";
+@forward "@lucca-front/scss/src/components/newBadge";
 @forward "@lucca-front/scss/src/components/progress";
 @forward "@lucca-front/scss/src/components/table";
 @forward "@lucca-front/scss/src/components/title";
+
 // Angular
 @forward "@lucca-front/ng/src/main";
 
-main {
-    display: flex;
-    flex-direction: column;
-    padding: var(--pr-t-spacings-400) var(--pr-t-spacings-200);
-    min-height: 100vh;
+@use "styles/_components.scss";
+@use "styles/_utils.scss";
+
+:root {
+    --commons-nav-header: 3.5rem;
+    --commons-nav-footer: 3.75rem;
+    --commons-max-width: 75rem; // 1200px
 }

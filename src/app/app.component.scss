@@ -1,0 +1,16 @@
+@use "@lucca-front/scss/src/commons/utils/media";
+
+main {
+  min-height: calc(100vh - var(--commons-nav-header) - var(--commons-nav-footer));
+  max-width: var(--commons-max-width);
+  margin-top: var(--commons-nav-header);
+  margin-bottom: var(--commons-nav-footer);
+  padding: var(--pr-t-spacings-300) var(--pr-t-spacings-200);
+
+  @include media.min("M") {
+    min-height: calc(100vh - var(--commons-nav-header));
+    margin-left: var(--commons-navSide-width);
+    margin-bottom: 0;
+    padding: var(--pr-t-spacings-300) var(--pr-t-spacings-400);
+  }
+}

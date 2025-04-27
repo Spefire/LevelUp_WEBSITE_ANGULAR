@@ -1,13 +1,39 @@
 <div class="mobileHeader">
-  <a class="link" routerLink="/home">
-    <lu-icon icon="buildingHouse" alt="Retour vers l'accueil" />
+  <a class="link u-displayFlex u-alignItemsCenter pr-u-gap100" routerLink="/home">
+    <img class="mobileHeader-image" src="./assets/icon.png" alt="Retour vers l'accueil" />
+    <img class="mobileHeader-image u-displayNoneAtMediaMinM" src="./assets/text.png" alt="Retour vers l'accueil" />
   </a>
-  <div class="mobileHeader-title">
-    <h1 class="mobileHeader-title-main">Next Level Up</h1>
-    <div class="mobileHeader-title-sub">Développez votre personnage en accomplissant des actions quotidiennes</div>
+  <div class="mobileHeader-title u-displayNoneAtMediaMaxM">
+    <h1 class="mobileHeader-title-main">Spefire</h1>
+    <div class="mobileHeader-title-sub">Homme, 30 ans</div>
   </div>
   <div class="mobileHeader-actions">
-    <button type="button" luButton="text" [luDropdown]="dropdown">
+    <div class="u-displayNoneAtMediaMinM">
+      <div class="u-displayFlex u-alignItemsCenter pr-u-gap100">
+        <div class="u-textAlignRight">
+          <h1 class="mobileHeader-title-main">Spefire</h1>
+          <div class="mobileHeader-title-sub">Homme, 30 ans</div>
+        </div>
+        <span class="avatar">
+          <img
+            class="avatar-picture"
+            loading="lazy"
+            src="https://www.arlenor.com/assets/images_filled/characters/alehar.png"
+            alt=""
+          />
+        </span>
+        <button type="button" luButton="text">
+          <lu-icon icon="settingsTools" />
+        </button>
+        <button type="button" luButton="text">
+          <lu-icon icon="bell" />
+        </button>
+        <button type="button" luButton="text">
+          <lu-icon icon="arrowLogout" />
+        </button>
+      </div>
+    </div>
+    <button type="button" luButton="text" class="u-displayFlexAtMediaMaxM" [luDropdown]="dropdown">
       <lu-icon icon="menuDots" alt="Voir plus d'options" />
     </button>
     <lu-dropdown #dropdown>
@@ -22,6 +48,12 @@
           <lu-icon icon="bell" />
           Notifications
         </button>
+      </li>
+      <li class="dropdown-list-option">
+        <a routerLink="/legacy" class="dropdown-list-option-action" luDropdownItem>
+          <lu-icon icon="signHelp" />
+          Mentions légales
+        </a>
       </li>
       <li class="dropdown-list-option">
         <button type="button" class="dropdown-list-option-action is-disabled" luDropdownItem>

@@ -1,0 +1,9 @@
+@use "@lucca-front/scss/src/commons/utils/media";
+
+.mobileNavigation {
+  height: var(--commons-nav-footer);
+
+  @include media.min("M") {
+    display: none;
+  }
+}

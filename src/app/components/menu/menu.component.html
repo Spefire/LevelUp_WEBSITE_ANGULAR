@@ -1,0 +1,47 @@
+<div class="navSide">
+  <nav role="navigation" aria-label="Nom application" class="navSide-wrapper">
+    <div class="navSide-mainSection">
+      <ul class="navSide-scrollWrapper">
+        <li class="navSide-item">
+          <a
+            class="navSide-item-link"
+            routerLink="/"
+            routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <span aria-hidden="true" class="lucca-icon icon-peoplePerson"></span>
+            <span class="navSide-item-link-title">Personnage</span>
+          </a>
+        </li>
+        <li class="navSide-item">
+          <a class="navSide-item-link" routerLink="/quests" routerLinkActive="is-active">
+            <span aria-hidden="true" class="lucca-icon icon-timeTimesheet"></span>
+            <span class="navSide-item-link-title">Quêtes</span>
+          </a>
+        </li>
+        <li class="navSide-item">
+          <a class="navSide-item-link" routerLink="/dungeons" routerLinkActive="is-active">
+            <span aria-hidden="true" class="lucca-icon icon-moneyBuildingBank"></span>
+            <span class="navSide-item-link-title">Donjons</span>
+            <span class="newBadge">New</span>
+          </a>
+        </li>
+        <li class="navSide-item">
+          <a class="navSide-item-link" routerLink="/inventory" routerLinkActive="is-active">
+            <span aria-hidden="true" class="lucca-icon icon-gift"></span>
+            <span class="navSide-item-link-title">Inventaire</span>
+            <span class="newBadge">New</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="navSide-bottomSection">
+      <div class="navSide-item">
+        <a class="navSide-item-link" routerLink="/legacy" routerLinkActive="is-active">
+          <span aria-hidden="true" class="lucca-icon icon-signHelp"></span>
+          <span class="navSide-item-link-title">Mentions légales</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+</div>

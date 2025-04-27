@@ -1,0 +1,12 @@
+.mobileHeader {
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  justify-content: space-between;
+  height: var(--commons-nav-header);
+  width: 100%;
+}
+
+.mobileHeader-image {
+  height: calc(var(--commons-nav-header) - var(--pr-t-spacings-75) * 2);
+}
