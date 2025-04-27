@@ -5,6 +5,11 @@ import { PageTitles } from '@src/models/pages.model';
 export const routes: Routes = [
   {
     path: '',
+    loadComponent: () => import('./pages/dashboard/dashboard.page').then(m => m.DashboardPage),
+    title: PageTitles.dashboard + ' - ' + PageTitles.app,
+  },
+  {
+    path: 'character',
     loadComponent: () => import('./pages/character/character.page').then(m => m.CharacterPage),
     title: PageTitles.character + ' - ' + PageTitles.app,
   },
@@ -17,11 +22,6 @@ export const routes: Routes = [
     path: 'donjons',
     loadComponent: () => import('./pages/dungeons/dungeons.page').then(m => m.DungeonsPage),
     title: PageTitles.dungeons + ' - ' + PageTitles.app,
-  },
-  {
-    path: 'inventaire',
-    loadComponent: () => import('./pages/inventory/inventory.page').then(m => m.InventoryPage),
-    title: PageTitles.inventory + ' - ' + PageTitles.app,
   },
   {
     path: 'parametres',

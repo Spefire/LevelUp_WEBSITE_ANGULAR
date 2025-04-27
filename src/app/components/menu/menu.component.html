@@ -9,6 +9,12 @@
             routerLinkActive="is-active"
             [routerLinkActiveOptions]="{ exact: true }"
           >
+            <span aria-hidden="true" class="lucca-icon icon-chartLevels"></span>
+            <span class="navSide-item-link-title">{{ pages.dashboard }}</span>
+          </a>
+        </li>
+        <li class="navSide-item">
+          <a class="navSide-item-link" routerLink="/character" routerLinkActive="is-active">
             <span aria-hidden="true" class="lucca-icon icon-peoplePerson"></span>
             <span class="navSide-item-link-title">{{ pages.character }}</span>
           </a>
@@ -23,13 +29,6 @@
           <a class="navSide-item-link" routerLink="/donjons" routerLinkActive="is-active">
             <span aria-hidden="true" class="lucca-icon icon-moneyBuildingBank"></span>
             <span class="navSide-item-link-title">{{ pages.dungeons }}</span>
-            <span class="newBadge">New</span>
-          </a>
-        </li>
-        <li class="navSide-item">
-          <a class="navSide-item-link" routerLink="/inventaire" routerLinkActive="is-active">
-            <span aria-hidden="true" class="lucca-icon icon-gift"></span>
-            <span class="navSide-item-link-title">{{ pages.inventory }}</span>
             <span class="newBadge">New</span>
           </a>
         </li>

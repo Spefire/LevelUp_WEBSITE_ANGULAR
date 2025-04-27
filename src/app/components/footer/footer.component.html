@@ -8,6 +8,17 @@
         [routerLinkActiveOptions]="{ exact: true }"
         ariaCurrentWhenActive="page"
       >
+        <span aria-hidden="true" class="lucca-icon icon-chartLevels"></span>
+        {{ pages.dashboard }}
+      </a>
+    </li>
+    <li class="mobileNavigation-list-item">
+      <a
+        class="mobileNavigation-list-item-link"
+        routerLink="/character"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+      >
         <span aria-hidden="true" class="lucca-icon icon-peoplePerson"></span>
         {{ pages.character }}
       </a>
@@ -32,17 +43,6 @@
       >
         <span aria-hidden="true" class="lucca-icon icon-moneyBuildingBank"></span>
         {{ pages.dungeons }}
-      </a>
-    </li>
-    <li class="mobileNavigation-list-item">
-      <a
-        class="mobileNavigation-list-item-link"
-        routerLink="/inventaire"
-        routerLinkActive="active"
-        ariaCurrentWhenActive="page"
-      >
-        <span aria-hidden="true" class="lucca-icon icon-gift"></span>
-        {{ pages.inventory }}
       </a>
     </li>
   </ul>

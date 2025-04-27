@@ -6,11 +6,11 @@ import { PageHeaderComponent } from '@lucca-front/ng/page-header';
 import { PageTitles } from '@src/models/pages.model';
 
 @Component({
-  selector: 'inventory-page',
+  selector: 'dashboard-page',
   imports: [CommonModule, PageHeaderComponent],
-  templateUrl: './inventory.page.html',
+  templateUrl: './dashboard.page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InventoryPage {
+export class DashboardPage {
   pages = PageTitles;
 }
