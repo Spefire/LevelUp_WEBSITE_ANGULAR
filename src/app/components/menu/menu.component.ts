@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+import { PageTitles } from '@src/models/pages.model';
+
 @Component({
   selector: 'app-menu',
   imports: [CommonModule, RouterModule],
@@ -9,4 +11,6 @@ import { RouterModule } from '@angular/router';
   styleUrl: './menu.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MenuComponent {}
+export class MenuComponent {
+  pages = PageTitles;
+}

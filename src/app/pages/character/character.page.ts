@@ -4,6 +4,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { PageHeaderComponent } from '@lucca-front/ng/page-header';
 
 import { Character } from '@src/models/character.model';
+import { PageTitles } from '@src/models/pages.model';
 import { CharacterService } from '@src/services/character.service';
 
 @Component({
@@ -14,6 +15,7 @@ import { CharacterService } from '@src/services/character.service';
 })
 export class CharacterPage implements OnInit {
   character: Character;
+  pages = PageTitles;
 
   constructor(private characterService: CharacterService) {}
 

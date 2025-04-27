@@ -10,26 +10,26 @@
             [routerLinkActiveOptions]="{ exact: true }"
           >
             <span aria-hidden="true" class="lucca-icon icon-peoplePerson"></span>
-            <span class="navSide-item-link-title">Personnage</span>
+            <span class="navSide-item-link-title">{{ pages.character }}</span>
           </a>
         </li>
         <li class="navSide-item">
-          <a class="navSide-item-link" routerLink="/quests" routerLinkActive="is-active">
+          <a class="navSide-item-link" routerLink="/quetes" routerLinkActive="is-active">
             <span aria-hidden="true" class="lucca-icon icon-timeTimesheet"></span>
-            <span class="navSide-item-link-title">Quêtes</span>
+            <span class="navSide-item-link-title">{{ pages.quests }}</span>
           </a>
         </li>
         <li class="navSide-item">
-          <a class="navSide-item-link" routerLink="/dungeons" routerLinkActive="is-active">
+          <a class="navSide-item-link" routerLink="/donjons" routerLinkActive="is-active">
             <span aria-hidden="true" class="lucca-icon icon-moneyBuildingBank"></span>
-            <span class="navSide-item-link-title">Donjons</span>
+            <span class="navSide-item-link-title">{{ pages.dungeons }}</span>
             <span class="newBadge">New</span>
           </a>
         </li>
         <li class="navSide-item">
-          <a class="navSide-item-link" routerLink="/inventory" routerLinkActive="is-active">
+          <a class="navSide-item-link" routerLink="/inventaire" routerLinkActive="is-active">
             <span aria-hidden="true" class="lucca-icon icon-gift"></span>
-            <span class="navSide-item-link-title">Inventaire</span>
+            <span class="navSide-item-link-title">{{ pages.inventory }}</span>
             <span class="newBadge">New</span>
           </a>
         </li>
@@ -37,9 +37,9 @@
     </div>
     <div class="navSide-bottomSection">
       <div class="navSide-item">
-        <a class="navSide-item-link" routerLink="/legacy" routerLinkActive="is-active">
+        <a class="navSide-item-link" routerLink="/mentions-legales" routerLinkActive="is-active">
           <span aria-hidden="true" class="lucca-icon icon-signHelp"></span>
-          <span class="navSide-item-link-title">Mentions légales</span>
+          <span class="navSide-item-link-title">{{ pages.legacy }}</span>
         </a>
       </div>
     </div>

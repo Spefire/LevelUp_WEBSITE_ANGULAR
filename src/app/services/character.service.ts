@@ -10,6 +10,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class CharacterService {
   private characterSubject = new BehaviorSubject<Character>({
+    avatar: 'https://www.arlenor.com/assets/images_filled/characters/alehar.png',
+    name: 'Spefire',
+    gender: 'Homme',
+    age: 30,
     currentXP: 0,
     level: 1,
     xpToNextLevel: 100,

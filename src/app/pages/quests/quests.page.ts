@@ -6,6 +6,7 @@ import { IconComponent } from '@lucca-front/ng/icon';
 import { PageHeaderComponent } from '@lucca-front/ng/page-header';
 
 import { Action, listActions } from '@src/models/actions.model';
+import { PageTitles } from '@src/models/pages.model';
 import { CharacterService } from '@src/services/character.service';
 
 @Component({
@@ -16,6 +17,7 @@ import { CharacterService } from '@src/services/character.service';
 })
 export class QuestsPage {
   listActions = listActions;
+  pages = PageTitles;
 
   constructor(private characterService: CharacterService) {}
 
