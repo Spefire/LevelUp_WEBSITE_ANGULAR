@@ -1,0 +1,20 @@
+<div class="grid-column card mod-actions" [attr.style]="'--grid-colspanAtMediaMinS: 2; --grid-colspanAtMediaMinM: 1'">
+  <h4>{{ quest().name }}</h4>
+  <p>{{ quest().description }}</p>
+  <div class="u-displayFlex u-flexWrapWrap pr-u-gap100 pr-u-marginTop50">
+    @for (reward of quest().xpRewards | keyvalue; track reward.key) {
+      @if (reward.key === 'force') {
+        <lu-tag palette="watermelon" [label]="'FOR +' + reward.value" />
+      } @else if (reward.key === 'habilete') {
+        <lu-tag palette="pineapple" [label]="'HAB +' + reward.value" />
+      } @else if (reward.key === 'tenacite') {
+        <lu-tag palette="cucumber" [label]="'TEN +' + reward.value" />
+      } @else if (reward.key === 'intelligence') {
+        <lu-tag palette="lagoon" [label]="'INT +' + reward.value" />
+      } @else if (reward.key === 'charisme') {
+        <lu-tag palette="grape" [label]="'CHA +' + reward.value" />
+      }
+    }
+  </div>
+  <!--button type="button" luButton size="S" class="pr-u-marginTop100" (click)="completeQuest()">Compléter</button-->
+</div>

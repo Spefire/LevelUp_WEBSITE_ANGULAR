@@ -1,0 +1,62 @@
+@for (category of categories; track category) {
+  @if (getQuestsByFilter(category); as filteredQuests) {
+    <div
+      role="tabpanel"
+      class="segmentedControl_panel pr-u-marginTop200"
+      [class.is-active]="category === filter"
+      [attr.id]="'panel-' + category"
+      [attr.aria-labelledby]="'tab-' + category"
+      tabindex="0"
+    >
+      @if (filteredQuests.length) {
+        <section class="card">
+          <h2 class="u-h3 u-displayFlex u-alignItemsCenter pr-u-gap100">
+            <span>Difficulté</span>
+            <lu-status-badge palette="error" [label]="QuestDifficulty.COMPLEXE" />
+          </h2>
+          <div class="grid pr-u-marginTop100" style="--grid-columns: 4; --grid-colspan: 4">
+            @for (quest of filteredQuests; track quest.id) {
+              <quests-card [quest]="quest" />
+            }
+          </div>
+        </section>
+        <section class="card pr-u-marginTop200">
+          <h2 class="u-h3 u-displayFlex u-alignItemsCenter pr-u-gap100">
+            <span>Difficulté</span>
+            <lu-status-badge palette="warning" [label]="QuestDifficulty.STANDARD" />
+          </h2>
+          <div class="grid pr-u-marginTop100" style="--grid-columns: 4; --grid-colspan: 4">
+            @for (quest of filteredQuests; track quest.id) {
+              <quests-card [quest]="quest" />
+            }
+          </div>
+        </section>
+        <section class="card pr-u-marginTop200">
+          <h2 class="u-h3 u-displayFlex u-alignItemsCenter pr-u-gap100">
+            <span>Difficulté</span>
+            <lu-status-badge palette="success" [label]="QuestDifficulty.SIMPLE" />
+          </h2>
+          <div class="grid pr-u-marginTop100" style="--grid-columns: 4; --grid-colspan: 4">
+            @for (quest of filteredQuests; track quest.id) {
+              <quests-card [quest]="quest" />
+            }
+          </div>
+        </section>
+      } @else {
+        <div class="card">
+          <lu-empty-state-section
+            hx="3"
+            icon="https://cdn.lucca.fr/lucca-front/assets/empty-states/icons/iconPaperAction.svg"
+            heading="Aucune quête disponible"
+            description="Vous pouvez changer les filtres, ou créer une nouvelle quête."
+          >
+            <button type="button" luButton disabled>
+              <lu-icon icon="mathsPlus" />
+              Créer une quête
+            </button>
+          </lu-empty-state-section>
+        </div>
+      }
+    </div>
+  }
+}

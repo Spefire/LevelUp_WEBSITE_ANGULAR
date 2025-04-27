@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { PageHeaderComponent } from '@lucca-front/ng/page-header';
 
@@ -11,7 +11,6 @@ import { CharacterService } from '@src/services/character.service';
   selector: 'character-page',
   imports: [CommonModule, PageHeaderComponent],
   templateUrl: './character.page.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CharacterPage implements OnInit {
   character: Character;

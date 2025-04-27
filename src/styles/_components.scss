@@ -27,3 +27,7 @@
     overflow: hidden;
   }
 }
+
+.segmentedControl {
+  --components-segmentedControl-direction: row !important;
+}

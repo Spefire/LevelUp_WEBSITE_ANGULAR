@@ -10,44 +10,5 @@
   </ng-container>
 </lu-page-header>
 
-<section class="card">
-  <h3>Quêtes hebdomadaires</h3>
-  <div class="grid" style="--grid-columns: 4; --grid-colspan: 4">
-    @for (action of listActions; track action) {
-      <div
-        class="grid-column card mod-actions pr-u-marginTop100"
-        [attr.style]="'--grid-colspanAtMediaMinS: 2; --grid-colspanAtMediaMinM: 1'"
-      >
-        <h4>{{ action.name }}</h4>
-        <p>{{ action.description }}</p>
-        <div class="u-displayFlex u-flexWrapWrap pr-u-gap100 pr-u-marginTop50">
-          <span *ngFor="let reward of action.xpRewards | keyvalue" class="u-textS u-textNeutral">
-            {{ reward.key | titlecase }}: +{{ reward.value }}
-          </span>
-        </div>
-        <button type="button" class="button pr-u-marginTop100" (click)="completeAction(action)">Compléter</button>
-      </div>
-    }
-  </div>
-</section>
-
-<section class="card pr-u-marginTop200">
-  <h3>Quêtes quotidiennes</h3>
-  <div class="grid" style="--grid-columns: 4; --grid-colspan: 4">
-    @for (action of listActions; track action) {
-      <div
-        class="grid-column card mod-actions pr-u-marginTop100"
-        [attr.style]="'--grid-colspanAtMediaMinS: 2; --grid-colspanAtMediaMinM: 1'"
-      >
-        <h4>{{ action.name }}</h4>
-        <p>{{ action.description }}</p>
-        <div class="u-displayFlex u-flexWrapWrap pr-u-gap100 pr-u-marginTop50">
-          <span *ngFor="let reward of action.xpRewards | keyvalue" class="u-textS u-textNeutral">
-            {{ reward.key | titlecase }}: +{{ reward.value }}
-          </span>
-        </div>
-        <button type="button" class="button pr-u-marginTop100" (click)="completeAction(action)">Compléter</button>
-      </div>
-    }
-  </div>
-</section>
+<quests-filters></quests-filters>
+<quests-list></quests-list>

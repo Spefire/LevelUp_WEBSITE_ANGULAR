@@ -1,0 +1,21 @@
+<ul class="segmentedControl" role="tablist">
+  @for (category of categories; track category) {
+    <li class="segmentedControl-item" role="presentation">
+      <button
+        class="segmentedControl-item-action"
+        type="button"
+        role="tab"
+        [attr.id]="'tab-' + category"
+        [attr.aria-controls]="'panel-' + category"
+        [attr.aria-selected]="filter === category"
+        [attr.tabindex]="filter === category ? null : '-1'"
+        (click)="changeFilter(category)"
+      >
+        {{ category ? category : 'Toutes' }}
+        @if (getQuestsByFilter(category).length; as nbQuest) {
+          <span class="numericBadge">{{ nbQuest }}</span>
+        }
+      </button>
+    </li>
+  }
+</ul>
