@@ -36,12 +36,13 @@ export class QuestsListComponent {
     });
   }
 
-  getQuestsByFilter(newFilter: string) {
-    if (!newFilter) return this.quests;
-    return this.quests.filter(quest => quest.category === newFilter);
+  getQuestsByFilter() {
+    if (!this.filter) return this.quests;
+    return this.quests.filter(quest => quest.category === this.filter);
   }
 
-  getQuestsByDifficulty(difficulty: string) {
-    return this.quests.filter(quest => quest.difficulty === difficulty);
+  getQuestsByDifficulty(quests: Quest[], difficulty: string) {
+    const result = quests.filter(quest => quest.difficulty === difficulty);
+    return result.length ? result : null;
   }
 }

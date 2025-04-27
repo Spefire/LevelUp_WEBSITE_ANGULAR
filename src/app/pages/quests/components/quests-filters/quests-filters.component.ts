@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormsModule } from '@angular/forms';
 
 import { Quest, QuestCategory } from '@src/models/quests.model';
 import { QuestsService } from '@src/pages/quests/quests.service';
 
 @Component({
   selector: 'quests-filters',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './quests-filters.component.html',
 })
 export class QuestsFiltersComponent {

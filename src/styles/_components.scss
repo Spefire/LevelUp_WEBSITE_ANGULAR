@@ -9,11 +9,17 @@
 
   &.mod-actions {
     padding: var(--pr-t-spacings-100);
+    cursor: pointer;
   }
 
   &:not(.mod-actions) {
     border: none !important;
     box-shadow: var(--pr-t-elevation-shadow-raised);
+  }
+
+  &.mod-selected {
+    --components-card-border-color: var(--palettes-product-700) !important;
+    --components-card-background: var(--palettes-product-50) !important;
   }
 }
 

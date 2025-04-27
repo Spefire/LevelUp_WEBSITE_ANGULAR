@@ -1,18 +1,28 @@
-<div class="grid-column card mod-actions" [attr.style]="'--grid-colspanAtMediaMinS: 2; --grid-colspanAtMediaMinM: 1'">
-  <h4>{{ quest().name }}</h4>
+<div
+  role="button"
+  tabindex="0"
+  class="grid-column card mod-actions"
+  [class.mod-selected]="isChecked"
+  [attr.style]="'--grid-colspanAtMediaMinS: 2; --grid-colspanAtMediaMinM: 1'"
+  (click)="toggleQuest()"
+>
+  <div class="u-displayFlex u-justifyContentSpaceBetween u-alignItemsCenter">
+    <h4>{{ quest().name }}</h4>
+    <lu-checkbox-input [(ngModel)]="isChecked" />
+  </div>
   <p>{{ quest().description }}</p>
   <div class="u-displayFlex u-flexWrapWrap pr-u-gap100 pr-u-marginTop50">
     @for (reward of quest().xpRewards | keyvalue; track reward.key) {
       @if (reward.key === 'force') {
-        <lu-tag palette="watermelon" [label]="'FOR +' + reward.value" />
+        <lu-tag [palette]="isChecked ? 'product' : 'watermelon'" [label]="'FOR +' + reward.value" />
       } @else if (reward.key === 'habilete') {
-        <lu-tag palette="pineapple" [label]="'HAB +' + reward.value" />
+        <lu-tag [palette]="isChecked ? 'product' : 'pineapple'" [label]="'HAB +' + reward.value" />
       } @else if (reward.key === 'tenacite') {
-        <lu-tag palette="cucumber" [label]="'TEN +' + reward.value" />
+        <lu-tag [palette]="isChecked ? 'product' : 'cucumber'" [label]="'TEN +' + reward.value" />
       } @else if (reward.key === 'intelligence') {
-        <lu-tag palette="lagoon" [label]="'INT +' + reward.value" />
+        <lu-tag [palette]="isChecked ? 'product' : 'lagoon'" [label]="'INT +' + reward.value" />
       } @else if (reward.key === 'charisme') {
-        <lu-tag palette="grape" [label]="'CHA +' + reward.value" />
+        <lu-tag [palette]="isChecked ? 'product' : 'grape'" [label]="'CHA +' + reward.value" />
       }
     }
   </div>
