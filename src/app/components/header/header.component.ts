@@ -8,7 +8,7 @@ import { IconComponent } from '@lucca-front/ng/icon';
 
 import { Character } from '@src/models/character.model';
 import { PageTitles } from '@src/models/pages.model';
-import { CharacterService } from '@src/services/character.service';
+import { CharacterService } from '@src/pages/character/character.service';
 
 @Component({
   selector: 'app-header',

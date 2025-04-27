@@ -5,7 +5,7 @@ import { PageHeaderComponent } from '@lucca-front/ng/page-header';
 
 import { Character } from '@src/models/character.model';
 import { PageTitles } from '@src/models/pages.model';
-import { CharacterService } from '@src/services/character.service';
+import { CharacterService } from '@src/pages/character/character.service';
 
 @Component({
   selector: 'character-page',
