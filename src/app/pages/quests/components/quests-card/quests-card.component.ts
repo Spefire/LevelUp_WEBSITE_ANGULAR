@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { CheckboxInputComponent } from '@lucca-front/ng/forms';
 import { TagComponent } from '@lucca-front/ng/tag';
 
-import { Quest, QuestDifficulty } from '@src/models/quests.model';
+import { Quest } from '@src/models/quests.model';
 import { QuestsService } from '@src/pages/quests/quests.service';
 
 @Component({
@@ -18,7 +18,6 @@ import { QuestsService } from '@src/pages/quests/quests.service';
 export class QuestsCardComponent {
   readonly quest = input.required<Quest>();
 
-  public QuestDifficulty = QuestDifficulty;
   public isChecked: boolean;
 
   private readonly _destroyRef = inject(DestroyRef);

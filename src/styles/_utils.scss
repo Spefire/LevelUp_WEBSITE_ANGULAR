@@ -1,5 +1,9 @@
 @use "@lucca-front/scss/src/commons/utils/media";
 
+.u-cursorPointer {
+    cursor: pointer !important;
+}
+
 .u-displayNoneAtMediaMinM {
     display: none !important;
 

@@ -15,7 +15,7 @@
         </section>
       }
       @if (getQuestsByDifficulty(filteredQuests, QuestDifficulty.STANDARD); as standardQuests) {
-        <section class="card pr-u-marginTop200">
+        <section class="card">
           <h2 class="u-h3 u-displayFlex u-alignItemsCenter pr-u-gap100">
             <span>Difficulté</span>
             <lu-status-badge palette="warning" [label]="QuestDifficulty.STANDARD" />
@@ -28,7 +28,7 @@
         </section>
       }
       @if (getQuestsByDifficulty(filteredQuests, QuestDifficulty.SIMPLE); as simpleQuests) {
-        <section class="card pr-u-marginTop200">
+        <section class="card">
           <h2 class="u-h3 u-displayFlex u-alignItemsCenter pr-u-gap100">
             <span>Difficulté</span>
             <lu-status-badge palette="success" [label]="QuestDifficulty.SIMPLE" />

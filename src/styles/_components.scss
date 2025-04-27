@@ -9,7 +9,6 @@
 
   &.mod-actions {
     padding: var(--pr-t-spacings-100);
-    cursor: pointer;
   }
 
   &:not(.mod-actions) {
@@ -20,6 +19,11 @@
   &.mod-selected {
     --components-card-border-color: var(--palettes-product-700) !important;
     --components-card-background: var(--palettes-product-50) !important;
+  }
+
+  &.mod-succeed {
+    --components-card-border-color: var(--palettes-success-700) !important;
+    --components-card-background: var(--palettes-success-50) !important;
   }
 }
 

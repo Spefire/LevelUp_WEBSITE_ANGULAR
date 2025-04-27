@@ -1,1 +1,44 @@
-<lu-page-header [label]="pages.dashboard" description="En cours de construction" />
+<lu-page-header [label]="pages.dashboard" />
+
+@if (dailyQuests.length) {
+  <div class="u-displayFlex u-flexDirectionColumn pr-u-gap200">
+    @if (nowQuests.length) {
+      <section class="card">
+        <h2 class="u-h3 u-displayFlex u-alignItemsCenter pr-u-gap100">
+          <span>Quêtes du jour</span>
+        </h2>
+        <div class="grid pr-u-marginTop100" style="--grid-columns: 4; --grid-colspan: 4">
+          @for (quest of nowQuests; track quest.id) {
+            <daily-card [quest]="quest" [readonly]="false" />
+          }
+        </div>
+      </section>
+    }
+    @if (lateQuests.length) {
+      <section class="card">
+        <h2 class="u-h3 u-displayFlex u-alignItemsCenter pr-u-gap100">
+          <span>Quêtes en attente</span>
+        </h2>
+        <div class="grid pr-u-marginTop100" style="--grid-columns: 4; --grid-colspan: 4">
+          @for (quest of lateQuests; track quest.id) {
+            <daily-card [quest]="quest" [readonly]="true" />
+          }
+        </div>
+      </section>
+    }
+  </div>
+} @else {
+  <div class="card">
+    <lu-empty-state-section
+      hx="3"
+      icon="https://cdn.lucca.fr/lucca-front/assets/empty-states/icons/iconPaperAction.svg"
+      heading="Aucune quête en cours"
+      description="Vous pouvez aller en sélectionner dans la liste des quêtes."
+    >
+      <a routerLink="/quests" luButton>
+        <lu-icon icon="mathsPlus" />
+        Voir les quêtes disponibles
+      </a>
+    </lu-empty-state-section>
+  </div>
+}
