@@ -1,0 +1,16 @@
+<lu-dialog #dialog>
+  <lu-dialog-header>
+    <h1>{{ data.heading ?? 'Confirmation' }}</h1>
+  </lu-dialog-header>
+
+  <lu-dialog-content>
+    <p>{{ data.content ?? 'Souhaites-tu continuer ?' }}</p>
+  </lu-dialog-content>
+
+  <lu-dialog-footer>
+    <div class="footer-actions">
+      <button type="button" luButton="text" luDialogDismiss>Non</button>
+      <button type="button" luButton (click)="confirm()">Oui</button>
+    </div>
+  </lu-dialog-footer>
+</lu-dialog>
