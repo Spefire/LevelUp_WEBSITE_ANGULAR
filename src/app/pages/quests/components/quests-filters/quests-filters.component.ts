@@ -4,7 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
 import { Quest, QuestCategory } from '@src/models/quests.model';
-import { QuestsService } from '@src/pages/quests/quests.service';
+import { QuestsService } from '@src/services/quests.service';
 
 @Component({
   selector: 'quests-filters',

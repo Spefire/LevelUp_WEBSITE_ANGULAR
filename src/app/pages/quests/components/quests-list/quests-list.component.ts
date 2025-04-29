@@ -9,7 +9,7 @@ import { StatusBadgeComponent } from '@lucca-front/ng/statusBadge';
 
 import { Quest, QuestCategory, QuestDifficulty } from '@src/models/quests.model';
 import { QuestsCardComponent } from '@src/pages/quests/components/quests-card/quests-card.component';
-import { QuestsService } from '@src/pages/quests/quests.service';
+import { QuestsService } from '@src/services/quests.service';
 
 @Component({
   selector: 'quests-list',

@@ -14,7 +14,7 @@ export class QuestsService {
 
   // Observables publics
   public quests$ = this.questsSubject.asObservable();
-  public dailyQuestsSubject$ = this.dailyQuestsSubject.asObservable();
+  public dailyQuests$ = this.dailyQuestsSubject.asObservable();
   public filter$ = this.filterSubject.asObservable();
 
   constructor() {

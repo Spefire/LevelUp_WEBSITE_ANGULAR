@@ -7,11 +7,11 @@
   <h3>Progression Globale</h3>
   <p class="pr-u-marginTop100">
     <span class="u-h2">Niveau</span>
-    <span class="u-h1 pr-u-marginLeft50 u-textPrimary">{{ character.level }}</span>
+    <span class="u-h1 pr-u-marginLeft50 u-textPrimary">{{ stats.level }}</span>
   </p>
   <div class="progress pr-u-marginTop100 u-textAlignCenter">
-    <div class="progress-bar" [attr.style]="'width:' + (character.currentXP / character.xpToNextLevel) * 100 + '%'">
-      {{ character.currentXP }}/{{ character.xpToNextLevel }} XP
+    <div class="progress-bar" [attr.style]="'width:' + (stats.currentXP / stats.xpToNextLevel) * 100 + '%'">
+      {{ stats.currentXP }}/{{ stats.xpToNextLevel }} XP
     </div>
   </div>
 </section>
@@ -19,21 +19,21 @@
 <section class="card pr-u-marginTop200">
   <h3>Caractéristiques</h3>
   <div class="grid pr-u-marginTop100" style="--grid-columns: 5; --grid-colspan: 5">
-    @for (stat of character.stats | keyvalue; track stat) {
+    @for (caract of stats.caracts | keyvalue; track caract) {
       <div
         class="grid-column card mod-actions u-displayFlex u-flexDirectionColumn u-textAlignCenter pr-u-gap100"
         [attr.style]="'--grid-colspanAtMediaMinM: 1'"
       >
         <div class="u-displayFlex u-justifyContentSpaceBetween u-alignItemsCenter pr-u-gap100">
-          <h4 class="u-h2">{{ stat.key | titlecase }}</h4>
-          <p class="u-h1 u-textPrimary">{{ stat.value.level }}</p>
+          <h4 class="u-h2">{{ caract.key | titlecase }}</h4>
+          <p class="u-h1 u-textPrimary">{{ caract.value.level }}</p>
         </div>
         <div class="progress">
           <div
             class="progress-bar"
-            [attr.style]="'width:' + (stat.value.currentXP / stat.value.xpToNextLevel) * 100 + '%'"
+            [attr.style]="'width:' + (caract.value.currentXP / caract.value.xpToNextLevel) * 100 + '%'"
           >
-            {{ stat.value.currentXP }} XP
+            {{ caract.value.currentXP }} XP
           </div>
         </div>
       </div>

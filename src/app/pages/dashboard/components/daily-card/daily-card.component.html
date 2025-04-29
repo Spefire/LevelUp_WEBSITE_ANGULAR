@@ -6,27 +6,19 @@
   <div class="u-displayFlex u-justifyContentSpaceBetween u-alignItemsCenter">
     <h4>{{ quest().name }}</h4>
     @if (isCompleted) {
-      <lu-tag palette="success" label="Validée" />
+      <lu-status-badge palette="success" label="Validée" />
+    } @else if (!readonly()) {
+      <lu-status-badge palette="product" label="En cours" />
     }
   </div>
   <p>{{ quest().description }}</p>
   <p class="u-textS u-textNeutral">{{ quest().daysOfWeek | daysOfWeek }}</p>
-  <div class="u-displayFlex u-flexWrapWrap pr-u-gap100 pr-u-marginTop50">
-    @for (reward of quest().xpRewards | keyvalue; track reward.key) {
-      @if (reward.key === 'force') {
-        <lu-tag [palette]="isCompleted ? 'success' : 'watermelon'" [label]="'FOR +' + reward.value" />
-      } @else if (reward.key === 'habilete') {
-        <lu-tag [palette]="isCompleted ? 'success' : 'pineapple'" [label]="'HAB +' + reward.value" />
-      } @else if (reward.key === 'tenacite') {
-        <lu-tag [palette]="isCompleted ? 'success' : 'cucumber'" [label]="'TEN +' + reward.value" />
-      } @else if (reward.key === 'intelligence') {
-        <lu-tag [palette]="isCompleted ? 'success' : 'lagoon'" [label]="'INT +' + reward.value" />
-      } @else if (reward.key === 'charisme') {
-        <lu-tag [palette]="isCompleted ? 'success' : 'grape'" [label]="'CHA +' + reward.value" />
-      }
+  <div class="u-displayFlex u-alignItemsCenter u-justifyContentSpaceBetween pr-u-gap100 pr-u-marginTop50">
+    <div class="u-displayFlex u-alignItemsCenter u-flexWrapWrap pr-u-gap100">
+      <quest-rewards [quest]="quest()" [forced]="isCompleted ? 'success' : null" />
+    </div>
+    @if (!isCompleted && !readonly()) {
+      <button type="button" luButton size="S" (click)="completeQuest()">Valider</button>
     }
   </div>
-  @if (!isCompleted && !readonly()) {
-    <button type="button" luButton size="S" class="pr-u-marginTop100" (click)="completeQuest()">Valider</button>
-  }
 </div>

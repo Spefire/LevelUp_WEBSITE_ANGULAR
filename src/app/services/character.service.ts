@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { Character } from '@src/models/character.model';
-import { Stats } from '@src/models/stats.model';
+import { Character, Stats } from '@src/models/character.model';
 
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,10 +13,12 @@ export class CharacterService {
     name: 'Spefire',
     gender: 'Homme',
     age: 30,
+  });
+  private statsSubject = new BehaviorSubject<Stats>({
     currentXP: 0,
     level: 1,
     xpToNextLevel: 100,
-    stats: {
+    caracts: {
       force: { currentXP: 0, level: 1, xpToNextLevel: 20 },
       habilete: { currentXP: 0, level: 1, xpToNextLevel: 20 },
       tenacite: { currentXP: 0, level: 1, xpToNextLevel: 20 },
@@ -26,19 +27,17 @@ export class CharacterService {
     },
   });
 
+  // Observables publics
+  public character$ = this.characterSubject.asObservable();
+  public stats$ = this.statsSubject.asObservable();
+
   constructor() {
     // Charger les données depuis le localStorage au démarrage
-    const savedCharacter = localStorage.getItem('character');
-    if (savedCharacter) {
-      this.characterSubject.next(JSON.parse(savedCharacter));
-    }
+    const character = localStorage.getItem('character');
+    if (character) this.characterSubject.next(JSON.parse(character));
   }
 
-  getCharacter(): Observable<Character> {
-    return this.characterSubject.asObservable();
-  }
-
-  addXP(stats: Partial<Stats>): void {
+  /*private _addXP(stats: Partial<Stats>): void {
     const currentCharacter = this.characterSubject.value;
     const newStats = { ...currentCharacter.stats };
     let totalXP = 0;
@@ -78,5 +77,5 @@ export class CharacterService {
 
     this.characterSubject.next(newCharacter);
     localStorage.setItem('character', JSON.stringify(newCharacter));
-  }
+  }*/
 }

@@ -5,15 +5,15 @@ import { FormsModule } from '@angular/forms';
 
 import { LuDialogService } from '@lucca-front/ng/dialog';
 import { CheckboxInputComponent } from '@lucca-front/ng/forms';
-import { TagComponent } from '@lucca-front/ng/tag';
 
 import { ConfirmDialogComponent } from '@src/components/confirm-dialog/confirm-dialog.component';
+import { QuestRewardsComponent } from '@src/components/quest-rewards/quest-rewards.component';
 import { Quest } from '@src/models/quests.model';
-import { QuestsService } from '@src/pages/quests/quests.service';
+import { QuestsService } from '@src/services/quests.service';
 
 @Component({
   selector: 'quests-card',
-  imports: [CommonModule, FormsModule, CheckboxInputComponent, TagComponent],
+  imports: [CommonModule, FormsModule, CheckboxInputComponent, QuestRewardsComponent],
   templateUrl: './quests-card.component.html',
   styles: ':host { display: contents }',
   providers: [LuDialogService],
@@ -30,7 +30,7 @@ export class QuestsCardComponent {
   constructor(private _questsService: QuestsService) {}
 
   ngOnInit(): void {
-    this._questsService.dailyQuestsSubject$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailyQuests => {
+    this._questsService.dailyQuests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailyQuests => {
       this.isChecked = !!dailyQuests.find(dailyQuest => dailyQuest.id === this.quest().id);
     });
   }

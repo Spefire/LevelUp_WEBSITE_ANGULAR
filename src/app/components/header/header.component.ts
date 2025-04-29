@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterModule } from '@angular/router';
 
 import { ButtonComponent } from '@lucca-front/ng/button';
@@ -8,7 +9,7 @@ import { IconComponent } from '@lucca-front/ng/icon';
 
 import { Character } from '@src/models/character.model';
 import { PageTitles } from '@src/models/pages.model';
-import { CharacterService } from '@src/pages/character/character.service';
+import { CharacterService } from '@src/services/character.service';
 
 @Component({
   selector: 'app-header',
@@ -20,10 +21,12 @@ export class HeaderComponent implements OnInit {
   character: Character;
   pages = PageTitles;
 
-  constructor(private characterService: CharacterService) {}
+  private readonly _destroyRef = inject(DestroyRef);
+
+  constructor(private _characterService: CharacterService) {}
 
   ngOnInit() {
-    this.characterService.getCharacter().subscribe(character => {
+    this._characterService.character$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(character => {
       this.character = character;
     });
   }

@@ -10,18 +10,6 @@
   </div>
   <p>{{ quest().description }}</p>
   <div class="u-displayFlex u-flexWrapWrap pr-u-gap100 pr-u-marginTop50">
-    @for (reward of quest().xpRewards | keyvalue; track reward.key) {
-      @if (reward.key === 'force') {
-        <lu-tag [palette]="isChecked ? 'product' : 'watermelon'" [label]="'FOR +' + reward.value" />
-      } @else if (reward.key === 'habilete') {
-        <lu-tag [palette]="isChecked ? 'product' : 'pineapple'" [label]="'HAB +' + reward.value" />
-      } @else if (reward.key === 'tenacite') {
-        <lu-tag [palette]="isChecked ? 'product' : 'cucumber'" [label]="'TEN +' + reward.value" />
-      } @else if (reward.key === 'intelligence') {
-        <lu-tag [palette]="isChecked ? 'product' : 'lagoon'" [label]="'INT +' + reward.value" />
-      } @else if (reward.key === 'charisme') {
-        <lu-tag [palette]="isChecked ? 'product' : 'grape'" [label]="'CHA +' + reward.value" />
-      }
-    }
+    <quest-rewards [quest]="quest()" [forced]="isChecked ? 'product' : null" />
   </div>
 </div>

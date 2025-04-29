@@ -1,0 +1,51 @@
+<div class="dataTableWrapper">
+  <table class="dataTable">
+    <thead class="dataTable-head">
+      <tr class="dataTable-head-row">
+        <th class="dataTable-head-row-cell">
+          <span class="u-displayNoneAtMediaMinM">Date d'enregistrement</span>
+          <span class="u-displayNoneAtMediaMaxM">Date</span>
+        </th>
+        <th class="dataTable-head-row-cell">
+          <span class="u-displayNoneAtMediaMinM">Nom de la quête</span>
+          <span class="u-displayNoneAtMediaMaxM">Nom</span>
+        </th>
+        <th class="dataTable-head-row-cell">Difficulté</th>
+        <th class="dataTable-head-row-cell">Effets</th>
+        <th class="dataTable-head-row-cell mod-actions">
+          <span class="u-mask">Actions</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody class="dataTable-body">
+      @for (log of logs; track log) {
+        <tr class="dataTable-body-row">
+          <td class="dataTable-body-row-cell u-whiteSpaceNoWrap">
+            <span class="u-displayNoneAtMediaMinM">{{ log.date | date: 'fullDate' | titlecase }}</span>
+            <span class="u-displayNoneAtMediaMaxM">{{ log.date | date: 'shortDate' }}</span>
+          </td>
+          <td class="dataTable-body-row-cell u-whiteSpaceNoWrap">{{ log.quest.name }}</td>
+          <td class="dataTable-body-row-cell">
+            @if (log.quest.difficulty === QuestDifficulty.COMPLEXE) {
+              <lu-status-badge palette="error" [label]="log.quest.difficulty" />
+            } @else if (log.quest.difficulty === QuestDifficulty.STANDARD) {
+              <lu-status-badge palette="warning" [label]="log.quest.difficulty" />
+            } @else if (log.quest.difficulty === QuestDifficulty.SIMPLE) {
+              <lu-status-badge palette="success" [label]="log.quest.difficulty" />
+            }
+          </td>
+          <td class="dataTable-body-row-cell">
+            <div class="u-displayFlex pr-u-gap100 pr-u-marginTop50">
+              <quest-rewards [quest]="log.quest" />
+            </div>
+          </td>
+          <td class="dataTable-body-row-cell mod-actions">
+            <button type="button" luButton disabled>
+              <lu-icon icon="trashDelete" alt="Supprimer l'enregistrement" />
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
