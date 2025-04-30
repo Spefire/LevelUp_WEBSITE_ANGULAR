@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
+import { HighlightDataComponent } from '@lucca-front/ng/highlight-data';
 import { HorizontalNavigationComponent, HorizontalNavigationLinkDirective } from '@lucca-front/ng/horizontal-navigation';
 import { PageHeaderComponent } from '@lucca-front/ng/page-header';
 
@@ -10,7 +11,15 @@ import { HistoricTableComponent } from '@src/pages/dashboard/components/historic
 
 @Component({
   selector: 'dashboard-page',
-  imports: [CommonModule, PageHeaderComponent, HorizontalNavigationComponent, HorizontalNavigationLinkDirective, DailyListComponent, HistoricTableComponent],
+  imports: [
+    CommonModule,
+    PageHeaderComponent,
+    HorizontalNavigationComponent,
+    HorizontalNavigationLinkDirective,
+    HighlightDataComponent,
+    DailyListComponent,
+    HistoricTableComponent,
+  ],
   templateUrl: './dashboard.page.html',
 })
 export class DashboardPage {
