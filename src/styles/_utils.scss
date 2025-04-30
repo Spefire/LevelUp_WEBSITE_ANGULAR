@@ -4,6 +4,10 @@
     cursor: pointer !important;
 }
 
+.u-borderTop {
+    border-top: 1px solid var(--commons-border-200);
+}
+
 .u-displayNoneAtMediaMinM {
     display: none !important;
 

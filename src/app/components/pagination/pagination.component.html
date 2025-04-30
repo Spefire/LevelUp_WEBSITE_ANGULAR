@@ -1,0 +1,16 @@
+<nav class="pagination u-borderTop" role="navigation" aria-label="Pagination des résultats">
+  <span class="u-mask">Résultats de {{ minResult }} à {{ maxResult }} sur {{ items().length }} résultats</span>
+  <div class="pagination-count" aria-hidden="true">
+    <span class="pagination-count-current">{{ minResult }} - {{ maxResult }}</span>
+    <span class="pagination-count-separator"> sur </span>
+    <span class="pagination-count-total">{{ items().length }}</span>
+  </div>
+  <div class="pagination-scrolling">
+    <button type="button" luButton="text" size="S" (click)="previous()" [disabled]="currentPage === 1">
+      <lu-icon icon="arrowChevronLeft" alt="Précédent"></lu-icon>
+    </button>
+    <button type="button" luButton="text" size="S" (click)="next()" [disabled]="currentPage === maxPage">
+      <lu-icon icon="arrowChevronRight" alt="Suivant"></lu-icon>
+    </button>
+  </div>
+</nav>

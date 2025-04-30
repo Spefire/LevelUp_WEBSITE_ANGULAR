@@ -18,7 +18,7 @@
       </tr>
     </thead>
     <tbody class="dataTable-body">
-      @for (log of logs; track log) {
+      @for (log of filteredLogs; track $index) {
         <tr class="dataTable-body-row">
           <td class="dataTable-body-row-cell u-whiteSpaceNoWrap">
             <span class="u-displayNoneAtMediaMinM">{{ log.date | date: 'fullDate' | titlecase }}</span>
@@ -48,4 +48,5 @@
       }
     </tbody>
   </table>
+  <pagination [items]="logs" [nbByPage]="nbByPage" (updateItems)="changePagination($event)" />
 </div>
