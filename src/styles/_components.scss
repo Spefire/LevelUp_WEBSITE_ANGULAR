@@ -1,3 +1,5 @@
+@use "@lucca-front/scss/src/commons/utils/media";
+
 .pageHeader {
   --components-pageHeader-padding: 0 !important;
   margin-block-end: var(--pr-t-spacings-200) !important;
@@ -44,4 +46,23 @@
 
 .dataTableWrapper {
   --components-dataTable-overflow: auto !important;
+}
+
+.fancyBox {
+  @include media.max("M") {
+    .fancyBox-content-box::before {
+      display: none;
+    }
+    .fancyBox-content-box:after {
+      display: none;
+    }
+  }
+
+  .fancyBox-content-box-foreground {
+    inline-size: 5rem !important;
+    block-size: 5rem !important;
+    inset-block-start: -1.5rem !important;
+    inset-inline-end: -1rem !important;
+    transform: rotate(90deg);
+  }
 }

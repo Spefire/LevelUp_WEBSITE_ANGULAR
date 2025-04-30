@@ -1,22 +1,23 @@
-<lu-page-header
-  [label]="pages.character"
-  description="Visualisez ici vos statistiques, vos quêtes à valider, votre évolution et votre historique."
-/>
+<lu-page-header [label]="pages.character" />
 
-<section class="card">
+<lu-fancy-box
+  backgroundLeft="https://cdn.lucca.fr/transverse/prisme/visuals/fancy-box/background-left-bubbles.svg"
+  backgroundRight="https://cdn.lucca.fr/transverse/prisme/visuals/fancy-box/background-right-bubbles.svg"
+  foreground="./assets/icon.png"
+>
   <h3>Progression Globale</h3>
   <p class="pr-u-marginTop100">
     <span class="u-h2">Niveau</span>
     <span class="u-h1 pr-u-marginLeft50 u-textPrimary">{{ stats.level }}</span>
   </p>
-  <div class="progress pr-u-marginTop100 u-textAlignCenter">
+  <div class="progress pr-u-marginTop100 u-textAlignCenter u-width100%">
     <div class="progress-bar" [attr.style]="'width:' + (stats.currentXP / stats.xpToNextLevel) * 100 + '%'">
       {{ stats.currentXP }}/{{ stats.xpToNextLevel }} XP
     </div>
   </div>
-</section>
+</lu-fancy-box>
 
-<section class="card pr-u-marginTop200">
+<section class="card pr-u-marginTop400">
   <h3>Caractéristiques</h3>
   <div class="grid pr-u-marginTop100" style="--grid-columns: 5; --grid-colspan: 5">
     @for (caract of stats.caracts | keyvalue; track caract) {

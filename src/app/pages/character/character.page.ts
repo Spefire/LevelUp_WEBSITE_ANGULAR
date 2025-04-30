@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
+import { FancyBoxComponent } from '@lucca-front/ng/fancy-box';
 import { PageHeaderComponent } from '@lucca-front/ng/page-header';
 
 import { Character, Stats } from '@src/models/character.model';
@@ -10,7 +11,7 @@ import { CharacterService } from '@src/services/character.service';
 
 @Component({
   selector: 'character-page',
-  imports: [CommonModule, PageHeaderComponent],
+  imports: [CommonModule, PageHeaderComponent, FancyBoxComponent],
   templateUrl: './character.page.html',
 })
 export class CharacterPage implements OnInit {
