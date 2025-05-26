@@ -1,4 +1,6 @@
 {
+  "author": "Spefire",
+  "description": "Application Next Level Up",
   "name": "next-level-up",
   "version": "0.0.1",
   "scripts": {
@@ -8,17 +10,18 @@
     "lint": "ng lint",
     "prettier": "npx prettier --write ."
   },
+  "private": true,
   "dependencies": {
-    "@angular/animations": "^19.2.1",
-    "@angular/common": "^19.2.1",
-    "@angular/compiler": "^19.2.1",
-    "@angular/core": "^19.2.1",
-    "@angular/forms": "^19.2.1",
-    "@angular/platform-browser": "^19.2.1",
-    "@angular/platform-browser-dynamic": "^19.2.1",
-    "@angular/pwa": "^19.2.1",
-    "@angular/router": "^19.2.1",
-    "@angular/service-worker": "^19.2.1",
+    "@angular/animations": "^19.2.8",
+    "@angular/common": "^19.2.8",
+    "@angular/compiler": "^19.2.8",
+    "@angular/core": "^19.2.8",
+    "@angular/forms": "^19.2.8",
+    "@angular/platform-browser": "^19.2.8",
+    "@angular/platform-browser-dynamic": "^19.2.8",
+    "@angular/pwa": "^19.2.8",
+    "@angular/router": "^19.2.8",
+    "@angular/service-worker": "^19.2.8",
     "@lucca-front/icons": "^19.3.0",
     "@lucca-front/ng": "^19.3.0",
     "@lucca-front/scss": "^19.3.0",
@@ -28,15 +31,17 @@
     "zone.js": "^0.15.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^19.2.1",
-    "@angular/cli": "^19.2.1",
-    "@angular/compiler-cli": "^19.2.1",
+    "@angular-devkit/build-angular": "^19.2.8",
+    "@angular/cli": "^19.2.8",
+    "@angular/compiler-cli": "^19.2.8",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/node": "^18.18.0",
-    "angular-eslint": "^19.2.1",
-    "eslint": "^9.22.0",
+    "angular-eslint": "^19.2.8",
+    "eslint": "^9.25.1",
+    "eslint-config-prettier": "^10.1.2",
+    "eslint-plugin-prettier": "^5.2.6",
     "prettier": "^3.5.3",
     "typescript": "^5.8.2",
-    "typescript-eslint": "^8.26.0"
+    "typescript-eslint": "^8.31.0"
   }
 }
