@@ -1,0 +1,64 @@
+<div class="dataTableWrapper">
+  <table class="dataTable">
+    <thead class="dataTable-head">
+      <tr class="dataTable-head-row">
+        <th class="dataTable-head-row-cell">
+          <span class="u-mask">Quête</span>
+        </th>
+        <th class="dataTable-head-row-cell mod-alignCenter">
+          <span class="u-displayNoneAtMediaMinM">Lundi</span>
+          <span class="u-displayNoneAtMediaMaxM">Lu</span>
+        </th>
+        <th class="dataTable-head-row-cell mod-alignCenter">
+          <span class="u-displayNoneAtMediaMinM">Mardi</span>
+          <span class="u-displayNoneAtMediaMaxM">Ma</span>
+        </th>
+        <th class="dataTable-head-row-cell mod-alignCenter">
+          <span class="u-displayNoneAtMediaMinM">Mercredi</span>
+          <span class="u-displayNoneAtMediaMaxM">Me</span>
+        </th>
+        <th class="dataTable-head-row-cell mod-alignCenter">
+          <span class="u-displayNoneAtMediaMinM">Jeudi</span>
+          <span class="u-displayNoneAtMediaMaxM">Je</span>
+        </th>
+        <th class="dataTable-head-row-cell mod-alignCenter">
+          <span class="u-displayNoneAtMediaMinM">Vendredi</span>
+          <span class="u-displayNoneAtMediaMaxM">Ve</span>
+        </th>
+        <th class="dataTable-head-row-cell mod-alignCenter">
+          <span class="u-displayNoneAtMediaMinM">Samedi</span>
+          <span class="u-displayNoneAtMediaMaxM">Sa</span>
+        </th>
+        <th class="dataTable-head-row-cell mod-alignCenter">
+          <span class="u-displayNoneAtMediaMinM">Dimanche</span>
+          <span class="u-displayNoneAtMediaMaxM">Di</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody class="dataTable-body">
+      @for (dailyQuest of dailyQuests; track $index) {
+        <tr class="dataTable-body-row">
+          <th class="dataTable-body-row-cell u-whiteSpaceNoWrap u-fontWeight400" scope="row">
+            <span class="u-displayNoneAtMediaMinM">{{ dailyQuest.name }}</span>
+            <span class="u-displayNoneAtMediaMaxM">{{ dailyQuest.name }}</span>
+          </th>
+          @for (dayOfWeek of daysOfWeek; track $index) {
+            <td class="dataTable-body-row-cell mod-alignCenter">
+              @if (checkDayOfWeek(dayOfWeek)) {
+                @if (dailyQuest.daysOfWeek.includes(dayOfWeek)) {
+                  @if (checkLog(dailyQuest, dayOfWeek)) {
+                    <lu-icon color="success" icon="signConfirm" size="XL" />
+                  } @else {
+                    <lu-icon color="error" icon="signClose" size="XL" />
+                  }
+                } @else {
+                  <lu-icon color="placeholder" icon="mathsMinus" size="XL" />
+                }
+              }
+            </td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

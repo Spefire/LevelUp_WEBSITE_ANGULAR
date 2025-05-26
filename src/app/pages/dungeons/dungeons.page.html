@@ -1,1 +1,7 @@
-<lu-page-header [label]="pages.dungeons" description="En cours de construction" />
+<lu-page-header
+  [label]="pages.dungeons"
+  description="Le donjon hebdomadaire rassemble toutes les actions réalisées durant la semaine pour suivre ta progression et tes efforts au quotidien."
+/>
+
+<h2 class="pr-u-marginBottom200">Semaine du {{ monday | date: 'd MMMM' }} au {{ sunday | date: 'longDate' }}</h2>
+<dungeon-table [currentDate]="currentDate" />
