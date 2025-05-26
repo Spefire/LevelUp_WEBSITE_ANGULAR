@@ -30,6 +30,12 @@ export interface Quest {
   };
 }
 
+export interface QuestsFilters {
+  category: string;
+  onlySelected: boolean;
+  search: string;
+}
+
 export const listQuests: Quest[] = [
   {
     id: 'quest-001',

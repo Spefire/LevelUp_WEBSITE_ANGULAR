@@ -66,3 +66,16 @@
     transform: rotate(90deg);
   }
 }
+
+.filterBar {
+  @include media.max("M") {
+    .scrollBox {
+      flex-direction: column;
+    }
+
+    .filterBar-scrollBox-export {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}

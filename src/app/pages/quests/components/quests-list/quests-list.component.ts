@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { ButtonComponent } from '@lucca-front/ng/button';
@@ -7,7 +7,7 @@ import { EmptyStateSectionComponent } from '@lucca-front/ng/empty-state';
 import { IconComponent } from '@lucca-front/ng/icon';
 import { StatusBadgeComponent } from '@lucca-front/ng/statusBadge';
 
-import { Quest, QuestCategory, QuestDifficulty } from '@src/models/quests.model';
+import { Quest, QuestCategory, QuestDifficulty, QuestsFilters } from '@src/models/quests.model';
 import { QuestsCardComponent } from '@src/pages/quests/components/quests-card/quests-card.component';
 import { QuestsService } from '@src/services/quests.service';
 
@@ -16,33 +16,50 @@ import { QuestsService } from '@src/services/quests.service';
   imports: [CommonModule, EmptyStateSectionComponent, QuestsCardComponent, StatusBadgeComponent, ButtonComponent, IconComponent],
   templateUrl: './quests-list.component.html',
 })
-export class QuestsListComponent {
+export class QuestsListComponent implements OnInit {
   public QuestDifficulty = QuestDifficulty;
   public categories = [null, ...Object.values(QuestCategory)];
+  public dailyQuests: Quest[];
   public quests: Quest[];
-  public filter: string;
+  public filters: QuestsFilters;
 
   private readonly _destroyRef = inject(DestroyRef);
 
   constructor(private _questsService: QuestsService) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
+    this._questsService.dailyQuests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailyQuests => {
+      this.dailyQuests = dailyQuests;
+    });
+
     this._questsService.quests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(quests => {
       this.quests = quests;
     });
 
-    this._questsService.filter$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(filter => {
-      this.filter = filter;
+    this._questsService.filters$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(filters => {
+      this.filters = filters;
     });
   }
 
-  getQuestsByFilter() {
-    if (!this.filter) return this.quests;
-    return this.quests.filter(quest => quest.category === this.filter);
+  public getQuestsByFilters() {
+    if (!this.filters) return this.quests;
+    let quests = this.quests;
+    quests = quests.filter(quest => !this.filters.category || (this.filters.category && quest.category === this.filters.category));
+    quests = quests.filter(quest => !this.filters.search || normalize(quest.name).includes(normalize(this.filters.search)));
+    quests = quests.filter(
+      quest => !this.filters.onlySelected || (this.filters.onlySelected && this.dailyQuests.find(dailyQuest => dailyQuest.id === quest.id))
+    );
+    return quests;
   }
 
-  getQuestsByDifficulty(quests: Quest[], difficulty: string) {
+  public getQuestsByDifficulty(quests: Quest[], difficulty: string) {
     const result = quests.filter(quest => quest.difficulty === difficulty);
     return result.length ? result : null;
   }
 }
+
+const normalize = (str: string) =>
+  str
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();

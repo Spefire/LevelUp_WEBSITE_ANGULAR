@@ -1,41 +1,66 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
-import { Quest, QuestCategory } from '@src/models/quests.model';
+import { FilterBarComponent, FilterPillAddonAfterDirective, FilterPillAddonBeforeDirective, FilterPillComponent } from '@lucca-front/ng/filter-pills';
+import { FormFieldComponent } from '@lucca-front/ng/form-field';
+import { CheckboxInputComponent, TextInputComponent } from '@lucca-front/ng/forms';
+
+import { Quest, QuestCategory, QuestsFilters } from '@src/models/quests.model';
 import { QuestsService } from '@src/services/quests.service';
 
 @Component({
   selector: 'quests-filters',
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    FormFieldComponent,
+    CheckboxInputComponent,
+    TextInputComponent,
+    FilterBarComponent,
+    FilterPillAddonAfterDirective,
+    FilterPillAddonBeforeDirective,
+    FilterPillComponent,
+  ],
   templateUrl: './quests-filters.component.html',
 })
-export class QuestsFiltersComponent {
+export class QuestsFiltersComponent implements OnInit {
   public categories = [null, ...Object.values(QuestCategory)];
   public quests: Quest[];
-  public filter: string;
+  public filters: QuestsFilters;
 
   private readonly _destroyRef = inject(DestroyRef);
 
   constructor(private _questsService: QuestsService) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this._questsService.quests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(quests => {
       this.quests = quests;
     });
 
-    this._questsService.filter$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(filter => {
-      this.filter = filter;
+    this._questsService.filters$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(filters => {
+      this.filters = filters;
     });
   }
 
-  changeFilter(newFilter: string) {
-    this._questsService.setFilter(newFilter);
+  public changeCategory(category: string) {
+    const newFilters = { ...this.filters, category };
+    this._questsService.setFilters(newFilters);
   }
 
-  getQuestsByFilter(newFilter: string) {
-    if (!newFilter) return this.quests;
-    return this.quests.filter(quest => quest.category === newFilter);
+  public changeOnlySelected(onlySelected: boolean) {
+    const newFilters = { ...this.filters, onlySelected };
+    this._questsService.setFilters(newFilters);
+  }
+
+  public changeSearch(search: string) {
+    const newFilters = { ...this.filters, search };
+    this._questsService.setFilters(newFilters);
+  }
+
+  public getQuestsByCategory(category: string) {
+    if (!category) return this.quests;
+    return this.quests.filter(quest => quest.category === category);
   }
 }

@@ -1,4 +1,4 @@
-@if (getQuestsByFilter(); as filteredQuests) {
+@if (getQuestsByFilters(); as filteredQuests) {
   <div class="u-displayFlex u-flexDirectionColumn pr-u-gap200 pr-u-marginTop200">
     @if (filteredQuests.length) {
       @if (getQuestsByDifficulty(filteredQuests, QuestDifficulty.COMPLEXE); as complexeQuests) {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { listQuests, Quest } from '@src/models/quests.model';
+import { listQuests, Quest, QuestsFilters } from '@src/models/quests.model';
 
 import { BehaviorSubject } from 'rxjs';
 
@@ -10,12 +10,16 @@ import { BehaviorSubject } from 'rxjs';
 export class QuestsService {
   private questsSubject = new BehaviorSubject<Quest[]>(listQuests);
   private dailyQuestsSubject = new BehaviorSubject<Quest[]>([]);
-  private filterSubject = new BehaviorSubject<string>(null);
+  private filtersSubject = new BehaviorSubject<QuestsFilters>({
+    category: null,
+    onlySelected: false,
+    search: null,
+  });
 
   // Observables publics
   public quests$ = this.questsSubject.asObservable();
   public dailyQuests$ = this.dailyQuestsSubject.asObservable();
-  public filter$ = this.filterSubject.asObservable();
+  public filters$ = this.filtersSubject.asObservable();
 
   constructor() {
     // Charger les données depuis le localStorage au démarrage
@@ -23,8 +27,8 @@ export class QuestsService {
     if (dailyQuests) this.dailyQuestsSubject.next(JSON.parse(dailyQuests));
   }
 
-  setFilter(newFilter: string) {
-    this.filterSubject.next(newFilter);
+  setFilters(newFilters: QuestsFilters) {
+    this.filtersSubject.next(newFilters);
   }
 
   toggleQuest(quest: Quest): void {

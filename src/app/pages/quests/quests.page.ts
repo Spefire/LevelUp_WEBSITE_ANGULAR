@@ -15,5 +15,5 @@ import { QuestsListComponent } from '@src/pages/quests/components/quests-list/qu
   templateUrl: './quests.page.html',
 })
 export class QuestsPage {
-  pages = PageTitles;
+  public pages = PageTitles;
 }

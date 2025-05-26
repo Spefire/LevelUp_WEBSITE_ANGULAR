@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject, input } from '@angular/core';
+import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
@@ -18,24 +18,24 @@ import { QuestsService } from '@src/services/quests.service';
   styles: ':host { display: contents }',
   providers: [LuDialogService],
 })
-export class QuestsCardComponent {
-  readonly quest = input.required<Quest>();
+export class QuestsCardComponent implements OnInit {
+  public readonly quest = input.required<Quest>();
 
   public isChecked: boolean;
 
-  #dialog = inject(LuDialogService);
-
   private readonly _destroyRef = inject(DestroyRef);
+
+  #dialog = inject(LuDialogService);
 
   constructor(private _questsService: QuestsService) {}
 
-  ngOnInit(): void {
+  public ngOnInit() {
     this._questsService.dailyQuests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailyQuests => {
       this.isChecked = !!dailyQuests.find(dailyQuest => dailyQuest.id === this.quest().id);
     });
   }
 
-  toggleQuest() {
+  public toggleQuest() {
     if (this.isChecked) {
       const dialogRef = this.#dialog.open({
         content: ConfirmDialogComponent,
