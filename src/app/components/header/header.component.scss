@@ -1,7 +1,7 @@
 .mobileHeader {
   position: fixed;
   top: 0;
-  z-index: 1;
+  z-index: 10;
   justify-content: space-between;
   height: var(--commons-nav-header);
   width: 100%;
