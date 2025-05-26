@@ -10,7 +10,7 @@ import { PaginationComponent } from '@src/components/pagination/pagination.compo
 import { QuestRewardsComponent } from '@src/components/quest-rewards/quest-rewards.component';
 import { Log } from '@src/models/logs.model';
 import { QuestDifficulty } from '@src/models/quests.model';
-import { LogsService } from '@src/services/historic.service';
+import { LogsService } from '@src/services/logs.service';
 
 @Component({
   selector: 'historic-table',
@@ -28,14 +28,14 @@ export class HistoricTableComponent implements OnInit {
 
   constructor(private _logsService: LogsService) {}
 
-  ngOnInit(): void {
+  public ngOnInit() {
     this._logsService.logs$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(logs => {
       this.logs = logs;
       this.filteredLogs = this.logs.slice(0, Math.min(logs.length, this.nbByPage));
     });
   }
 
-  changePagination(value: { min: number; max: number }) {
+  public changePagination(value: { min: number; max: number }) {
     this.filteredLogs = this.logs.slice(value.min, value.max);
   }
 }

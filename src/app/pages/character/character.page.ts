@@ -15,15 +15,15 @@ import { CharacterService } from '@src/services/character.service';
   templateUrl: './character.page.html',
 })
 export class CharacterPage implements OnInit {
-  pages = PageTitles;
-  character: Character;
-  stats: Stats;
+  public pages = PageTitles;
+  public character: Character;
+  public stats: Stats;
 
   private readonly _destroyRef = inject(DestroyRef);
 
   constructor(private _characterService: CharacterService) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this._characterService.character$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(character => {
       this.character = character;
     });

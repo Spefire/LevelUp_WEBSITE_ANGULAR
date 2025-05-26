@@ -23,11 +23,11 @@ import { HistoricTableComponent } from '@src/pages/dashboard/components/historic
   templateUrl: './dashboard.page.html',
 })
 export class DashboardPage {
-  pages = PageTitles;
+  public pages = PageTitles;
 
   public currentNav = 'daily-list';
 
-  setNav(newNav: string) {
+  public setNav(newNav: string) {
     this.currentNav = newNav;
   }
 }

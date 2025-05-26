@@ -8,31 +8,33 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class QuestsService {
-  private questsSubject = new BehaviorSubject<Quest[]>(listQuests);
-  private dailyQuestsSubject = new BehaviorSubject<Quest[]>([]);
-  private filtersSubject = new BehaviorSubject<QuestsFilters>({
+  private _dailyQuestsSubject = new BehaviorSubject<Quest[]>([]);
+  private _questsSubject = new BehaviorSubject<Quest[]>(listQuests);
+  private _filtersSubject = new BehaviorSubject<QuestsFilters>({
     category: null,
     onlySelected: false,
     search: null,
   });
 
-  // Observables publics
-  public quests$ = this.questsSubject.asObservable();
-  public dailyQuests$ = this.dailyQuestsSubject.asObservable();
-  public filters$ = this.filtersSubject.asObservable();
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  public dailyQuests$ = this._dailyQuestsSubject.asObservable();
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  public quests$ = this._questsSubject.asObservable();
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  public filters$ = this._filtersSubject.asObservable();
 
   constructor() {
     // Charger les données depuis le localStorage au démarrage
     const dailyQuests = localStorage.getItem('dailyQuests');
-    if (dailyQuests) this.dailyQuestsSubject.next(JSON.parse(dailyQuests));
+    if (dailyQuests) this._dailyQuestsSubject.next(JSON.parse(dailyQuests));
   }
 
-  setFilters(newFilters: QuestsFilters) {
-    this.filtersSubject.next(newFilters);
+  public setFilters(newFilters: QuestsFilters) {
+    this._filtersSubject.next(newFilters);
   }
 
-  toggleQuest(quest: Quest): void {
-    let dailyQuests = this.dailyQuestsSubject.value;
+  public toggleQuest(quest: Quest): void {
+    let dailyQuests = this._dailyQuestsSubject.value;
 
     if (dailyQuests.find(dailyQuest => dailyQuest.id === quest.id)) {
       dailyQuests = dailyQuests.filter(dailyQuest => dailyQuest.id !== quest.id);
@@ -40,7 +42,7 @@ export class QuestsService {
       dailyQuests.push(quest);
     }
 
-    this.dailyQuestsSubject.next(dailyQuests);
+    this._dailyQuestsSubject.next(dailyQuests);
     localStorage.setItem('dailyQuests', JSON.stringify(dailyQuests));
   }
 }

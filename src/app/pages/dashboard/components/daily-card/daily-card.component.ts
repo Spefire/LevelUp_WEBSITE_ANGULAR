@@ -8,7 +8,7 @@ import { QuestRewardsComponent } from '@src/components/quest-rewards/quest-rewar
 import { Log } from '@src/models/logs.model';
 import { Quest } from '@src/models/quests.model';
 import { DaysOfWeekPipe } from '@src/pipes/days-of-week.pipe';
-import { LogsService } from '@src/services/historic.service';
+import { LogsService } from '@src/services/logs.service';
 
 @Component({
   selector: 'daily-card',
@@ -17,14 +17,14 @@ import { LogsService } from '@src/services/historic.service';
   styles: ':host { display: contents }',
 })
 export class DailyCardComponent {
-  readonly quest = input.required<Quest>();
-  readonly readonly = input.required<boolean>();
+  public readonly quest = input.required<Quest>();
+  public readonly readonly = input.required<boolean>();
 
   public isCompleted = false;
 
   constructor(private _logsService: LogsService) {}
 
-  completeQuest() {
+  public completeQuest() {
     this.isCompleted = true;
     const log: Log = { date: new Date(), quest: this.quest() };
     this._logsService.addLog(log);

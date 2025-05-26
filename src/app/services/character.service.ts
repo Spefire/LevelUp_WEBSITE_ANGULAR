@@ -8,13 +8,13 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class CharacterService {
-  private characterSubject = new BehaviorSubject<Character>({
+  private _characterSubject = new BehaviorSubject<Character>({
     avatar: 'https://www.arlenor.com/assets/images_filled/characters/alehar.png',
     name: 'Spefire',
     gender: 'Homme',
     age: 30,
   });
-  private statsSubject = new BehaviorSubject<Stats>({
+  private _statsSubject = new BehaviorSubject<Stats>({
     currentXP: 0,
     level: 1,
     xpToNextLevel: 100,
@@ -27,17 +27,18 @@ export class CharacterService {
     },
   });
 
-  // Observables publics
-  public character$ = this.characterSubject.asObservable();
-  public stats$ = this.statsSubject.asObservable();
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  public character$ = this._characterSubject.asObservable();
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  public stats$ = this._statsSubject.asObservable();
 
   constructor() {
     // Charger les données depuis le localStorage au démarrage
     const character = localStorage.getItem('character');
-    if (character) this.characterSubject.next(JSON.parse(character));
+    if (character) this._characterSubject.next(JSON.parse(character));
   }
 
-  /*private _addXP(stats: Partial<Stats>): void {
+  /* private _addXP(stats: Partial<Stats>): void {
     const currentCharacter = this.characterSubject.value;
     const newStats = { ...currentCharacter.stats };
     let totalXP = 0;

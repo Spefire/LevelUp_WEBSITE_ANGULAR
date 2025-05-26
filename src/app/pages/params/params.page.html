@@ -1,1 +1,44 @@
-<lu-page-header [label]="pages.params" description="En cours de construction" />
+<lu-page-header
+  [label]="pages.params"
+  description="Gère ton profil, renomme ton personnage et maîtrise les réglages de ton aventure."
+>
+  <ng-container pageHeaderActions>
+    <button type="button" luButton palette="error" (click)="cleanAll()">Tout réinitialiser</button>
+  </ng-container>
+</lu-page-header>
+
+<lu-callout state="warning">Attention : certaines actions sont irréversibles.</lu-callout>
+
+<div class="grid pr-u-marginTop200">
+  <div class="grid-column card" [attr.style]="'--grid-colspan: 12; --grid-colspanAtMediaMinM: 4'">
+    <h2 class="pr-u-marginBottom150">Personnage</h2>
+    <p>
+      Nom : <b>{{ character.name }}</b>
+    </p>
+    <p>
+      Genre : <b>{{ character.gender }}</b>
+    </p>
+    <p>
+      Age : <b>{{ character.age }} ans</b>
+    </p>
+    <button type="button" luButton size="S" class="pr-u-marginTop200" (click)="resetCharacter()">Réinitialiser</button>
+  </div>
+
+  <div class="grid-column card" [attr.style]="'--grid-colspan: 12; --grid-colspanAtMediaMinM: 4'">
+    <h2 class="pr-u-marginBottom150">Quêtes journalières</h2>
+    <p>
+      Nombre de quêtes sélectionnées : <b>{{ dailyQuests.length }}</b>
+    </p>
+    <button type="button" luButton size="S" class="pr-u-marginTop200" (click)="resetDailyQuests()">
+      Réinitialiser
+    </button>
+  </div>
+
+  <div class="grid-column card" [attr.style]="'--grid-colspan: 12; --grid-colspanAtMediaMinM: 4'">
+    <h2 class="pr-u-marginBottom150">Historique</h2>
+    <p>
+      Nombre de quêtes réalisées : <b>{{ logs.length }}</b>
+    </p>
+    <button type="button" luButton size="S" class="pr-u-marginTop200" (click)="resetLogs()">Réinitialiser</button>
+  </div>
+</div>

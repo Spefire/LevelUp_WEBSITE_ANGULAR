@@ -18,10 +18,10 @@ import {
   templateUrl: './confirm-dialog.component.html',
 })
 export class ConfirmDialogComponent {
-  data = injectDialogData<{ heading?: string; content?: string }>();
-  ref = injectDialogRef<boolean>();
+  public data = injectDialogData<{ heading?: string; content?: string }>();
+  public ref = injectDialogRef<boolean>();
 
-  confirm() {
+  public confirm() {
     this.ref.close(true);
   }
 }

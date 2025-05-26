@@ -17,15 +17,15 @@ import { QuestsService } from '@src/services/quests.service';
   styles: ':host { display: contents }',
 })
 export class DailyListComponent implements OnInit {
-  dailyQuests: Quest[];
-  nowQuests: Quest[];
-  lateQuests: Quest[];
+  public dailyQuests: Quest[];
+  public nowQuests: Quest[];
+  public lateQuests: Quest[];
 
   private readonly _destroyRef = inject(DestroyRef);
 
   constructor(private _questsService: QuestsService) {}
 
-  ngOnInit(): void {
+  public ngOnInit() {
     this._questsService.dailyQuests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailyQuests => {
       this.dailyQuests = dailyQuests;
       const now = new Date();
