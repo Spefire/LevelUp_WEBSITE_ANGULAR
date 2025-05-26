@@ -1,37 +1,37 @@
-@use "@lucca-front/scss/src/commons/utils/media";
+@use '@lucca-front/scss/src/commons/utils/media';
 
 .u-cursorPointer {
-    cursor: pointer !important;
+  cursor: pointer !important;
 }
 
 .u-borderTop {
-    border-top: 1px solid var(--commons-border-200);
+  border-top: 1px solid var(--commons-border-200);
 }
 
 .u-displayNoneAtMediaMinM {
-    display: none !important;
+  display: none !important;
 
-    @include media.min("M") {
-        display: block !important;
-    }
+  @include media.min('M') {
+    display: block !important;
+  }
 }
 
 .u-displayFlexAtMediaMaxM {
-    display: none !important;
+  display: none !important;
 
-    @include media.max("M") {
-        display: flex !important;
-    }
+  @include media.max('M') {
+    display: flex !important;
+  }
 }
 
 .u-displayNoneAtMediaMaxM {
-    display: none !important;
+  display: none !important;
 
-    @include media.max("M") {
-        display: block !important;
-    }
+  @include media.max('M') {
+    display: block !important;
+  }
 }
 
 .u-whiteSpaceNoWrap {
-    white-space: nowrap !important;
+  white-space: nowrap !important;
 }

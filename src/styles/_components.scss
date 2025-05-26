@@ -1,4 +1,4 @@
-@use "@lucca-front/scss/src/commons/utils/media";
+@use '@lucca-front/scss/src/commons/utils/media';
 
 .pageHeader {
   --components-pageHeader-padding: 0 !important;
@@ -49,7 +49,7 @@
 }
 
 .fancyBox {
-  @include media.max("M") {
+  @include media.max('M') {
     .fancyBox-content-box::before {
       display: none;
     }
