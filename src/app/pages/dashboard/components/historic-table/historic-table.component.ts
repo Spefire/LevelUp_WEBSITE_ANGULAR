@@ -3,6 +3,7 @@ import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { ButtonComponent } from '@lucca-front/ng/button';
+import { EmptyStateSectionComponent } from '@lucca-front/ng/empty-state';
 import { IconComponent } from '@lucca-front/ng/icon';
 import { StatusBadgeComponent } from '@lucca-front/ng/statusBadge';
 
@@ -14,7 +15,17 @@ import { LogsService } from '@src/services/logs.service';
 
 @Component({
   selector: 'historic-table',
-  imports: [CommonModule, ButtonComponent, IconComponent, StatusBadgeComponent, TitleCasePipe, DatePipe, PaginationComponent, QuestRewardsComponent],
+  imports: [
+    CommonModule,
+    EmptyStateSectionComponent,
+    ButtonComponent,
+    IconComponent,
+    StatusBadgeComponent,
+    TitleCasePipe,
+    DatePipe,
+    PaginationComponent,
+    QuestRewardsComponent,
+  ],
   templateUrl: './historic-table.component.html',
   styles: ':host { display: contents }',
 })

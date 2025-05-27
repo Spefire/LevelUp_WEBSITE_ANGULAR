@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Log } from '@src/models/logs.model';
+import { isSameDay } from '@src/utils/time';
 
 import { BehaviorSubject } from 'rxjs';
 
@@ -16,13 +17,28 @@ export class LogsService {
   constructor() {
     // Charger les données depuis le localStorage au démarrage
     const logs = localStorage.getItem('logs');
-    if (logs) this._logsSubject.next(JSON.parse(logs));
+    if (logs) {
+      const newLogs: Log[] = [];
+      const jsonObjs = JSON.parse(logs);
+      jsonObjs.forEach((jsonObj: Log) => {
+        newLogs.push({
+          date: new Date(jsonObj.date),
+          quest: jsonObj.quest,
+        });
+      });
+      this._logsSubject.next(newLogs);
+    }
   }
 
-  public addLog(log: Log): void {
+  public addLog(addedLog: Log): void {
     const logs = this._logsSubject.value;
-    logs.push(log);
+    logs.push(addedLog);
+    this._logsSubject.next(logs);
+    localStorage.setItem('logs', JSON.stringify(logs));
+  }
 
+  public removeLog(removedLog: Log): void {
+    const logs = this._logsSubject.value.filter(log => !(removedLog.quest.id === log.quest.id && isSameDay(removedLog.date, new Date(log.date))));
     this._logsSubject.next(logs);
     localStorage.setItem('logs', JSON.stringify(logs));
   }

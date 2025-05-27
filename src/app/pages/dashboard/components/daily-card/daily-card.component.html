@@ -1,24 +1,34 @@
 <div
   class="grid-column card mod-actions"
-  [class.mod-succeed]="isCompleted"
+  [class.mod-succeed]="logLinked"
   [attr.style]="'--grid-colspanAtMediaMinS: 2; --grid-colspanAtMediaMinM: 1'"
 >
   <div class="u-displayFlex u-justifyContentSpaceBetween u-alignItemsCenter">
     <h4>{{ quest().name }}</h4>
-    @if (isCompleted) {
+    @if (logLinked) {
       <lu-status-badge palette="success" label="Validée" />
     } @else if (!readonly()) {
-      <lu-status-badge palette="product" label="En cours" />
+      @if (isOld()) {
+        <lu-status-badge palette="neutral" label="En retard" />
+      } @else {
+        <lu-status-badge palette="product" label="En cours" />
+      }
     }
   </div>
   <p>{{ quest().description }}</p>
   <p class="u-textS u-textNeutral">{{ quest().daysOfWeek | daysOfWeek }}</p>
   <div class="u-displayFlex u-alignItemsCenter u-justifyContentSpaceBetween pr-u-gap100 pr-u-marginTop50">
     <div class="u-displayFlex u-alignItemsCenter u-flexWrapWrap pr-u-gap100">
-      <quest-rewards [quest]="quest()" [forced]="isCompleted ? 'success' : null" />
+      <quest-rewards [quest]="quest()" [forced]="logLinked ? 'success' : isOld() ? 'neutral' : null" />
     </div>
-    @if (!isCompleted && !readonly()) {
-      <button type="button" luButton size="S" (click)="completeQuest()">Valider</button>
+    @if (!logLinked && !readonly()) {
+      <button type="button" luButton size="S" [palette]="isOld() ? 'neutral' : 'product'" (click)="completeQuest()">
+        Valider
+      </button>
+    } @else if (logLinked && !readonly()) {
+      <button type="button" luButton="text" size="S" (click)="cancelQuest()">
+        <lu-icon icon="close" alt="Annuler" />
+      </button>
     }
   </div>
 </div>

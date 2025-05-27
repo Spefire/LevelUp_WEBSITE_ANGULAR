@@ -1,21 +1,40 @@
 @if (dailyQuests.length) {
   <div class="u-displayFlex u-flexDirectionColumn pr-u-gap200">
-    @if (nowQuests.length) {
+    @if (todayQuests.length) {
       <section class="card">
-        <h2 class="u-h3">Aujourd'hui</h2>
+        <div class="u-displayFlex u-alignItemsCenter pr-u-gap100">
+          <h2 class="u-h3">Aujourd'hui</h2>
+          <lu-tag [label]="today | dayOfWeek" palette="product" size="L" />
+        </div>
         <div class="grid pr-u-marginTop100" style="--grid-columns: 4; --grid-colspan: 4">
-          @for (quest of nowQuests; track quest.id) {
-            <daily-card [quest]="quest" [readonly]="false" />
+          @for (quest of todayQuests; track quest.id) {
+            <daily-card [currentDate]="today" [quest]="quest" [readonly]="false" [isOld]="false" />
           }
         </div>
       </section>
     }
-    @if (lateQuests.length) {
+    @if (yesterdayQuests.length) {
       <section class="card">
-        <h2 class="u-h3">Durant les prochains jours</h2>
+        <div class="u-displayFlex u-alignItemsCenter pr-u-gap100">
+          <h2 class="u-h3">Hier</h2>
+          <lu-tag [label]="yesterday | dayOfWeek" palette="neutral" size="L" />
+        </div>
         <div class="grid pr-u-marginTop100" style="--grid-columns: 4; --grid-colspan: 4">
-          @for (quest of lateQuests; track quest.id) {
-            <daily-card [quest]="quest" [readonly]="true" />
+          @for (quest of yesterdayQuests; track quest.id) {
+            <daily-card [currentDate]="yesterday" [quest]="quest" [readonly]="false" [isOld]="true" />
+          }
+        </div>
+      </section>
+    }
+    @if (tomorrowQuests.length) {
+      <section class="card">
+        <div class="u-displayFlex u-alignItemsCenter pr-u-gap100">
+          <h2 class="u-h3">Demain</h2>
+          <lu-tag [label]="tomorrow | dayOfWeek" palette="neutral" size="L" />
+        </div>
+        <div class="grid pr-u-marginTop100" style="--grid-columns: 4; --grid-colspan: 4">
+          @for (quest of tomorrowQuests; track quest.id) {
+            <daily-card [currentDate]="tomorrow" [quest]="quest" [readonly]="true" [isOld]="true" />
           }
         </div>
       </section>

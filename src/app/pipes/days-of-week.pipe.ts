@@ -5,15 +5,15 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true,
 })
 export class DaysOfWeekPipe implements PipeTransform {
-  private readonly days = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+  private readonly _days = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
 
-  transform(days: number[]): string {
+  public transform(days: number[]): string {
     if (!days || days.length === 0) {
       return 'Aucun jour';
     }
     if (days.length === 7) {
       return 'Tous les jours';
     }
-    return days.map(day => this.days[day]).join(', ');
+    return days.map(day => this._days[day]).join(', ');
   }
 }

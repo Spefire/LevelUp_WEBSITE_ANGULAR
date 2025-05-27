@@ -45,6 +45,17 @@
             </button>
           </td>
         </tr>
+      } @empty {
+        <tr class="dataTable-body-row">
+          <td class="dataTable-body-row-cell" colspan="5">
+            <lu-empty-state-section
+              hx="3"
+              icon="https://cdn.lucca.fr/lucca-front/assets/empty-states/icons/iconPaper.svg"
+              heading="Aucune quête validée"
+              description="Regardez vos quêtes journalières si vous pouvez en valider."
+            />
+          </td>
+        </tr>
       }
     </tbody>
   </table>
