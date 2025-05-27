@@ -5,13 +5,11 @@ export enum QuestDifficulty {
 }
 
 export enum QuestCategory {
-  SPORT = 'Sport',
-  HYGIENE = 'Hygiène',
-  CUISINE = 'Cuisine',
-  MEDITATION = 'Méditation',
-  CREATIVITE = 'Créativité',
+  EXERCICE = 'Sport',
+  HEALTH = 'Hygiène',
+  FOOD = 'Alimentaire',
   SOCIAL = 'Social',
-  AUTRE = 'Autre',
+  OTHER = 'Autre',
 }
 
 export interface Quest {
@@ -21,6 +19,7 @@ export interface Quest {
   difficulty: QuestDifficulty;
   category: QuestCategory;
   daysOfWeek: number[]; // 0 = Dimanche, 1 = Lundi, ..., 6 = Samedi
+  isOptional: boolean;
   xpRewards: {
     force?: number;
     habilete?: number;
@@ -41,60 +40,90 @@ export const listQuests: Quest[] = [
     id: 'quest-001',
     name: 'Musculation',
     description: 'Faire une séance de musculation',
-    difficulty: QuestDifficulty.STANDARD,
-    category: QuestCategory.SPORT,
-    daysOfWeek: [1, 3, 5], // Lundi, Mercredi, Vendredi
-    xpRewards: {
-      force: 10,
-      tenacite: 5,
-    },
+    difficulty: QuestDifficulty.COMPLEXE,
+    category: QuestCategory.EXERCICE,
+    daysOfWeek: [1, 2, 3, 4, 5, 6, 0],
+    isOptional: true,
+    xpRewards: {},
   },
   {
     id: 'quest-002',
-    name: 'Yoga',
-    description: 'Pratiquer le yoga',
-    difficulty: QuestDifficulty.SIMPLE,
-    category: QuestCategory.SPORT,
-    daysOfWeek: [2, 4, 6], // Mardi, Jeudi, Samedi
-    xpRewards: {
-      habilete: 10,
-      intelligence: 5,
-    },
+    name: 'Cardio',
+    description: 'Faire une séance de cardio 30min',
+    difficulty: QuestDifficulty.STANDARD,
+    category: QuestCategory.EXERCICE,
+    daysOfWeek: [1, 2, 3, 4, 5, 6, 0],
+    isOptional: true,
+    xpRewards: {},
   },
   {
     id: 'quest-003',
-    name: 'Course à pied',
-    description: 'Faire une course',
+    name: 'Marche',
+    description: 'Faire une séance de marche 1h',
     difficulty: QuestDifficulty.STANDARD,
-    category: QuestCategory.SPORT,
-    daysOfWeek: [1, 3, 5], // Lundi, Mercredi, Vendredi
-    xpRewards: {
-      tenacite: 10,
-      force: 5,
-    },
+    category: QuestCategory.EXERCICE,
+    daysOfWeek: [1, 2, 3, 4, 5, 6, 0],
+    isOptional: true,
+    xpRewards: {},
   },
   {
-    id: 'quest-004',
-    name: 'Hygiène personnelle',
-    description: 'Prendre soin de son hygiène',
+    id: 'quest-010',
+    name: 'Sommeil I',
+    description: 'Dormir avant 0h',
     difficulty: QuestDifficulty.SIMPLE,
-    category: QuestCategory.HYGIENE,
-    daysOfWeek: [0, 1, 2, 3, 4, 5, 6], // Tous les jours
-    xpRewards: {
-      charisme: 10,
-      tenacite: 5,
-    },
+    category: QuestCategory.HEALTH,
+    daysOfWeek: [1, 2, 3, 4, 5, 6, 0],
+    isOptional: false,
+    xpRewards: {},
   },
   {
-    id: 'quest-005',
-    name: 'Méditation',
-    description: 'Pratiquer la méditation',
-    difficulty: QuestDifficulty.SIMPLE,
-    category: QuestCategory.MEDITATION,
-    daysOfWeek: [0, 1, 2, 3, 4, 5, 6], // Tous les jours
-    xpRewards: {
-      intelligence: 10,
-      habilete: 5,
-    },
+    id: 'quest-011',
+    name: 'Sommeil II',
+    description: 'Dormir avant 23h',
+    difficulty: QuestDifficulty.STANDARD,
+    category: QuestCategory.HEALTH,
+    daysOfWeek: [1, 2, 3, 4, 5, 6, 0],
+    isOptional: true,
+    xpRewards: {},
+  },
+  {
+    id: 'quest-012',
+    name: 'Sommeil III',
+    description: 'Dormir avant 22h',
+    difficulty: QuestDifficulty.COMPLEXE,
+    category: QuestCategory.HEALTH,
+    daysOfWeek: [1, 2, 3, 4, 5, 6, 0],
+    isOptional: true,
+    xpRewards: {},
+  },
+  {
+    id: 'quest-020',
+    name: 'Objectif Yazio',
+    description: 'Remplir son objectif calorique',
+    difficulty: QuestDifficulty.STANDARD,
+    category: QuestCategory.FOOD,
+    daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
+    isOptional: false,
+    xpRewards: {},
+  },
+  {
+    id: 'quest-021',
+    name: 'Cuisine',
+    description: 'Faire la cuisine',
+    difficulty: QuestDifficulty.STANDARD,
+    category: QuestCategory.FOOD,
+    daysOfWeek: [1, 2, 3, 4, 5, 6, 0],
+    isOptional: true,
+    xpRewards: {},
+  },
+  {
+    id: 'quest-022',
+    name: 'Boisson',
+    description: `Boire une bouteille d'eau`,
+    difficulty: QuestDifficulty.STANDARD,
+    category: QuestCategory.FOOD,
+    daysOfWeek: [1, 2, 3, 4, 5, 6, 0],
+    isOptional: false,
+    xpRewards: {},
   },
 ];
