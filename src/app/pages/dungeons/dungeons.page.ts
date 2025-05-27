@@ -1,6 +1,8 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
+import { ButtonComponent } from '@lucca-front/ng/button';
+import { IconComponent } from '@lucca-front/ng/icon';
 import { PageHeaderComponent } from '@lucca-front/ng/page-header';
 
 import { PageTitles } from '@src/models/pages.model';
@@ -8,17 +10,42 @@ import { DungeonTableComponent } from '@src/pages/dungeons/dungeon-table/dungeon
 
 @Component({
   selector: 'dungeons-page',
-  imports: [CommonModule, PageHeaderComponent, DungeonTableComponent, DatePipe],
+  imports: [CommonModule, PageHeaderComponent, DungeonTableComponent, ButtonComponent, IconComponent, DatePipe],
   templateUrl: './dungeons.page.html',
 })
 export class DungeonsPage implements OnInit {
   public pages = PageTitles;
 
-  public currentDate = new Date();
+  public currentDate: Date;
   public monday: Date;
   public sunday: Date;
+  public index: number;
 
   public ngOnInit() {
+    this.currentDate = new Date();
+    this.index = 0;
+    this._update();
+  }
+
+  public previousDate() {
+    this.currentDate.setDate(this.currentDate.getDate() - 7);
+    this.index--;
+    this._update();
+  }
+
+  public resetDate() {
+    this.currentDate = new Date();
+    this.index = 0;
+    this._update();
+  }
+
+  public nextDate() {
+    this.currentDate.setDate(this.currentDate.getDate() + 7);
+    this.index++;
+    this._update();
+  }
+
+  private _update() {
     const day = this.currentDate.getDay();
     const diffToMonday = (day === 0 ? -6 : 1) - day;
 

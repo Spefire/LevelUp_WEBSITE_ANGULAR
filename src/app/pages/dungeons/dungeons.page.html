@@ -3,5 +3,17 @@
   description="Le donjon hebdomadaire rassemble toutes les actions réalisées durant la semaine pour suivre ta progression et tes efforts au quotidien."
 />
 
-<h2 class="pr-u-marginBottom200">Semaine du {{ monday | date: 'd MMMM' }} au {{ sunday | date: 'longDate' }}</h2>
-<dungeon-table [currentDate]="currentDate" />
+<div class="u-displayFlex u-alignItemsCenter u-justifyContentSpaceBetween pr-u-gap200 pr-u-marginBottom200">
+  <h2>Semaine du {{ monday | date: 'd MMMM' }} au {{ sunday | date: 'longDate' }}</h2>
+  <div class="u-displayFlex pr-u-gap100">
+    <button type="button" luButton="outlined" size="S" (click)="previousDate()">
+      <lu-icon icon="chevronLeft" alt="Voir la semaine précédente" />
+    </button>
+    <button type="button" luButton="outlined" size="S" (click)="resetDate()">Cette semaine</button>
+    <button type="button" luButton="outlined" size="S" (click)="nextDate()">
+      <lu-icon icon="chevronRight" alt="Voir la semaine suivante" />
+    </button>
+  </div>
+</div>
+
+<dungeon-table [currentDate]="currentDate" [isAfter]="index > 0" [isBefore]="index < 0" />

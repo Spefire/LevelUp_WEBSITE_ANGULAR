@@ -18,6 +18,8 @@ import { isSameDay } from '@src/utils/time';
 })
 export class DungeonTableComponent implements OnInit {
   public readonly currentDate = input.required<Date>();
+  public readonly isBefore = input.required<boolean>();
+  public readonly isAfter = input.required<boolean>();
 
   public QuestDifficulty = QuestDifficulty;
   public dailyQuests: Quest[];
@@ -43,6 +45,8 @@ export class DungeonTableComponent implements OnInit {
   }
 
   public checkDayOfWeek(dayOfWeek: number) {
+    if (this.isBefore()) return true;
+    if (this.isAfter()) return false;
     const day01 = dayOfWeek === 0 ? 7 : dayOfWeek;
     const day02 = this.currentDate().getDay() === 0 ? 7 : this.currentDate().getDay();
     return day02 >= day01;
