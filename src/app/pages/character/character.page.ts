@@ -7,11 +7,12 @@ import { PageHeaderComponent } from '@lucca-front/ng/page-header';
 
 import { Character, Stats } from '@src/models/character.model';
 import { PageTitles } from '@src/models/pages.model';
+import { CaracteristicPipe } from '@src/pipes/caracteristic.pipe';
 import { CharacterService } from '@src/services/character.service';
 
 @Component({
   selector: 'character-page',
-  imports: [CommonModule, PageHeaderComponent, FancyBoxComponent],
+  imports: [CommonModule, PageHeaderComponent, FancyBoxComponent, CaracteristicPipe],
   templateUrl: './character.page.html',
 })
 export class CharacterPage implements OnInit {
