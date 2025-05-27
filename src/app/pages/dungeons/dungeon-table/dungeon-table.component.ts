@@ -36,7 +36,7 @@ export class DungeonTableComponent implements OnInit {
 
   public ngOnInit() {
     this._questsService.dailyQuests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailyQuests => {
-      this.dailyQuests = dailyQuests;
+      this.dailyQuests = dailyQuests.sort((a, b) => a.name.localeCompare(b.name));
     });
 
     this._logsService.logs$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(logs => {

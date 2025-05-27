@@ -49,7 +49,11 @@
                   @if (checkLog(dailyQuest, dayOfWeek)) {
                     <lu-icon color="success" icon="signConfirm" size="XL" />
                   } @else {
-                    <lu-icon color="error" icon="signClose" size="XL" />
+                    @if (dailyQuest.isOptional) {
+                      <lu-icon color="warning" icon="mathsMinus" size="XL" />
+                    } @else {
+                      <lu-icon color="error" icon="signClose" size="XL" />
+                    }
                   }
                 } @else {
                   <lu-icon color="placeholder" icon="mathsMinus" size="XL" />
