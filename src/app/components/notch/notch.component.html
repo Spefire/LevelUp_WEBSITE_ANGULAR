@@ -1,4 +1,7 @@
-<div class="notchBox mod-notchTop">
+<div
+  class="notchBox mod-notchTop"
+  [style.--component-notchbox-badge-background-color]="'var(--palettes-' + (palette() ?? 'neutral') + '-600)'"
+>
   <div class="notchBox-badge">
     <p class="u-h1 pr-u-paddingTop100 u-textAlignCenter u-textNeutral0">{{ badge() }}</p>
   </div>

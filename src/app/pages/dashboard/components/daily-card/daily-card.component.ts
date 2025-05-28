@@ -6,16 +6,14 @@ import { ButtonComponent } from '@lucca-front/ng/button';
 import { IconComponent } from '@lucca-front/ng/icon';
 import { StatusBadgeComponent } from '@lucca-front/ng/statusBadge';
 
-import { QuestRewardsComponent } from '@src/components/quest-rewards/quest-rewards.component';
 import { Log } from '@src/models/logs.model';
 import { Quest } from '@src/models/quests.model';
-import { DaysOfWeekPipe } from '@src/pipes/days-of-week.pipe';
 import { LogsService } from '@src/services/logs.service';
 import { isSameDay } from '@src/utils/time';
 
 @Component({
   selector: 'daily-card',
-  imports: [CommonModule, ButtonComponent, IconComponent, StatusBadgeComponent, DaysOfWeekPipe, QuestRewardsComponent],
+  imports: [CommonModule, ButtonComponent, IconComponent, StatusBadgeComponent],
   templateUrl: './daily-card.component.html',
   styles: ':host { display: contents }',
 })

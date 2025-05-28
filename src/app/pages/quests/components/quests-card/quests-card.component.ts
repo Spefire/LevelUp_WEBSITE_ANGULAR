@@ -9,11 +9,12 @@ import { CheckboxInputComponent } from '@lucca-front/ng/forms';
 import { ConfirmDialogComponent } from '@src/components/confirm-dialog/confirm-dialog.component';
 import { QuestRewardsComponent } from '@src/components/quest-rewards/quest-rewards.component';
 import { Quest } from '@src/models/quests.model';
+import { DaysOfWeekPipe } from '@src/pipes/days-of-week.pipe';
 import { QuestsService } from '@src/services/quests.service';
 
 @Component({
   selector: 'quests-card',
-  imports: [CommonModule, FormsModule, CheckboxInputComponent, QuestRewardsComponent],
+  imports: [CommonModule, FormsModule, CheckboxInputComponent, QuestRewardsComponent, DaysOfWeekPipe],
   templateUrl: './quests-card.component.html',
   styles: ':host { display: contents }',
   providers: [LuDialogService],

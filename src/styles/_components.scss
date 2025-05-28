@@ -32,8 +32,9 @@
 .progress {
   --components-progress-margin-vertical: 0 !important;
   --components-progress-height: var(--sizes-M-lineHeight) !important;
+  --components-progress-bar-color: var(--palettes-neutral-0);
   font-size: var(--sizes-M-fontSize) !important;
-  color: var(--palettes-neutral-0) !important;
+  color: var(--components-progress-bar-color) !important;
 
   .progress-bar {
     padding: 0 var(--pr-t-spacings-100);

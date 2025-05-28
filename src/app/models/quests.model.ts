@@ -178,7 +178,7 @@ export const listQuests: Quest[] = [
     isOptional: false,
     xpRewards: {
       force: null,
-      habilete: 1,
+      habilete: null,
       intelligence: null,
       tenacite: 1,
       charisme: 1,

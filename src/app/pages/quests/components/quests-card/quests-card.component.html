@@ -9,6 +9,7 @@
     <lu-checkbox-input [(ngModel)]="isChecked" />
   </div>
   <p>{{ quest().description }}</p>
+  <p class="u-textS u-textNeutral">{{ quest().daysOfWeek | daysOfWeek }}</p>
   <div class="u-displayFlex u-flexWrapWrap pr-u-gap100 pr-u-marginTop50">
     <quest-rewards [quest]="quest()" [forced]="isChecked ? 'product' : null" />
   </div>

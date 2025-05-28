@@ -16,11 +16,8 @@
     }
   </div>
   <p>{{ quest().description }}</p>
-  <p class="u-textS u-textNeutral">{{ quest().daysOfWeek | daysOfWeek }}</p>
-  <div class="u-displayFlex u-alignItemsCenter u-justifyContentSpaceBetween pr-u-gap100 pr-u-marginTop50">
-    <div class="u-displayFlex u-alignItemsCenter u-flexWrapWrap pr-u-gap100">
-      <quest-rewards [quest]="quest()" [forced]="logLinked ? 'success' : isOld() ? 'neutral' : null" />
-    </div>
+  <div class="u-displayFlex u-alignItemsCenter u-justifyContentSpaceBetween pr-u-gap100 pr-u-marginTop150">
+    <div></div>
     @if (!logLinked) {
       @if (!isOptionnal()) {
         <button type="button" luButton size="S" [palette]="isOld() ? 'neutral' : 'product'" (click)="completeQuest()">
