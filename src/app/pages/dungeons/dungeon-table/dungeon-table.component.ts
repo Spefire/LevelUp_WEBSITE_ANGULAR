@@ -7,6 +7,7 @@ import { IconComponent } from '@lucca-front/ng/icon';
 
 import { Log } from '@src/models/logs.model';
 import { Quest, QuestDifficulty } from '@src/models/quests.model';
+import { DayOfWeekPipe } from '@src/pipes/day-of-week.pipe';
 import { LogsService } from '@src/services/logs.service';
 import { QuestsService } from '@src/services/quests.service';
 import { isSameDay } from '@src/utils/time';
@@ -92,9 +93,21 @@ export class DungeonTableComponent implements OnInit, OnChanges {
     }
   }
 
+  private _getBestDay() {
+    let bestDay = 0;
+    let bestValue = -1000;
+    this.daysOfWeek.forEach(dayOfWeek => {
+      if (this.footTable[dayOfWeek] > bestValue) {
+        bestDay = dayOfWeek;
+        bestValue = this.footTable[dayOfWeek];
+      }
+    });
+    return DayOfWeekPipe.transformDay(bestDay);
+  }
+
   private _createTable() {
     this.bodyTable = [];
-    this.footTable = [];
+    this.footTable = {};
     let totalLundi = 0;
     let totalMardi = 0;
     let totalMercredi = 0;
@@ -102,21 +115,43 @@ export class DungeonTableComponent implements OnInit, OnChanges {
     let totalVendredi = 0;
     let totalSamedi = 0;
     let totalDimanche = 0;
+    let nbQuests = 0;
     this.dailyQuests.forEach(dailyQuest => {
       const lundi = this._checkDayOfWeek(1) ? this._checkLog(dailyQuest, 1) : null;
-      totalLundi += lundi ? lundi : 0;
+      if (lundi) {
+        totalLundi += lundi;
+        if (lundi > 0) nbQuests++;
+      }
       const mardi = this._checkDayOfWeek(2) ? this._checkLog(dailyQuest, 2) : null;
-      totalMardi += mardi ? mardi : 0;
+      if (mardi) {
+        totalMardi += mardi;
+        if (mardi > 0) nbQuests++;
+      }
       const mercredi = this._checkDayOfWeek(3) ? this._checkLog(dailyQuest, 3) : null;
-      totalMercredi += mercredi ? mercredi : 0;
+      if (mercredi) {
+        totalMercredi += mercredi;
+        if (mercredi > 0) nbQuests++;
+      }
       const jeudi = this._checkDayOfWeek(4) ? this._checkLog(dailyQuest, 4) : null;
-      totalJeudi += jeudi ? jeudi : 0;
+      if (jeudi) {
+        totalJeudi += jeudi;
+        if (jeudi > 0) nbQuests++;
+      }
       const vendredi = this._checkDayOfWeek(5) ? this._checkLog(dailyQuest, 5) : null;
-      totalVendredi += vendredi ? vendredi : 0;
+      if (vendredi) {
+        totalVendredi += vendredi;
+        if (vendredi > 0) nbQuests++;
+      }
       const samedi = this._checkDayOfWeek(6) ? this._checkLog(dailyQuest, 6) : null;
-      totalSamedi += samedi ? samedi : 0;
+      if (samedi) {
+        totalSamedi += samedi;
+        if (samedi > 0) nbQuests++;
+      }
       const dimanche = this._checkDayOfWeek(0) ? this._checkLog(dailyQuest, 0) : null;
-      totalDimanche += dimanche ? dimanche : 0;
+      if (dimanche) {
+        totalDimanche += dimanche;
+        if (dimanche > 0) nbQuests++;
+      }
       this.bodyTable.push({
         name: dailyQuest.name,
         1: lundi,
@@ -138,6 +173,11 @@ export class DungeonTableComponent implements OnInit, OnChanges {
       6: totalSamedi,
       0: totalDimanche,
       total: totalLundi + totalMardi + totalMercredi + totalJeudi + totalVendredi + totalSamedi + totalDimanche,
+    };
+    this.headData = {
+      best: this._getBestDay(),
+      nb: nbQuests,
+      score: this.footTable.total,
     };
   }
 }

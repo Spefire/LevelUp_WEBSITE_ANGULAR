@@ -5,9 +5,13 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true,
 })
 export class DayOfWeekPipe implements PipeTransform {
-  private readonly _days = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+  private static readonly _days = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+
+  public static transformDay(day: number): string {
+    return this._days[day];
+  }
 
   public transform(date: Date): string {
-    return this._days[date.getDay()];
+    return DayOfWeekPipe._days[date.getDay()];
   }
 }
