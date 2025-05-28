@@ -1,14 +1,37 @@
-<lu-page-header [label]="pages.dashboard">
+<lu-page-header
+  [label]="pages.dashboard"
+  description="Bienvenue, retrouvez ici vos quêtes journalières d'aujourd'hui et de vos jours passés."
+>
   <ng-container pageHeaderNavigation>
     <lu-horizontal-navigation>
       <button
         type="button"
         *luHorizontalNavigationLink
         class="horizontalNavigation-list-item-action"
-        [attr.aria-current]="currentNav === 'daily-list' ? 'page' : null"
-        (click)="setNav('daily-list')"
+        [attr.aria-current]="currentNav === 'j-0' ? 'page' : null"
+        (click)="setNav('j-0')"
       >
-        Quêtes journalières
+        Aujourd'hui
+      </button>
+      <button
+        type="button"
+        *luHorizontalNavigationLink
+        class="horizontalNavigation-list-item-action"
+        [attr.aria-current]="currentNav === 'j-1' ? 'page' : null"
+        (click)="setNav('j-1')"
+      >
+        Hier
+        <lu-tag palette="neutral" label="J-1" />
+      </button>
+      <button
+        type="button"
+        *luHorizontalNavigationLink
+        class="horizontalNavigation-list-item-action"
+        [attr.aria-current]="currentNav === 'j-2' ? 'page' : null"
+        (click)="setNav('j-2')"
+      >
+        Avant-hier
+        <lu-tag palette="neutral" label="J-2" />
       </button>
       <button
         type="button"
@@ -23,8 +46,12 @@
   </ng-container>
 </lu-page-header>
 
-@if (currentNav === 'daily-list') {
-  <daily-list />
-} @else if (currentNav === 'historic-table') {
+@if (currentNav === 'j-0') {
+  <daily-list [currentDate]="today" [isOld]="false" />
+} @else if (currentNav === 'j-1') {
+  <daily-list [currentDate]="yesterday" [isOld]="true" />
+} @else if (currentNav === 'j-2') {
+  <daily-list [currentDate]="lastYesterday" [isOld]="true" />
+} @else {
   <historic-table />
 }

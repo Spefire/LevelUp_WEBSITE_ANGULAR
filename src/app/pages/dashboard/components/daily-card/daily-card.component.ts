@@ -22,8 +22,8 @@ import { isSameDay } from '@src/utils/time';
 export class DailyCardComponent implements OnInit {
   public readonly currentDate = input.required<Date>();
   public readonly quest = input.required<Quest>();
-  public readonly readonly = input.required<boolean>();
   public readonly isOld = input.required<boolean>();
+  public readonly isOptionnal = input.required<boolean>();
 
   public logs: Log[];
   public logLinked: Log | null = null;

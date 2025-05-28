@@ -7,7 +7,7 @@
     <h4>{{ quest().name }}</h4>
     @if (logLinked) {
       <lu-status-badge palette="success" label="Validée" />
-    } @else if (!readonly()) {
+    } @else if (!isOptionnal()) {
       @if (isOld()) {
         <lu-status-badge palette="neutral" label="En retard" />
       } @else {
@@ -21,11 +21,23 @@
     <div class="u-displayFlex u-alignItemsCenter u-flexWrapWrap pr-u-gap100">
       <quest-rewards [quest]="quest()" [forced]="logLinked ? 'success' : isOld() ? 'neutral' : null" />
     </div>
-    @if (!logLinked && !readonly()) {
-      <button type="button" luButton size="S" [palette]="isOld() ? 'neutral' : 'product'" (click)="completeQuest()">
-        Valider
-      </button>
-    } @else if (logLinked && !readonly()) {
+    @if (!logLinked) {
+      @if (!isOptionnal()) {
+        <button type="button" luButton size="S" [palette]="isOld() ? 'neutral' : 'product'" (click)="completeQuest()">
+          Valider
+        </button>
+      } @else {
+        <button
+          type="button"
+          luButton="outlined"
+          size="S"
+          [palette]="isOld() ? 'neutral' : 'product'"
+          (click)="completeQuest()"
+        >
+          Valider
+        </button>
+      }
+    } @else {
       <button type="button" luButton="text" size="S" (click)="cancelQuest()">
         <lu-icon icon="close" alt="Annuler" />
       </button>
