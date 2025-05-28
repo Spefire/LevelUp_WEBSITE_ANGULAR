@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
@@ -26,19 +26,16 @@ import { QuestsService } from '@src/services/quests.service';
   templateUrl: './quests-filters.component.html',
 })
 export class QuestsFiltersComponent implements OnInit {
+  public readonly quests = input.required<Quest[]>();
+
   public categories = [null, ...Object.values(QuestCategory)];
-  public quests: Quest[];
   public filters: QuestsFilters;
 
   private readonly _destroyRef = inject(DestroyRef);
 
   constructor(private _questsService: QuestsService) {}
 
-  public ngOnInit(): void {
-    this._questsService.quests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(quests => {
-      this.quests = quests;
-    });
-
+  public ngOnInit() {
     this._questsService.filters$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(filters => {
       this.filters = filters;
     });
@@ -60,7 +57,7 @@ export class QuestsFiltersComponent implements OnInit {
   }
 
   public getQuestsByCategory(category: string) {
-    if (!category) return this.quests;
-    return this.quests.filter(quest => quest.category === category);
+    if (!category) return this.quests();
+    return this.quests().filter(quest => quest.category === category);
   }
 }

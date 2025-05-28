@@ -8,7 +8,37 @@
       Créer une quête
     </button>
   </ng-container>
+
+  <ng-container pageHeaderNavigation>
+    <lu-horizontal-navigation>
+      <button
+        type="button"
+        *luHorizontalNavigationLink
+        class="horizontalNavigation-list-item-action"
+        [attr.aria-current]="currentNav === 'obligatoires' ? 'page' : null"
+        (click)="setNav('obligatoires')"
+      >
+        Obligatoires
+        <lu-tag palette="product" label="2" />
+      </button>
+      <button
+        type="button"
+        *luHorizontalNavigationLink
+        class="horizontalNavigation-list-item-action"
+        [attr.aria-current]="currentNav === 'optionnelles' ? 'page' : null"
+        (click)="setNav('optionnelles')"
+      >
+        Optionnelles
+        <lu-tag palette="product" label="2" />
+      </button>
+    </lu-horizontal-navigation>
+  </ng-container>
 </lu-page-header>
 
-<quests-filters></quests-filters>
-<quests-list></quests-list>
+@if (currentNav === 'obligatoires') {
+  <quests-filters [quests]="quests"></quests-filters>
+  <quests-list [quests]="quests"></quests-list>
+} @else {
+  <quests-filters [quests]="optionnalQuests"></quests-filters>
+  <quests-list [quests]="optionnalQuests"></quests-list>
+}

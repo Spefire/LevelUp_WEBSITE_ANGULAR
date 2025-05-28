@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { ButtonComponent } from '@lucca-front/ng/button';
@@ -17,10 +17,11 @@ import { QuestsService } from '@src/services/quests.service';
   templateUrl: './quests-list.component.html',
 })
 export class QuestsListComponent implements OnInit {
+  public readonly quests = input.required<Quest[]>();
+
   public QuestDifficulty = QuestDifficulty;
   public categories = [null, ...Object.values(QuestCategory)];
   public dailyQuests: Quest[];
-  public quests: Quest[];
   public filters: QuestsFilters;
 
   private readonly _destroyRef = inject(DestroyRef);
@@ -32,18 +33,14 @@ export class QuestsListComponent implements OnInit {
       this.dailyQuests = dailyQuests;
     });
 
-    this._questsService.quests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(quests => {
-      this.quests = quests;
-    });
-
     this._questsService.filters$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(filters => {
       this.filters = filters;
     });
   }
 
   public getQuestsByFilters() {
-    if (!this.filters) return this.quests;
-    let quests = this.quests;
+    if (!this.filters) return this.quests();
+    let quests = this.quests();
     quests = quests.filter(quest => !this.filters.category || (this.filters.category && quest.category === this.filters.category));
     quests = quests.filter(quest => !this.filters.search || normalize(quest.name).includes(normalize(this.filters.search)));
     quests = quests.filter(
