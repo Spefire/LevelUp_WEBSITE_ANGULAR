@@ -1,0 +1,12 @@
+:host {
+  display: contents;
+}
+
+.dungeonTable-score {
+  display: flex;
+  justify-content: center;
+
+  ::ng-deep lu-icon {
+    margin: 0 calc(var(--pr-t-spacings-100) * -1);
+  }
+}

@@ -24,36 +24,6 @@
 </lu-page-header>
 
 @if (currentNav === 'daily-list') {
-  <!--div class="grid pr-u-marginBottom200" style="--grid-columns: 3; --grid-colspan: 3">
-    <lu-highlight-data
-      class="grid-column"
-      [attr.style]="'--grid-colspanAtMediaMinM: 1'"
-      heading="Plus longue série"
-      value="3 (Yoga)"
-      [bubble]="3"
-      illustration="medallon"
-      theme="light"
-      palette="success"
-    />
-    <lu-highlight-data
-      class="grid-column"
-      [attr.style]="'--grid-colspanAtMediaMinM: 1'"
-      heading="Quêtes réalisées cette semaine"
-      value="10"
-      [bubble]="1"
-      illustration="calendar"
-      theme="light"
-    />
-    <lu-highlight-data
-      class="grid-column"
-      [attr.style]="'--grid-colspanAtMediaMinM: 1'"
-      heading="Total de quêtes réalisées"
-      value="245"
-      [bubble]="3"
-      illustration="calculator"
-      theme="dark"
-    />
-  </div-->
   <daily-list />
 } @else if (currentNav === 'historic-table') {
   <historic-table />
