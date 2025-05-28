@@ -1,3 +1,5 @@
+import { CaractKey } from '@src/models/character.model';
+
 export enum QuestDifficulty {
   SIMPLE = 'Simple',
   STANDARD = 'Standard',
@@ -20,13 +22,7 @@ export interface Quest {
   category: QuestCategory;
   daysOfWeek: number[]; // 0 = Dimanche, 1 = Lundi, ..., 6 = Samedi
   isOptional: boolean;
-  xpRewards: {
-    force?: number;
-    habilete?: number;
-    tenacite?: number;
-    charisme?: number;
-    intelligence?: number;
-  };
+  xpRewards: Record<CaractKey, number>;
 }
 
 export interface QuestsFilters {
@@ -44,7 +40,14 @@ export const listQuests: Quest[] = [
     category: QuestCategory.EXERCICE,
     daysOfWeek: [1, 2, 3, 4, 5, 6, 0],
     isOptional: true,
-    xpRewards: {},
+    xpRewards: {
+      force: 2,
+      habilete: null,
+      tenacite: null,
+      intelligence: null,
+      charisme: null,
+      magie: null,
+    },
   },
   {
     id: 'quest-002',
@@ -54,7 +57,14 @@ export const listQuests: Quest[] = [
     category: QuestCategory.EXERCICE,
     daysOfWeek: [1, 2, 3, 4, 5, 6, 0],
     isOptional: true,
-    xpRewards: {},
+    xpRewards: {
+      force: null,
+      habilete: null,
+      tenacite: 2,
+      intelligence: null,
+      charisme: null,
+      magie: null,
+    },
   },
   {
     id: 'quest-003',
@@ -64,7 +74,14 @@ export const listQuests: Quest[] = [
     category: QuestCategory.EXERCICE,
     daysOfWeek: [1, 2, 3, 4, 5, 6, 0],
     isOptional: true,
-    xpRewards: {},
+    xpRewards: {
+      force: null,
+      habilete: null,
+      tenacite: 2,
+      intelligence: null,
+      charisme: null,
+      magie: null,
+    },
   },
   {
     id: 'quest-010',
@@ -74,7 +91,14 @@ export const listQuests: Quest[] = [
     category: QuestCategory.HEALTH,
     daysOfWeek: [1, 2, 3, 4, 5, 6, 0],
     isOptional: false,
-    xpRewards: {},
+    xpRewards: {
+      force: null,
+      habilete: null,
+      tenacite: null,
+      intelligence: 2,
+      charisme: null,
+      magie: null,
+    },
   },
   {
     id: 'quest-011',
@@ -84,7 +108,14 @@ export const listQuests: Quest[] = [
     category: QuestCategory.HEALTH,
     daysOfWeek: [1, 2, 3, 4, 5, 6, 0],
     isOptional: true,
-    xpRewards: {},
+    xpRewards: {
+      force: null,
+      habilete: null,
+      tenacite: null,
+      intelligence: 2,
+      charisme: null,
+      magie: null,
+    },
   },
   {
     id: 'quest-012',
@@ -94,7 +125,14 @@ export const listQuests: Quest[] = [
     category: QuestCategory.HEALTH,
     daysOfWeek: [1, 2, 3, 4, 5, 6, 0],
     isOptional: true,
-    xpRewards: {},
+    xpRewards: {
+      force: null,
+      habilete: null,
+      tenacite: null,
+      intelligence: 2,
+      charisme: null,
+      magie: null,
+    },
   },
   {
     id: 'quest-020',
@@ -104,7 +142,14 @@ export const listQuests: Quest[] = [
     category: QuestCategory.FOOD,
     daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
     isOptional: false,
-    xpRewards: {},
+    xpRewards: {
+      force: null,
+      habilete: null,
+      tenacite: 1,
+      intelligence: null,
+      charisme: 1,
+      magie: null,
+    },
   },
   {
     id: 'quest-021',
@@ -114,7 +159,14 @@ export const listQuests: Quest[] = [
     category: QuestCategory.FOOD,
     daysOfWeek: [1, 2, 3, 4, 5, 6, 0],
     isOptional: true,
-    xpRewards: {},
+    xpRewards: {
+      force: null,
+      habilete: 1,
+      tenacite: null,
+      intelligence: 1,
+      charisme: null,
+      magie: null,
+    },
   },
   {
     id: 'quest-022',
@@ -124,6 +176,13 @@ export const listQuests: Quest[] = [
     category: QuestCategory.FOOD,
     daysOfWeek: [1, 2, 3, 4, 5, 6, 0],
     isOptional: false,
-    xpRewards: {},
+    xpRewards: {
+      force: null,
+      habilete: 1,
+      intelligence: null,
+      tenacite: 1,
+      charisme: 1,
+      magie: null,
+    },
   },
 ];

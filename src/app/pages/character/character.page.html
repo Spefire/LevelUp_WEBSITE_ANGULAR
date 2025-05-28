@@ -17,27 +17,27 @@
   </div>
 </lu-fancy-box>
 
-<section class="card pr-u-marginTop400">
-  <h3>Caractéristiques</h3>
-  <div class="grid pr-u-marginTop100" style="--grid-columns: 5; --grid-colspan: 5">
-    @for (caract of stats.caracts | keyvalue; track caract) {
-      <div
-        class="grid-column card mod-actions u-displayFlex u-flexDirectionColumn u-textAlignCenter pr-u-gap100"
-        [attr.style]="'--grid-colspanAtMediaMinM: 1'"
-      >
-        <div class="u-displayFlex u-justifyContentSpaceBetween u-alignItemsCenter pr-u-gap100">
-          <h4 class="u-h2">{{ caract.key | caracteristic }}</h4>
-          <p class="u-h1 u-textPrimary">{{ caract.value.level }}</p>
-        </div>
-        <div class="progress">
-          <div
-            class="progress-bar"
-            [attr.style]="'width:' + (caract.value.currentXP / caract.value.xpToNextLevel) * 100 + '%'"
-          >
-            {{ caract.value.currentXP }} XP
+<div class="grid pr-u-marginTop400 pr-u-gap400" style="--grid-columns: 3; --grid-colspan: 3">
+  @for (caractKey of CaractKeys; track caractKey) {
+    <div class="grid-column" [attr.style]="'--grid-colspanAtMediaMinM: 1'">
+      @if (stats.caracts[caractKey]; as statCaract) {
+        <notch
+          [heading]="Caracteristics[caractKey].libelle"
+          [badge]="statCaract.level"
+          [tag]="Caracteristics[caractKey].code"
+          [palette]="Caracteristics[caractKey].color"
+        >
+          <p class="pr-u-marginBottom200">{{ Caracteristics[caractKey].description }}</p>
+          <div class="progress">
+            <div
+              class="progress-bar"
+              [attr.style]="'width:' + (statCaract.currentXP / statCaract.xpToNextLevel) * 100 + '%'"
+            >
+              {{ statCaract.currentXP }} XP
+            </div>
           </div>
-        </div>
-      </div>
-    }
-  </div>
-</section>
+        </notch>
+      }
+    </div>
+  }
+</div>

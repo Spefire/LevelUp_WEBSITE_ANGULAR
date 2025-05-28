@@ -24,9 +24,7 @@ export class QuestsService {
   public filters$ = this._filtersSubject.asObservable();
 
   constructor() {
-    // Charger les données depuis le localStorage au démarrage
-    const dailyQuests = localStorage.getItem('dailyQuests');
-    if (dailyQuests) this._dailyQuestsSubject.next(JSON.parse(dailyQuests));
+    this._load();
   }
 
   public setFilters(newFilters: QuestsFilters) {
@@ -35,14 +33,32 @@ export class QuestsService {
 
   public toggleQuest(quest: Quest): void {
     let dailyQuests = this._dailyQuestsSubject.value;
-
     if (dailyQuests.find(dailyQuest => dailyQuest.id === quest.id)) {
       dailyQuests = dailyQuests.filter(dailyQuest => dailyQuest.id !== quest.id);
     } else {
       dailyQuests.push(quest);
     }
+    this._save(dailyQuests);
+  }
 
+  private _load() {
+    const storage = localStorage.getItem('dailyQuests');
+    if (storage) {
+      const result: Quest[] = [];
+      const jsonObjs: string[] = JSON.parse(storage);
+      jsonObjs.forEach(jsonObj => {
+        const itemToFind = listQuests.find(quest => quest.id === jsonObj);
+        if (itemToFind) {
+          result.push(itemToFind);
+        }
+      });
+      this._dailyQuestsSubject.next(result);
+    }
+  }
+
+  private _save(dailyQuests: Quest[]) {
     this._dailyQuestsSubject.next(dailyQuests);
-    localStorage.setItem('dailyQuests', JSON.stringify(dailyQuests));
+    const result = dailyQuests.map(dailyQuest => dailyQuest.id);
+    localStorage.setItem('dailyQuests', JSON.stringify(result));
   }
 }

@@ -6,7 +6,6 @@ import { ButtonComponent } from '@lucca-front/ng/button';
 import { HorizontalNavigationComponent, HorizontalNavigationLinkDirective } from '@lucca-front/ng/horizontal-navigation';
 import { IconComponent } from '@lucca-front/ng/icon';
 import { PageHeaderComponent } from '@lucca-front/ng/page-header';
-import { TagComponent } from '@lucca-front/ng/tag';
 
 import { PageTitles } from '@src/models/pages.model';
 import { Quest } from '@src/models/quests.model';
@@ -19,7 +18,6 @@ import { QuestsService } from '@src/services/quests.service';
   imports: [
     CommonModule,
     PageHeaderComponent,
-    TagComponent,
     HorizontalNavigationComponent,
     HorizontalNavigationLinkDirective,
     QuestsFiltersComponent,

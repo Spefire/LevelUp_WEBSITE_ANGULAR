@@ -1,0 +1,16 @@
+<div class="notchBox mod-notchTop">
+  <div class="notchBox-badge">
+    <p class="u-h1 pr-u-paddingTop100 u-textAlignCenter u-textNeutral0">{{ badge() }}</p>
+  </div>
+  <div class="notchBox-wrapper">
+    <div class="notchBox-wrapper-content">
+      <div class="u-displayFlex u-alignCenter u-justifyContentSpaceBetween pr-u-gap400">
+        <h2>{{ heading() }}</h2>
+        @if (tag()) {
+          <lu-tag [palette]="palette() ?? 'neutral'" [label]="tag()" size="L" />
+        }
+      </div>
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

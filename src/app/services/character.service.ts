@@ -22,8 +22,9 @@ export class CharacterService {
       force: { currentXP: 0, level: 1, xpToNextLevel: 20 },
       habilete: { currentXP: 0, level: 1, xpToNextLevel: 20 },
       tenacite: { currentXP: 0, level: 1, xpToNextLevel: 20 },
-      charisme: { currentXP: 0, level: 1, xpToNextLevel: 20 },
       intelligence: { currentXP: 0, level: 1, xpToNextLevel: 20 },
+      charisme: { currentXP: 0, level: 1, xpToNextLevel: 20 },
+      magie: { currentXP: 0, level: 1, xpToNextLevel: 20 },
     },
   });
 

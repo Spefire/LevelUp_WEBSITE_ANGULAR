@@ -36,6 +36,7 @@
   color: var(--palettes-neutral-0) !important;
 
   .progress-bar {
+    padding: 0 var(--pr-t-spacings-100);
     overflow: hidden;
   }
 }
@@ -68,7 +69,7 @@
 }
 
 .filterBar {
-  @include media.max("M") {
+  @include media.max('M') {
     .scrollBox {
       flex-direction: column;
     }
@@ -78,4 +79,8 @@
       padding: 0;
     }
   }
+}
+
+.notchBox-wrapper {
+  margin-top: calc(var(--component-notchbox-badge-actualHeight) / 2);
 }

@@ -11,22 +11,22 @@ import { IconComponent } from '@lucca-front/ng/icon';
   styles: ':host { display: contents }',
 })
 export class PaginationComponent implements OnInit {
-  readonly nbByPage = input.required<number>();
-  readonly items = input.required<any[]>();
-  updateItems = output<{ min: number; max: number }>();
+  public readonly nbByPage = input.required<number>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public readonly items = input.required<any[]>();
+  public updateItems = output<{ min: number; max: number }>();
 
   public currentPage = 1;
   public maxPage = 1;
   public minResult = 1;
   public maxResult = 1;
 
-  ngOnInit() {
+  public ngOnInit() {
     this.maxPage = Math.ceil(this.items().length / this.nbByPage());
-    console.warn(this.maxPage, this.items().length, this.nbByPage());
     this.update();
   }
 
-  update() {
+  public update() {
     this.minResult = 1 + (this.currentPage - 1) * 10;
     this.maxResult = Math.min(10 + (this.currentPage - 1) * 10, this.items().length);
     this.updateItems.emit({
@@ -35,12 +35,12 @@ export class PaginationComponent implements OnInit {
     });
   }
 
-  previous() {
+  public previous() {
     this.currentPage--;
     this.update();
   }
 
-  next() {
+  public next() {
     this.currentPage++;
     this.update();
   }

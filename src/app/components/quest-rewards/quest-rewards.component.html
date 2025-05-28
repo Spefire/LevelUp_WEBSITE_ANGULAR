@@ -1,13 +1,9 @@
 @for (reward of quest().xpRewards | keyvalue; track reward.key) {
-  @if (reward.key === 'force') {
-    <lu-tag [palette]="forced() ?? 'watermelon'" [label]="'FOR +' + reward.value" />
-  } @else if (reward.key === 'habilete') {
-    <lu-tag [palette]="forced() ?? 'pineapple'" [label]="'HAB +' + reward.value" />
-  } @else if (reward.key === 'tenacite') {
-    <lu-tag [palette]="forced() ?? 'cucumber'" [label]="'TEN +' + reward.value" />
-  } @else if (reward.key === 'intelligence') {
-    <lu-tag [palette]="forced() ?? 'lagoon'" [label]="'INT +' + reward.value" />
-  } @else if (reward.key === 'charisme') {
-    <lu-tag [palette]="forced() ?? 'grape'" [label]="'CHA +' + reward.value" />
+  @let key = getCaractKey(reward.key);
+  @if (reward.value) {
+    <lu-tag
+      [palette]="forced() ?? Caracteristics[key].color"
+      [label]="Caracteristics[key].code + ' +' + reward.value"
+    />
   }
 }
