@@ -21,11 +21,6 @@ export class SupabaseService {
     const key = environment.NG_APP_SUPABASE_ANON_KEY || '';
     this._supabase = createClient(url, key);
 
-    // Initialiser la session au démarrage
-    this._supabase.auth.getSession().then(({ data: { session } }) => {
-      this._session$.next(session || null);
-    });
-
     // Écouter les changements de session
     this._supabase.auth.onAuthStateChange((_event, session) => {
       this._session$.next(session || null);
