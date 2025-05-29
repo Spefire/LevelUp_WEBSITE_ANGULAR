@@ -32,10 +32,10 @@ export class SupabaseService {
     return result.data.session;
   }
 
-  public async login(uuid: string) {
+  public async login(email: string, password: string) {
     const result = await this._supabase.auth.signInWithPassword({
-      email: `${uuid}@yopmail.com`,
-      password: uuid,
+      email,
+      password,
     });
 
     if (result.error) {
@@ -46,18 +46,18 @@ export class SupabaseService {
     }
   }
 
-  public async signUp() {
-    const uuid = crypto.randomUUID().toString();
+  public async signUp(email: string, password: string) {
+    // const uuid = crypto.randomUUID().toString();
 
     const result = await this._supabase.auth.signUp({
-      email: `${uuid}@yopmail.com`,
-      password: uuid,
+      email,
+      password,
     });
 
     if (result.error) {
       return { success: '', error: result.error.message };
     } else {
-      return { success: 'Vous avez reçu un mail sur ' + uuid + '@yopmail.com', error: '' };
+      return { success: 'Vous avez reçu un mail sur ' + email + ' pour confirmer votre inscription.', error: '' };
     }
   }
 

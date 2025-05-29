@@ -1,49 +1,74 @@
 <nav class="mobileNavigation">
   <ul class="mobileNavigation-list">
-    <li class="mobileNavigation-list-item">
-      <a
-        class="mobileNavigation-list-item-link"
-        routerLink="/"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-        ariaCurrentWhenActive="page"
-      >
-        <span aria-hidden="true" class="lucca-icon icon-chartLevels"></span>
-        {{ pages.dashboard }}
-      </a>
-    </li>
-    <li class="mobileNavigation-list-item">
-      <a
-        class="mobileNavigation-list-item-link"
-        routerLink="/character"
-        routerLinkActive="active"
-        ariaCurrentWhenActive="page"
-      >
-        <span aria-hidden="true" class="lucca-icon icon-peoplePerson"></span>
-        {{ pages.character }}
-      </a>
-    </li>
-    <li class="mobileNavigation-list-item">
-      <a
-        class="mobileNavigation-list-item-link"
-        routerLink="/quetes"
-        routerLinkActive="active"
-        ariaCurrentWhenActive="page"
-      >
-        <span aria-hidden="true" class="lucca-icon icon-timeTimesheet"></span>
-        {{ pages.quests }}
-      </a>
-    </li>
-    <li class="mobileNavigation-list-item">
-      <a
-        class="mobileNavigation-list-item-link"
-        routerLink="/donjons"
-        routerLinkActive="active"
-        ariaCurrentWhenActive="page"
-      >
-        <span aria-hidden="true" class="lucca-icon icon-moneyBuildingBank"></span>
-        {{ pages.dungeons }}
-      </a>
-    </li>
+    @if (isConnected) {
+      <li class="mobileNavigation-list-item">
+        <a
+          class="mobileNavigation-list-item-link"
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          ariaCurrentWhenActive="page"
+        >
+          <span aria-hidden="true" class="lucca-icon icon-chartLevels"></span>
+          {{ pages.dashboard }}
+        </a>
+      </li>
+      <li class="mobileNavigation-list-item">
+        <a
+          class="mobileNavigation-list-item-link"
+          routerLink="/character"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+        >
+          <span aria-hidden="true" class="lucca-icon icon-peoplePerson"></span>
+          {{ pages.character }}
+        </a>
+      </li>
+      <li class="mobileNavigation-list-item">
+        <a
+          class="mobileNavigation-list-item-link"
+          routerLink="/quetes"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+        >
+          <span aria-hidden="true" class="lucca-icon icon-timeTimesheet"></span>
+          {{ pages.quests }}
+        </a>
+      </li>
+      <li class="mobileNavigation-list-item">
+        <a
+          class="mobileNavigation-list-item-link"
+          routerLink="/donjons"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+        >
+          <span aria-hidden="true" class="lucca-icon icon-moneyBuildingBank"></span>
+          {{ pages.dungeons }}
+        </a>
+      </li>
+    } @else {
+      <li class="mobileNavigation-list-item">
+        <a
+          class="mobileNavigation-list-item-link"
+          routerLink="/connexion"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+        >
+          <span aria-hidden="true" class="lucca-icon icon-arrowLogin"></span>
+          {{ pages.login }}
+        </a>
+      </li>
+      <li class="mobileNavigation-list-item">
+        <a
+          class="mobileNavigation-list-item-link"
+          routerLink="/inscription"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+        >
+          <span aria-hidden="true" class="lucca-icon icon-filePlus"></span>
+          {{ pages.signup }}
+        </a>
+      </li>
+    }
   </ul>
 </nav>

@@ -19,14 +19,15 @@ import { SupabaseService } from '@src/services/supabase.service';
 export class LoginPage {
   public pages = PageTitles;
 
-  public uuid = '';
+  public email = '';
+  public password = '';
   public success: string | null = null;
   public error: string | null = null;
 
   constructor(private _supabaseService: SupabaseService) {}
 
   public async login() {
-    const result = await this._supabaseService.login(this.uuid);
+    const result = await this._supabaseService.login(this.email, this.password);
     this.success = result.success;
     this.error = result.error;
   }

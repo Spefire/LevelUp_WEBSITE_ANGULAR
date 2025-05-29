@@ -5,6 +5,24 @@
 
 <form class="card u-displayFlex u-flexDirectionColumn u-alignItemsFlexStart pr-u-gap200 pr-u-marginTop200">
   <h2>{{ pages.signup }}</h2>
+  <lu-form-field label="E-mail">
+    <lu-text-input
+      required
+      type="text"
+      placeholder="exemple@mail.com"
+      [(ngModel)]="email"
+      [ngModelOptions]="{ standalone: true }"
+    ></lu-text-input>
+  </lu-form-field>
+  <lu-form-field label="Mot de passe">
+    <lu-text-input
+      required
+      type="password"
+      placeholder="********"
+      [(ngModel)]="password"
+      [ngModelOptions]="{ standalone: true }"
+    ></lu-text-input>
+  </lu-form-field>
   @if (success) {
     <lu-callout state="success">
       {{ success }}
