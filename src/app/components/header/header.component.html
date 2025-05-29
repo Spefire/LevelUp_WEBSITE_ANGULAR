@@ -3,59 +3,61 @@
     <img class="mobileHeader-image" src="./assets/icon.png" alt="Retour vers l'accueil" />
     <img class="mobileHeader-image u-displayNoneAtMediaMinM" src="./assets/text.png" alt="Retour vers l'accueil" />
   </a>
-  <div class="mobileHeader-title u-displayNoneAtMediaMaxM">
-    <h1 class="mobileHeader-title-main">{{ character.name }}</h1>
-    <div class="mobileHeader-title-sub">{{ character.gender }}, {{ character.age }} ans</div>
-  </div>
-  <div class="mobileHeader-actions">
-    <div class="u-displayNoneAtMediaMinM">
-      <div class="u-displayFlex u-alignItemsCenter pr-u-gap100">
-        <div class="u-textAlignRight">
-          <h1 class="mobileHeader-title-main">{{ character.name }}</h1>
-          <div class="mobileHeader-title-sub">{{ character.gender }}, {{ character.age }} ans</div>
-        </div>
-        <span class="avatar">
-          <img class="avatar-picture" loading="lazy" [src]="character.avatar" alt="" />
-        </span>
-        <a luButton="text" routerLink="/parametres">
-          <lu-icon icon="settingsTools" [alt]="pages.params" />
-        </a>
-        <button type="button" luButton="text" disabled>
-          <lu-icon icon="bell" [alt]="pages.notifs" />
-        </button>
-        <button type="button" luButton="text" disabled>
-          <lu-icon icon="arrowLogout" [alt]="pages.logout" />
-        </button>
-      </div>
+  @if (isConnected) {
+    <div class="mobileHeader-title u-displayNoneAtMediaMaxM">
+      <h1 class="mobileHeader-title-main">{{ character.name }}</h1>
+      <div class="mobileHeader-title-sub">{{ character.gender }}, {{ character.age }} ans</div>
     </div>
-    <button type="button" luButton="text" class="u-displayFlexAtMediaMaxM" [luDropdown]="dropdown">
-      <lu-icon icon="menuDots" alt="Voir plus d'options" />
-    </button>
-    <lu-dropdown #dropdown>
-      <li class="dropdown-list-option">
-        <a routerLink="/parametres" class="dropdown-list-option-action" luDropdownItem>
-          <lu-icon icon="settingsTools" />
-          {{ pages.params }}
-        </a>
-      </li>
-      <li class="dropdown-list-option">
-        <button type="button" class="dropdown-list-option-action is-disabled" luDropdownItem>
-          <lu-icon icon="bell" />
-          {{ pages.notifs }}
-        </button>
-      </li>
-      <li class="dropdown-list-option">
-        <a routerLink="/mentions-legales" class="dropdown-list-option-action" luDropdownItem>
-          <lu-icon icon="signHelp" />
-          {{ pages.legacy }}
-        </a>
-      </li>
-      <li class="dropdown-list-option">
-        <button type="button" class="dropdown-list-option-action is-disabled" luDropdownItem>
-          <lu-icon icon="arrowLogout" />
-          {{ pages.logout }}
-        </button>
-      </li>
-    </lu-dropdown>
-  </div>
+    <div class="mobileHeader-actions">
+      <div class="u-displayNoneAtMediaMinM">
+        <div class="u-displayFlex u-alignItemsCenter pr-u-gap100">
+          <div class="u-textAlignRight">
+            <h1 class="mobileHeader-title-main">{{ character.name }}</h1>
+            <div class="mobileHeader-title-sub">{{ character.gender }}, {{ character.age }} ans</div>
+          </div>
+          <span class="avatar">
+            <img class="avatar-picture" loading="lazy" [src]="character.avatar" alt="" />
+          </span>
+          <a luButton="text" routerLink="/parametres">
+            <lu-icon icon="settingsTools" [alt]="pages.params" />
+          </a>
+          <button type="button" luButton="text" disabled>
+            <lu-icon icon="bell" [alt]="pages.notifs" />
+          </button>
+          <button type="button" luButton="text" (click)="logout()">
+            <lu-icon icon="arrowLogout" [alt]="pages.logout" />
+          </button>
+        </div>
+      </div>
+      <button type="button" luButton="text" class="u-displayFlexAtMediaMaxM" [luDropdown]="dropdown">
+        <lu-icon icon="menuDots" alt="Voir plus d'options" />
+      </button>
+      <lu-dropdown #dropdown>
+        <li class="dropdown-list-option">
+          <a routerLink="/parametres" class="dropdown-list-option-action" luDropdownItem>
+            <lu-icon icon="settingsTools" />
+            {{ pages.params }}
+          </a>
+        </li>
+        <li class="dropdown-list-option">
+          <button type="button" class="dropdown-list-option-action is-disabled" luDropdownItem>
+            <lu-icon icon="bell" />
+            {{ pages.notifs }}
+          </button>
+        </li>
+        <li class="dropdown-list-option">
+          <a routerLink="/mentions-legales" class="dropdown-list-option-action" luDropdownItem>
+            <lu-icon icon="signHelp" />
+            {{ pages.legacy }}
+          </a>
+        </li>
+        <li class="dropdown-list-option">
+          <button type="button" class="dropdown-list-option-action" luDropdownItem (click)="logout()">
+            <lu-icon icon="arrowLogout" />
+            {{ pages.logout }}
+          </button>
+        </li>
+      </lu-dropdown>
+    </div>
+  }
 </div>

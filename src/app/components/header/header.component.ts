@@ -10,6 +10,7 @@ import { IconComponent } from '@lucca-front/ng/icon';
 import { Character } from '@src/models/character.model';
 import { PageTitles } from '@src/models/pages.model';
 import { CharacterService } from '@src/services/character.service';
+import { SupabaseService } from '@src/services/supabase.service';
 
 @Component({
   selector: 'app-header',
@@ -18,16 +19,28 @@ import { CharacterService } from '@src/services/character.service';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit {
-  character: Character;
-  pages = PageTitles;
+  public pages = PageTitles;
+
+  public character: Character;
+  public isConnected: boolean;
 
   private readonly _destroyRef = inject(DestroyRef);
 
-  constructor(private _characterService: CharacterService) {}
+  constructor(
+    private _characterService: CharacterService,
+    private _supabaseService: SupabaseService
+  ) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this._characterService.character$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(character => {
       this.character = character;
     });
+    this._supabaseService.session$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(session => {
+      this.isConnected = session ? true : false;
+    });
+  }
+
+  public logout() {
+    this._supabaseService.logout();
   }
 }

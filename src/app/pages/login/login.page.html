@@ -1,0 +1,28 @@
+<lu-page-header
+  [label]="pages.app"
+  description="Connecte-toi pour continuer à faire progresser ton personnage et gagner de l'XP dans la vraie vie."
+/>
+
+<form class="card u-displayFlex u-flexDirectionColumn u-alignItemsFlexStart pr-u-gap200">
+  <h2>{{ pages.login }}</h2>
+  <lu-form-field label="GUID" hiddenLabel="true">
+    <lu-text-input
+      required
+      type="text"
+      placeholder="GUID"
+      [(ngModel)]="uuid"
+      [ngModelOptions]="{ standalone: true }"
+    ></lu-text-input>
+  </lu-form-field>
+  @if (success) {
+    <lu-callout state="success">
+      {{ success }}
+    </lu-callout>
+  }
+  @if (error) {
+    <lu-callout state="error" removable>
+      {{ error }}
+    </lu-callout>
+  }
+  <button type="button" luButton (click)="login()" [disabled]="success">Se connecter</button>
+</form>

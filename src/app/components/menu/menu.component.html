@@ -1,38 +1,55 @@
 <div class="navSide">
   <nav role="navigation" aria-label="Nom application" class="navSide-wrapper">
     <div class="navSide-mainSection">
-      <ul class="navSide-scrollWrapper">
-        <li class="navSide-item">
-          <a
-            class="navSide-item-link"
-            routerLink="/"
-            routerLinkActive="is-active"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <span aria-hidden="true" class="lucca-icon icon-chartLevels"></span>
-            <span class="navSide-item-link-title">{{ pages.dashboard }}</span>
-          </a>
-        </li>
-        <li class="navSide-item">
-          <a class="navSide-item-link" routerLink="/character" routerLinkActive="is-active">
-            <span aria-hidden="true" class="lucca-icon icon-peoplePerson"></span>
-            <span class="navSide-item-link-title">{{ pages.character }}</span>
-          </a>
-        </li>
-        <li class="navSide-item">
-          <a class="navSide-item-link" routerLink="/quetes" routerLinkActive="is-active">
-            <span aria-hidden="true" class="lucca-icon icon-timeTimesheet"></span>
-            <span class="navSide-item-link-title">{{ pages.quests }}</span>
-          </a>
-        </li>
-        <li class="navSide-item">
-          <a class="navSide-item-link" routerLink="/donjons" routerLinkActive="is-active">
-            <span aria-hidden="true" class="lucca-icon icon-moneyBuildingBank"></span>
-            <span class="navSide-item-link-title">{{ pages.dungeons }}</span>
-            <span class="newBadge">New</span>
-          </a>
-        </li>
-      </ul>
+      @if (isConnected) {
+        <ul class="navSide-scrollWrapper">
+          <li class="navSide-item">
+            <a
+              class="navSide-item-link"
+              routerLink="/"
+              routerLinkActive="is-active"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <span aria-hidden="true" class="lucca-icon icon-chartLevels"></span>
+              <span class="navSide-item-link-title">{{ pages.dashboard }}</span>
+            </a>
+          </li>
+          <li class="navSide-item">
+            <a class="navSide-item-link" routerLink="/character" routerLinkActive="is-active">
+              <span aria-hidden="true" class="lucca-icon icon-peoplePerson"></span>
+              <span class="navSide-item-link-title">{{ pages.character }}</span>
+            </a>
+          </li>
+          <li class="navSide-item">
+            <a class="navSide-item-link" routerLink="/quetes" routerLinkActive="is-active">
+              <span aria-hidden="true" class="lucca-icon icon-timeTimesheet"></span>
+              <span class="navSide-item-link-title">{{ pages.quests }}</span>
+            </a>
+          </li>
+          <li class="navSide-item">
+            <a class="navSide-item-link" routerLink="/donjons" routerLinkActive="is-active">
+              <span aria-hidden="true" class="lucca-icon icon-moneyBuildingBank"></span>
+              <span class="navSide-item-link-title">{{ pages.dungeons }}</span>
+              <span class="newBadge">New</span>
+            </a>
+          </li>
+        </ul>
+      } @else {
+        <ul class="navSide-scrollWrapper">
+          <li class="navSide-item">
+            <a class="navSide-item-link" routerLink="/connexion" routerLinkActive="is-active">
+              <span aria-hidden="true" class="lucca-icon icon-arrowLogin"></span>
+              <span class="navSide-item-link-title">{{ pages.login }}</span>
+            </a>
+          </li>
+          <li class="navSide-item">
+            <a class="navSide-item-link" routerLink="/inscription" routerLinkActive="is-active">
+              <span aria-hidden="true" class="lucca-icon icon-filePlus"></span>
+              <span class="navSide-item-link-title">{{ pages.signup }}</span>
+            </a>
+          </li>
+        </ul>
+      }
     </div>
     <div class="navSide-bottomSection">
       <div class="navSide-item">

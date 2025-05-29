@@ -11,5 +11,5 @@ import { PageTitles } from '@src/models/pages.model';
   styleUrl: './footer.component.scss',
 })
 export class FooterComponent {
-  pages = PageTitles;
+  public pages = PageTitles;
 }

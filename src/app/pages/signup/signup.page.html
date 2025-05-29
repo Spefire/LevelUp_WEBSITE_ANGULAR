@@ -1,0 +1,19 @@
+<lu-page-header
+  [label]="pages.app"
+  description="Bienvenue ! Inscris-toi pour commencer ton aventure et améliorer tes stats jour après jour."
+/>
+
+<form class="card u-displayFlex u-flexDirectionColumn u-alignItemsFlexStart pr-u-gap200 pr-u-marginTop200">
+  <h2>{{ pages.signup }}</h2>
+  @if (success) {
+    <lu-callout state="success">
+      {{ success }}
+    </lu-callout>
+  }
+  @if (error) {
+    <lu-callout state="error" removable>
+      {{ error }}
+    </lu-callout>
+  }
+  <button type="button" luButton (click)="signUp()" [disabled]="success">S'incrire</button>
+</form>
