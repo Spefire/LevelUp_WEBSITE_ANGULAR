@@ -10,11 +10,11 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class SupabaseService {
+  public session = new BehaviorSubject<Session | null>(null);
   private _supabase: SupabaseClient | null = null;
-  private _session$ = new BehaviorSubject<Session | null>(null);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  public session$ = this._session$.asObservable();
+  public session$ = this.session.asObservable();
 
   constructor(private _router: Router) {
     const url = environment.NG_APP_SUPABASE_URL || '';
@@ -23,7 +23,9 @@ export class SupabaseService {
 
     // Écouter les changements de session
     this._supabase.auth.onAuthStateChange((_event, session) => {
-      this._session$.next(session || null);
+      this.session.next(session || null);
+      if (session) this._router.navigate(['/']);
+      else this._router.navigate(['/connexion']);
     });
   }
 
@@ -41,14 +43,11 @@ export class SupabaseService {
     if (result.error) {
       return { success: '', error: result.error.message };
     } else {
-      this._router.navigate(['/']);
       return { success: 'Vous êtes bien connecté !', error: '' };
     }
   }
 
   public async signUp(email: string, password: string) {
-    // const uuid = crypto.randomUUID().toString();
-
     const result = await this._supabase.auth.signUp({
       email,
       password,
@@ -67,7 +66,6 @@ export class SupabaseService {
     if (result.error) {
       return result.error.message;
     } else {
-      this._router.navigate(['/connexion']);
       return null;
     }
   }

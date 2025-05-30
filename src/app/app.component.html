@@ -1,6 +1,6 @@
 <app-header />
 <app-menu />
-<main>
+<main [class.is-empty]="!isConnected">
   <router-outlet></router-outlet>
 </main>
 <app-footer />

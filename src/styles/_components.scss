@@ -85,3 +85,18 @@
 .notchBox-wrapper {
   margin-top: calc(var(--component-notchbox-badge-actualHeight) / 2);
 }
+
+.emptyState.mod-page .emptyState-content-heading {
+  --sizes-verticalPadding: var(--sizes-XXL-verticalPadding) !important;
+  --sizes-fontSize: var(--sizes-XXL-fontSize) !important;
+  --sizes-lineHeight: var(--sizes-XXL-lineHeight) !important;
+  --components-title-weight: 900 !important;
+}
+
+.emptyState.mod-page {
+  background-position:
+    bottom left,
+    bottom left,
+    top right,
+    top right !important;
+}

@@ -11,4 +11,11 @@ main {
     margin-left: var(--commons-navSide-width);
     padding: var(--pr-t-spacings-300) var(--pr-t-spacings-400);
   }
+
+  &.is-empty {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 0 !important;
+  }
 }

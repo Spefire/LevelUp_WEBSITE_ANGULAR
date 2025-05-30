@@ -1,37 +1,83 @@
-<lu-page-header
-  [label]="pages.app"
+<lu-empty-state-page
+  [heading]="pages.app"
+  [icon]="success ? 'https://cdn.lucca.fr/lucca-front/assets/empty-states/message/post-it-01.svg' : ''"
   description="Bienvenue ! Inscris-toi pour commencer ton aventure et améliorer tes stats jour après jour."
-/>
-
-<form class="card u-displayFlex u-flexDirectionColumn u-alignItemsFlexStart pr-u-gap200 pr-u-marginTop200">
-  <h2>{{ pages.signup }}</h2>
-  <lu-form-field label="E-mail">
-    <lu-text-input
-      required
-      type="text"
-      placeholder="exemple@mail.com"
-      [(ngModel)]="email"
-      [ngModelOptions]="{ standalone: true }"
-    ></lu-text-input>
-  </lu-form-field>
-  <lu-form-field label="Mot de passe">
-    <lu-text-input
-      required
-      type="password"
-      placeholder="********"
-      [(ngModel)]="password"
-      [ngModelOptions]="{ standalone: true }"
-    ></lu-text-input>
-  </lu-form-field>
+  topRightBackground="https://cdn.lucca.fr/lucca-front/assets/empty-states/lucca/bubbles-top-right-02.svg"
+  topRightForeground="https://cdn.lucca.fr/lucca-front/assets/empty-states/generic/post-its-01.svg"
+  bottomLeftBackground="https://cdn.lucca.fr/lucca-front/assets/empty-states/lucca/bubbles-bottom-left-02.svg"
+  bottomLeftForeground="https://cdn.lucca.fr/lucca-front/assets/empty-states/pagga/wizard-01.svg"
+  hx="1"
+>
   @if (success) {
-    <lu-callout state="success">
-      {{ success }}
-    </lu-callout>
+    <div class="card u-displayFlex u-flexDirectionColumn u-alignItemsFlexStart u-width100% pr-u-gap200">
+      <h2>{{ pages.signup }}</h2>
+      <lu-callout state="success">{{ success }}</lu-callout>
+    </div>
+  } @else {
+    <form class="card u-displayFlex u-flexDirectionColumn u-alignItemsFlexStart u-width100% pr-u-gap200">
+      <h2>{{ pages.signup }}</h2>
+      <div class="grid u-width100%" style="--grid-colspan: 12">
+        <div class="grid-column">
+          <lu-form-field label="E-mail">
+            <lu-text-input
+              required
+              type="text"
+              placeholder="exemple@mail.com"
+              [(ngModel)]="email"
+              [ngModelOptions]="{ standalone: true }"
+            ></lu-text-input>
+          </lu-form-field>
+        </div>
+        <div class="grid-column">
+          <lu-form-field label="Confirmation de l'e-mail">
+            <lu-text-input
+              required
+              type="text"
+              placeholder="exemple@mail.com"
+              [(ngModel)]="emailConfirmed"
+              [ngModelOptions]="{ standalone: true }"
+            ></lu-text-input>
+          </lu-form-field>
+          @if (email && emailConfirmed && email !== emailConfirmed) {
+            <lu-callout state="error" size="S" class="pr-u-marginTop150">
+              Les e-mails ne correspondent pas.
+            </lu-callout>
+          }
+        </div>
+        <div class="grid-column">
+          <lu-form-field label="Mot de passe">
+            <lu-text-input
+              required
+              type="password"
+              placeholder="********"
+              [(ngModel)]="password"
+              [ngModelOptions]="{ standalone: true }"
+            ></lu-text-input>
+          </lu-form-field>
+        </div>
+        <div class="grid-column">
+          <lu-form-field label="Confirmation du mot de passe">
+            <lu-text-input
+              required
+              type="password"
+              placeholder="********"
+              [(ngModel)]="passwordConfirmed"
+              [ngModelOptions]="{ standalone: true }"
+            ></lu-text-input>
+          </lu-form-field>
+          @if (password && passwordConfirmed && password !== passwordConfirmed) {
+            <lu-callout state="error" size="S" class="pr-u-marginTop150">
+              Les mots de passe ne correspondent pas.
+            </lu-callout>
+          }
+        </div>
+      </div>
+      @if (error) {
+        <lu-callout state="error">{{ error }}</lu-callout>
+      }
+      <div class="u-displayFlex u-justifyContentFlexEnd u-width100%">
+        <button type="button" luButton (click)="signUp()">S'incrire</button>
+      </div>
+    </form>
   }
-  @if (error) {
-    <lu-callout state="error" removable>
-      {{ error }}
-    </lu-callout>
-  }
-  <button type="button" luButton (click)="signUp()" [disabled]="success">S'incrire</button>
-</form>
+</lu-empty-state-page>

@@ -2,17 +2,20 @@ import { Routes } from '@angular/router';
 
 import { PageTitles } from '@src/models/pages.model';
 import { AuthGuard } from '@src/utils/auth.guard';
+import { NoAuthGuard } from '@src/utils/no-auth.guard';
 
 export const routes: Routes = [
   {
     path: 'connexion',
     loadComponent: () => import('./pages/login/login.page').then(m => m.LoginPage),
     title: PageTitles.login + ' - ' + PageTitles.app,
+    canActivate: [NoAuthGuard],
   },
   {
     path: 'inscription',
     loadComponent: () => import('./pages/signup/signup.page').then(m => m.SignUpPage),
     title: PageTitles.signup + ' - ' + PageTitles.app,
+    canActivate: [NoAuthGuard],
   },
   {
     path: '',
