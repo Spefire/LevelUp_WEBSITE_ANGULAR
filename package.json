@@ -45,6 +45,9 @@
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.31.0"
   },
+  "optionalDependencies": {
+    "@esbuild/linux-x64": "0.24.0"
+  },
   "overrides": {
     "@supabase/supabase-js": {
       "@supabase/auth-js": "2.61.0"
