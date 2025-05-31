@@ -71,10 +71,14 @@ export class SupabaseService {
         firstName: 'Cookie',
       };
       result = await this._supabase.from('characters').insert(character);
+    } else {
+      console.error(result.error.message);
     }
 
-    if (!result.data) return null;
-    else {
+    if (!result.data) {
+      console.error(result.error.message);
+      return null;
+    } else {
       const character: Character = {
         age: 22,
         avatar: result.data.avatar,
