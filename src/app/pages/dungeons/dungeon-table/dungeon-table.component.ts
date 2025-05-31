@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, inject, input, OnChanges, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
+import { EmptyStateSectionComponent } from '@lucca-front/ng/empty-state';
 import { HighlightDataComponent } from '@lucca-front/ng/highlight-data';
 import { IconComponent } from '@lucca-front/ng/icon';
 
@@ -14,7 +15,7 @@ import { isSameDay } from '@src/utils/time';
 
 @Component({
   selector: 'dungeon-table',
-  imports: [CommonModule, HighlightDataComponent, IconComponent],
+  imports: [CommonModule, EmptyStateSectionComponent, HighlightDataComponent, IconComponent],
   templateUrl: './dungeon-table.component.html',
   styleUrl: './dungeon-table.component.scss',
 })
@@ -106,6 +107,7 @@ export class DungeonTableComponent implements OnInit, OnChanges {
   }
 
   private _createTable() {
+    if (!this.dailyQuests || !this.logs) return;
     this.bodyTable = [];
     this.footTable = {};
     let totalLundi = 0;

@@ -1,33 +1,35 @@
-<div class="grid pr-u-marginBottom200" style="--grid-columns: 3; --grid-colspan: 3">
-  <lu-highlight-data
-    class="grid-column"
-    [attr.style]="'--grid-colspanAtMediaMinM: 1'"
-    heading="Meilleur jour de la semaine"
-    [value]="headData.best"
-    [bubble]="3"
-    illustration="medallon"
-    theme="light"
-    palette="success"
-  />
-  <lu-highlight-data
-    class="grid-column"
-    [attr.style]="'--grid-colspanAtMediaMinM: 1'"
-    heading="Quêtes réalisées cette semaine"
-    [value]="headData.nb"
-    [bubble]="1"
-    illustration="calendar"
-    theme="light"
-  />
-  <lu-highlight-data
-    class="grid-column"
-    [attr.style]="'--grid-colspanAtMediaMinM: 1'"
-    heading="Score de la semaine"
-    [value]="headData.score"
-    [bubble]="3"
-    illustration="calculator"
-    theme="dark"
-  />
-</div>
+@if (headData) {
+  <div class="grid pr-u-marginBottom200" style="--grid-columns: 3; --grid-colspan: 3">
+    <lu-highlight-data
+      class="grid-column"
+      [attr.style]="'--grid-colspanAtMediaMinM: 1'"
+      heading="Meilleur jour de la semaine"
+      [value]="headData.best"
+      [bubble]="3"
+      illustration="medallon"
+      theme="light"
+      palette="success"
+    />
+    <lu-highlight-data
+      class="grid-column"
+      [attr.style]="'--grid-colspanAtMediaMinM: 1'"
+      heading="Quêtes réalisées cette semaine"
+      [value]="headData.nb"
+      [bubble]="1"
+      illustration="calendar"
+      theme="light"
+    />
+    <lu-highlight-data
+      class="grid-column"
+      [attr.style]="'--grid-colspanAtMediaMinM: 1'"
+      heading="Score de la semaine"
+      [value]="headData.score"
+      [bubble]="3"
+      illustration="calculator"
+      theme="dark"
+    />
+  </div>
+}
 
 <div class="dataTableWrapper">
   <table class="dataTable">
@@ -107,20 +109,33 @@
             <span [ngClass]="getColor(item.total)">{{ item.total }}</span>
           </td>
         </tr>
+      } @empty {
+        <tr class="dataTable-body-row">
+          <td class="dataTable-body-row-cell" colspan="9">
+            <lu-empty-state-section
+              hx="3"
+              icon="https://cdn.lucca.fr/lucca-front/assets/empty-states/icons/iconPaper.svg"
+              heading="Aucune quête validée"
+              description="Regardez vos quêtes journalières si vous pouvez en valider."
+            />
+          </td>
+        </tr>
       }
     </tbody>
-    <tfoot class="dataTable-foot">
-      <tr class="dataTable-foot-row">
-        <th class="dataTable-foot-row-cell" scope="row">Total</th>
-        @for (dayOfWeek of daysOfWeek; track $index) {
-          <td class="dataTable-foot-row-cell mod-alignCenter">
-            <span [ngClass]="getColor(footTable[dayOfWeek])">{{ footTable[dayOfWeek] }}</span>
+    @if (footTable) {
+      <tfoot class="dataTable-foot">
+        <tr class="dataTable-foot-row">
+          <th class="dataTable-foot-row-cell" scope="row">Total</th>
+          @for (dayOfWeek of daysOfWeek; track $index) {
+            <td class="dataTable-foot-row-cell mod-alignCenter">
+              <span [ngClass]="getColor(footTable[dayOfWeek])">{{ footTable[dayOfWeek] }}</span>
+            </td>
+          }
+          <td class="dataTable-foot-row-cell mod-alignRight">
+            <span [ngClass]="getColor(footTable.total)">{{ footTable.total }}</span>
           </td>
-        }
-        <td class="dataTable-foot-row-cell mod-alignRight">
-          <span [ngClass]="getColor(footTable.total)">{{ footTable.total }}</span>
-        </td>
-      </tr>
-    </tfoot>
+        </tr>
+      </tfoot>
+    }
   </table>
 </div>
