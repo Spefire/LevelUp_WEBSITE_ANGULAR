@@ -30,9 +30,16 @@ export class SupabaseService {
 
     // Écouter les changements de session
     this._supabase.auth.onAuthStateChange((_event, session) => {
-      this.session.next(session || null);
-      if (session) this._router.navigate(['/']);
-      else this._router.navigate(['/connexion']);
+      // Connexion
+      if (!this.session.value && session) {
+        this.session.next(session);
+        this._router.navigate(['/']);
+      }
+      // Déconnexion
+      else if (this.session.value && !session) {
+        this.session.next(null);
+        this._router.navigate(['/connexion']);
+      }
     });
   }
 
@@ -62,9 +69,10 @@ export class SupabaseService {
     if (!this.user_id) return null;
 
     console.log('getCharacter 1');
-    let result = await this._supabase.from('characters').select().eq('user_id', this.user_id).single();
+    let result = await this._supabase.from('characters').select().eq('user_id', this.user_id).maybeSingle();
+    console.warn('result 1', result);
+    console.error('error 1', result?.error?.message);
     if (!result.data) {
-      console.error('error 1', result.error.message);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const character: any = {
         user_id: this.user_id,
@@ -73,15 +81,15 @@ export class SupabaseService {
         lastName: 'Super',
         firstName: 'Cookie',
       };
+      console.log('getCharacter 2');
       result = await this._supabase.from('characters').insert(character);
+      console.warn('result 2', result);
+      console.error('error 2', result?.error?.message);
     }
 
-    console.log('getCharacter 2');
     if (!result.data) {
-      console.error('error 2', result?.error?.message);
       return null;
     } else {
-      console.error('result', result);
       const character: Character = {
         age: 22,
         avatar: result.data.avatar,
