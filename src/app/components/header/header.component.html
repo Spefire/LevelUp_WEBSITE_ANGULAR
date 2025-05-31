@@ -4,20 +4,24 @@
     <img class="mobileHeader-image u-displayNoneAtMediaMinM" src="./assets/text.png" alt="Retour vers l'accueil" />
   </a>
   @if (isConnected) {
-    <div class="mobileHeader-title u-displayNoneAtMediaMaxM">
-      <h1 class="mobileHeader-title-main">{{ character.name }}</h1>
-      <div class="mobileHeader-title-sub">{{ character.gender }}, {{ character.age }} ans</div>
-    </div>
+    @if (character) {
+      <div class="mobileHeader-title u-displayNoneAtMediaMaxM">
+        <h1 class="mobileHeader-title-main">{{ character.name }}</h1>
+        <div class="mobileHeader-title-sub">{{ character.gender }}, {{ character.age }} ans</div>
+      </div>
+    }
     <div class="mobileHeader-actions">
       <div class="u-displayNoneAtMediaMinM">
         <div class="u-displayFlex u-alignItemsCenter pr-u-gap100">
-          <div class="u-textAlignRight">
-            <h1 class="mobileHeader-title-main">{{ character.name }}</h1>
-            <div class="mobileHeader-title-sub">{{ character.gender }}, {{ character.age }} ans</div>
-          </div>
-          <span class="avatar">
-            <img class="avatar-picture" loading="lazy" [src]="character.avatar" alt="" />
-          </span>
+          @if (character) {
+            <div class="u-textAlignRight">
+              <h1 class="mobileHeader-title-main">{{ character.name }}</h1>
+              <div class="mobileHeader-title-sub">{{ character.gender }}, {{ character.age }} ans</div>
+            </div>
+            <span class="avatar">
+              <img class="avatar-picture" loading="lazy" [src]="character.avatar" alt="" />
+            </span>
+          }
           <a luButton="text" routerLink="/parametres">
             <lu-icon icon="settingsTools" [alt]="pages.params" />
           </a>

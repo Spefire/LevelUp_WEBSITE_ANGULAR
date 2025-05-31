@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 
 import { createClient, Session, SupabaseClient } from '@supabase/supabase-js';
 
+import { Character } from '@src/models/character.model';
+
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -15,6 +17,11 @@ export class SupabaseService {
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   public session$ = this.session.asObservable();
+
+  public get user_id() {
+    const session = this.session.value;
+    return session ? session.user.id : null;
+  }
 
   constructor(private _router: Router) {
     const url = environment.NG_APP_SUPABASE_URL || '';
@@ -29,90 +36,52 @@ export class SupabaseService {
     });
   }
 
-  public async getSession() {
-    const result = await this._supabase.auth.getSession();
-    return result.data.session;
-  }
-
   public async login(email: string, password: string) {
-    const result = await this._supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (result.error) {
-      return { success: '', error: result.error.message };
-    } else {
-      return { success: 'Vous êtes bien connecté !', error: '' };
-    }
+    const result = await this._supabase.auth.signInWithPassword({ email, password });
+    if (result.error) return { success: '', error: result.error.message };
+    else return { success: 'Vous êtes bien connecté !', error: '' };
   }
 
   public async signUp(email: string, password: string) {
-    const result = await this._supabase.auth.signUp({
-      email,
-      password,
-    });
-
-    if (result.error) {
-      return { success: '', error: result.error.message };
-    } else {
-      return { success: 'Vous avez reçu un mail sur ' + email + ' pour confirmer votre inscription.', error: '' };
-    }
+    const result = await this._supabase.auth.signUp({ email, password });
+    if (result.error) return { success: '', error: result.error.message };
+    else return { success: 'Vous avez reçu un mail sur ' + email + ' pour confirmer votre inscription.', error: '' };
   }
 
   public async logout() {
     const result = await this._supabase.auth.signOut();
-
-    if (result.error) {
-      return result.error.message;
-    } else {
+    if (result.error) return result.error.message;
+    else {
+      localStorage.removeItem('character');
       return null;
     }
   }
 
-  /*
-  private async _requestGet(target: string): Promise<any[]> {
-    if (!this._supabase) return [];
-    const { data } = await this._supabase.from(target).select();
-    // console.log('requestGet', data);
-    return data || [];
-  }
+  public async getCharacter() {
+    if (!this.user_id) return null;
 
-  private async _requestPostAll(target: string, items: ModelAPI[]): Promise<any[]> {
-    if (!this._supabase) return [];
-    const newItems: any[] = [];
-    items.forEach(item => {
-      const newItem: any = Object.assign({}, item);
-      delete newItem['id'];
-      newItems.push(newItem);
-    });
-    const { data } = await this._supabase.from(target).insert(newItems).select();
-    // console.log('requestPostAll', data);
-    return data || [];
-  }
+    let result = await this._supabase.from('characters').select().eq('user_id', this.user_id).single();
+    if (!result.data) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const character: any = {
+        user_id: this.user_id,
+        isAdmin: false,
+        avatar: 'https://www.arlenor.com/assets/images_filled/characters/ace.png',
+        lastName: 'Super',
+        firstName: 'Cookie',
+      };
+      result = await this._supabase.from('characters').insert(character);
+    }
 
-  private async _requestPost(target: string, item: ModelAPI): Promise<number> {
-    if (!this._supabase) return 0;
-    const newItem: any = Object.assign({}, item);
-    delete newItem['id'];
-    const { data } = await this._supabase.from(target).insert([newItem]).select();
-    const id = data && data[0].id ? data[0].id : 0;
-    // console.log('requestPost', id);
-    return id;
+    if (!result.data) return null;
+    else {
+      const character: Character = {
+        age: 22,
+        avatar: result.data.avatar,
+        gender: 'N',
+        name: result.data.lastName + ' ' + result.data.firstName,
+      };
+      return character;
+    }
   }
-
-  private async _requestPut(target: string, item: ModelAPI): Promise<boolean> {
-    if (!this._supabase) return false;
-    await this._supabase.from(target).update(item).eq('id', item.id).select();
-    // console.log('requestPut');
-    return true;
-  }
-
-  private async _requestDelete(target: string, id: number | null): Promise<boolean> {
-    if (!this._supabase) return false;
-    await this._supabase.from(target).delete().eq('id', id).select();
-    // console.log('requestDelete');
-    return true;
-  }
-  */
 }
