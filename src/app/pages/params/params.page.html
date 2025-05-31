@@ -13,13 +13,10 @@
   <div class="grid-column card" [attr.style]="'--grid-colspan: 12; --grid-colspanAtMediaMinM: 4'">
     <h2 class="pr-u-marginBottom150">Personnage</h2>
     <p>
-      Nom : <b>{{ character.name }}</b>
+      Nom : <b>{{ character.lastName }} {{ character.firstName }}</b>
     </p>
     <p>
-      Genre : <b>{{ character.gender }}</b>
-    </p>
-    <p>
-      Age : <b>{{ character.age }} ans</b>
+      Admin : <b>{{ character.isAdmin ? 'Oui' : 'Non' }}</b>
     </p>
     <button type="button" luButton size="S" class="pr-u-marginTop200" (click)="resetCharacter()">Réinitialiser</button>
   </div>

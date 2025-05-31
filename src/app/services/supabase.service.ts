@@ -65,25 +65,25 @@ export class SupabaseService {
   }
 
   public async getCharacter() {
-    let result = await this._requestGet('characters');
-    if (!result.data) {
-      const character: any = {
+    let resultCharacter = await this._requestGet('characters');
+    if (!resultCharacter) {
+      const item: any = {
         user_id: this.user_id,
         isAdmin: false,
         avatar: 'https://www.arlenor.com/assets/images_filled/characters/ace.png',
         lastName: 'Super',
         firstName: 'Cookie',
       };
-      result = await this._requestPost('characters', character);
+      resultCharacter = await this._requestPost('characters', item);
     }
 
-    if (!result.data) return null;
+    if (!resultCharacter) return null;
     else {
       const character: Character = {
-        age: 22,
-        avatar: result.data.avatar,
-        gender: 'N',
-        name: result.data.lastName + ' ' + result.data.firstName,
+        avatar: resultCharacter.avatar,
+        lastName: resultCharacter.lastName,
+        firstName: resultCharacter.firstName,
+        isAdmin: resultCharacter.isAdmin,
       };
       return character;
     }

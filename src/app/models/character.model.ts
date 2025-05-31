@@ -5,9 +5,9 @@ export const CaractKeys: CaractKey[] = ['force', 'habilete', 'tenacite', 'intell
 
 export interface Character {
   avatar: string;
-  name: string;
-  gender: string;
-  age: number;
+  lastName: string;
+  firstName: string;
+  isAdmin: false;
 }
 
 export interface Caract {

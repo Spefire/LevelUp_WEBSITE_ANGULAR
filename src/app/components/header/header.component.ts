@@ -34,11 +34,9 @@ export class HeaderComponent implements OnInit {
   public ngOnInit() {
     this._characterService.character$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(character => {
       this.character = character;
-      console.log('HEADER this._characterService.character$', character);
     });
     this._supabaseService.session$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(session => {
       this.isConnected = session ? true : false;
-      console.log('HEADER this._supabaseService.session$', this.isConnected);
       if (this.isConnected) this._characterService.loadCharacter();
     });
   }
