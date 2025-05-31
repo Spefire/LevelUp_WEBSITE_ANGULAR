@@ -82,7 +82,7 @@ export class SupabaseService {
         firstName: 'Cookie',
       };
       console.log('getCharacter 2');
-      result = await this._supabase.from('characters').insert(character);
+      result = await this._supabase.from('characters').insert(character).select();
       console.warn('result 2', result);
       console.error('error 2', result?.error?.message);
     }
