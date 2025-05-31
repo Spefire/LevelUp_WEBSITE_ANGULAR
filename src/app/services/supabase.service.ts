@@ -58,10 +58,13 @@ export class SupabaseService {
   }
 
   public async getCharacter() {
+    console.log('----------------', this.user_id);
     if (!this.user_id) return null;
 
+    console.log('getCharacter 1');
     let result = await this._supabase.from('characters').select().eq('user_id', this.user_id).single();
     if (!result.data) {
+      console.error('error 1', result.error.message);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const character: any = {
         user_id: this.user_id,
@@ -71,14 +74,14 @@ export class SupabaseService {
         firstName: 'Cookie',
       };
       result = await this._supabase.from('characters').insert(character);
-    } else {
-      console.error(result.error.message);
     }
 
+    console.log('getCharacter 2');
     if (!result.data) {
-      console.error(result.error.message);
+      console.error('error 2', result?.error?.message);
       return null;
     } else {
+      console.error('result', result);
       const character: Character = {
         age: 22,
         avatar: result.data.avatar,
