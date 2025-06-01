@@ -12,13 +12,16 @@
 <div class="grid pr-u-marginTop200">
   <div class="grid-column card" [attr.style]="'--grid-colspan: 12; --grid-colspanAtMediaMinM: 4'">
     <h2 class="pr-u-marginBottom150">Personnage</h2>
+    <span class="avatar mod-XXXL pr-u-marginBottom150">
+      <img class="avatar-picture" loading="lazy" [src]="avatarURL" alt="Avatar" />
+    </span>
     <p>
       Nom : <b>{{ character.lastName }} {{ character.firstName }}</b>
     </p>
     <p>
       Admin : <b>{{ character.isAdmin ? 'Oui' : 'Non' }}</b>
     </p>
-    <button type="button" luButton size="S" class="pr-u-marginTop200" (click)="resetCharacter()">Réinitialiser</button>
+    <button type="button" luButton size="S" class="pr-u-marginTop200" (click)="modifyCharacter()">Modifier</button>
   </div>
 
   <div class="grid-column card" [attr.style]="'--grid-colspan: 12; --grid-colspanAtMediaMinM: 4'">

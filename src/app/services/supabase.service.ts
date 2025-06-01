@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 
 import { createClient, Session, SupabaseClient } from '@supabase/supabase-js';
 
-import { Character } from '@src/models/character.model';
+import { Avatar, Character } from '@src/models/character.model';
+import { adjectives, nouns } from '@src/models/character.options';
 
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -59,7 +60,7 @@ export class SupabaseService {
     const result = await this._supabase.auth.signOut();
     if (result.error) return result.error.message;
     else {
-      localStorage.removeItem('character');
+      localStorage.clear();
       return null;
     }
   }
@@ -70,17 +71,24 @@ export class SupabaseService {
       const item: any = {
         user_id: this.user_id,
         isAdmin: false,
-        avatar: 'https://www.arlenor.com/assets/images_filled/characters/ace.png',
-        lastName: 'Super',
-        firstName: 'Cookie',
+        avatar: [1, 1, 0, 1, 1],
+        lastName: adjectives[Math.floor(Math.random() * adjectives.length)],
+        firstName: nouns[Math.floor(Math.random() * nouns.length)],
       };
       resultCharacter = await this._requestPost('characters', item);
     }
 
     if (!resultCharacter) return null;
     else {
+      const avatar: Avatar = {
+        eyebrows: resultCharacter.avatar ? resultCharacter.avatar[0] : 1,
+        eyes: resultCharacter.avatar ? resultCharacter.avatar[1] : 1,
+        hasGlasses: resultCharacter.avatar ? (resultCharacter.avatar[2] ? true : false) : false,
+        glasses: resultCharacter.avatar ? resultCharacter.avatar[3] : 1,
+        mouth: resultCharacter.avatar ? resultCharacter.avatar[4] : 1,
+      };
       const character: Character = {
-        avatar: resultCharacter.avatar,
+        avatar: avatar,
         lastName: resultCharacter.lastName,
         firstName: resultCharacter.firstName,
         isAdmin: resultCharacter.isAdmin,

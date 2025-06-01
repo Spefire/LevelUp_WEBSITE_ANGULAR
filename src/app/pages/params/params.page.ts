@@ -8,10 +8,11 @@ import { LuDialogService } from '@lucca-front/ng/dialog';
 import { PageHeaderComponent } from '@lucca-front/ng/page-header';
 
 import { ConfirmDialogComponent } from '@src/components/confirm-dialog/confirm-dialog.component';
-import { Character } from '@src/models/character.model';
+import { Character, getAvatarURL } from '@src/models/character.model';
 import { Log } from '@src/models/logs.model';
 import { PageTitles } from '@src/models/pages.model';
 import { Quest } from '@src/models/quests.model';
+import { ParamsCharacterDialogComponent } from '@src/pages/params/params-character-dialog/params-character-dialog.component';
 import { CharacterService } from '@src/services/character.service';
 import { LogsService } from '@src/services/logs.service';
 import { QuestsService } from '@src/services/quests.service';
@@ -24,6 +25,8 @@ import { QuestsService } from '@src/services/quests.service';
 })
 export class ParamsPage implements OnInit {
   public pages = PageTitles;
+
+  public avatarURL: string;
   public character: Character;
   public logs: Log[];
   public dailyQuests: Quest[];
@@ -41,6 +44,7 @@ export class ParamsPage implements OnInit {
   public ngOnInit(): void {
     this._characterService.character$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(character => {
       this.character = character;
+      this.avatarURL = getAvatarURL(this.character.avatar);
     });
 
     this._logsService.logs$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(logs => {
@@ -52,15 +56,18 @@ export class ParamsPage implements OnInit {
     });
   }
 
-  public resetCharacter() {
+  public modifyCharacter() {
     const dialogRef = this.#dialog.open({
-      content: ConfirmDialogComponent,
-      data: {},
-      size: 'S',
+      content: ParamsCharacterDialogComponent,
+      data: { character: this.character },
+      panelClasses: ['mod-neutralBackground'],
+      size: 'L',
     });
 
     dialogRef.result$.subscribe(res => {
-      if (res) localStorage.removeItem('character');
+      if (res) {
+        console.warn('Avatar modifié');
+      }
     });
   }
 
@@ -98,6 +105,7 @@ export class ParamsPage implements OnInit {
     dialogRef.result$.subscribe(res => {
       if (res) {
         localStorage.clear();
+        window.location.reload();
       }
     });
   }

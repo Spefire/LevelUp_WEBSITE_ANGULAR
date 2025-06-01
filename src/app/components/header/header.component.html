@@ -19,7 +19,7 @@
               <div class="mobileHeader-title-sub">Débutant {{ character.isAdmin ? '(Admin)' : '' }}</div>
             </div>
             <span class="avatar">
-              <img class="avatar-picture" loading="lazy" [src]="character.avatar" alt="" />
+              <img class="avatar-picture" loading="lazy" [src]="avatarURL" alt="Avatar" />
             </span>
           }
           <a luButton="text" routerLink="/parametres">
