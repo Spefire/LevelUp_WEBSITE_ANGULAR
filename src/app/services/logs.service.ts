@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Log } from '@src/models/logs.model';
-import { listQuests } from '@src/models/quests.model';
+import { SupabaseService } from '@src/services/supabase.service';
 import { isSameDay } from '@src/utils/time';
 
 import { BehaviorSubject } from 'rxjs';
@@ -10,49 +10,51 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class LogsService {
-  private _logsSubject = new BehaviorSubject<Log[]>([]);
+  private _logsSubject = new BehaviorSubject<Log[]>(null);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   public logs$ = this._logsSubject.asObservable();
 
-  constructor() {
+  constructor(private _supabaseService: SupabaseService) {
     this._load();
   }
 
-  public addLog(addedLog: Log): void {
-    const logs = this._logsSubject.value;
-    logs.push(addedLog);
-    this._save(logs);
+  public async loadLogs() {
+    if (!this._logsSubject.value) {
+      const logs = await this._supabaseService.getLogs();
+      if (logs) this._save(logs);
+    }
   }
 
-  public removeLog(removedLog: Log): void {
-    const logs = this._logsSubject.value.filter(log => !(removedLog.quest.id === log.quest.id && isSameDay(removedLog.date, new Date(log.date))));
-    this._save(logs);
+  public async addLog(newLog: Log) {
+    const log = await this._supabaseService.postLog(newLog);
+    if (log) {
+      const logs = this._logsSubject.value;
+      logs.push(log);
+      this._save(logs);
+      return true;
+    } else return false;
+  }
+
+  public async removeLog(deletedLog: Log) {
+    const log = await this._supabaseService.deleteLog(deletedLog);
+    if (log) {
+      const logs = this._logsSubject.value.filter(log => !(deletedLog.quest.id === log.quest.id && isSameDay(deletedLog.date, new Date(log.date))));
+      this._save(logs);
+      return true;
+    } else return false;
   }
 
   private _load() {
     const storage = localStorage.getItem('logs');
     if (storage) {
-      const result: Log[] = [];
-      const jsonObjs: { date: string; idQuest: string }[] = JSON.parse(storage);
-      jsonObjs.forEach(jsonObj => {
-        const itemToFind = listQuests.find(quest => quest.id === jsonObj.idQuest);
-        if (itemToFind) {
-          result.push({
-            date: new Date(jsonObj.date),
-            quest: itemToFind,
-          });
-        }
-      });
-      this._logsSubject.next(result);
+      const logs: Log[] = JSON.parse(storage);
+      this._logsSubject.next(logs);
     }
   }
 
   private _save(logs: Log[]) {
     this._logsSubject.next(logs);
-    const result = logs.map(log => {
-      return { date: log.date, idQuest: log.quest.id };
-    });
-    localStorage.setItem('logs', JSON.stringify(result));
+    localStorage.setItem('logs', JSON.stringify(logs));
   }
 }

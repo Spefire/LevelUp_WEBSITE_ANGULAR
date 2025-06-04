@@ -15,7 +15,7 @@ export enum QuestCategory {
 }
 
 export interface Quest {
-  id: string;
+  id: number;
   name: string;
   description: string;
   difficulty: QuestDifficulty;
@@ -33,7 +33,7 @@ export interface QuestsFilters {
 
 export const listQuests: Quest[] = [
   {
-    id: 'quest-001',
+    id: 1,
     name: 'Musculation',
     description: 'Faire une séance de musculation',
     difficulty: QuestDifficulty.COMPLEXE,
@@ -50,7 +50,7 @@ export const listQuests: Quest[] = [
     },
   },
   {
-    id: 'quest-002',
+    id: 2,
     name: 'Cardio',
     description: 'Faire une séance de cardio 30min',
     difficulty: QuestDifficulty.STANDARD,
@@ -67,7 +67,7 @@ export const listQuests: Quest[] = [
     },
   },
   {
-    id: 'quest-003',
+    id: 3,
     name: 'Marche',
     description: 'Faire une séance de marche 1h',
     difficulty: QuestDifficulty.STANDARD,
@@ -84,7 +84,7 @@ export const listQuests: Quest[] = [
     },
   },
   {
-    id: 'quest-010',
+    id: 4,
     name: 'Sommeil I',
     description: 'Dormir avant 0h',
     difficulty: QuestDifficulty.SIMPLE,
@@ -101,7 +101,7 @@ export const listQuests: Quest[] = [
     },
   },
   {
-    id: 'quest-011',
+    id: 5,
     name: 'Sommeil II',
     description: 'Dormir avant 23h',
     difficulty: QuestDifficulty.STANDARD,
@@ -118,7 +118,7 @@ export const listQuests: Quest[] = [
     },
   },
   {
-    id: 'quest-012',
+    id: 6,
     name: 'Sommeil III',
     description: 'Dormir avant 22h',
     difficulty: QuestDifficulty.COMPLEXE,
@@ -135,7 +135,7 @@ export const listQuests: Quest[] = [
     },
   },
   {
-    id: 'quest-020',
+    id: 7,
     name: 'Objectif Yazio',
     description: 'Remplir son objectif calorique',
     difficulty: QuestDifficulty.STANDARD,
@@ -152,7 +152,7 @@ export const listQuests: Quest[] = [
     },
   },
   {
-    id: 'quest-021',
+    id: 8,
     name: 'Cuisine',
     description: 'Faire la cuisine',
     difficulty: QuestDifficulty.STANDARD,
@@ -169,7 +169,7 @@ export const listQuests: Quest[] = [
     },
   },
   {
-    id: 'quest-022',
+    id: 9,
     name: 'Boisson',
     description: `Boire une bouteille d'eau`,
     difficulty: QuestDifficulty.STANDARD,

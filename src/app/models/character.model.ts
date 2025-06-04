@@ -13,10 +13,10 @@ export interface Avatar {
 
 export interface Character {
   id: number;
-  avatar: Avatar;
   lastName: string;
   firstName: string;
   isAdmin: boolean;
+  avatar: Avatar;
 }
 
 export interface Caract {
@@ -24,19 +24,6 @@ export interface Caract {
   code: string;
   description: string;
   color: Palette | DecorativePalette;
-}
-
-export interface StatProgress {
-  currentXP: number;
-  level: number;
-  xpToNextLevel: number;
-}
-
-export interface Stats {
-  currentXP: number;
-  level: number;
-  xpToNextLevel: number;
-  caracts: Record<CaractKey, StatProgress>;
 }
 
 export const Caracteristics: Record<CaractKey, Caract> = {

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { Character, Stats } from '@src/models/character.model';
+import { Character } from '@src/models/character.model';
+import { Stats } from '@src/models/stats.model';
 import { SupabaseService } from '@src/services/supabase.service';
 
 import { BehaviorSubject } from 'rxjs';
@@ -51,8 +52,8 @@ export class CharacterService {
   private _load() {
     const storage = localStorage.getItem('character');
     if (storage) {
-      const jsonObj: Character = JSON.parse(storage);
-      this._characterSubject.next(jsonObj);
+      const character: Character = JSON.parse(storage);
+      this._characterSubject.next(character);
     }
   }
 

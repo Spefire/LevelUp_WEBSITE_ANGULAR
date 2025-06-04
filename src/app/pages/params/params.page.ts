@@ -9,11 +9,13 @@ import { PageHeaderComponent } from '@lucca-front/ng/page-header';
 
 import { ConfirmDialogComponent } from '@src/components/confirm-dialog/confirm-dialog.component';
 import { Character, getAvatarURL } from '@src/models/character.model';
+import { DailyQuest } from '@src/models/daily-quests.model';
 import { Log } from '@src/models/logs.model';
 import { PageTitles } from '@src/models/pages.model';
 import { Quest } from '@src/models/quests.model';
 import { ParamsCharacterDialogComponent } from '@src/pages/params/params-character-dialog/params-character-dialog.component';
 import { CharacterService } from '@src/services/character.service';
+import { DailyQuestsService } from '@src/services/daily-quests.service';
 import { LogsService } from '@src/services/logs.service';
 import { QuestsService } from '@src/services/quests.service';
 
@@ -29,7 +31,8 @@ export class ParamsPage implements OnInit {
   public avatarURL: string;
   public character: Character;
   public logs: Log[];
-  public dailyQuests: Quest[];
+  public dailyQuests: DailyQuest[];
+  public quests: Quest[];
 
   private readonly _destroyRef = inject(DestroyRef);
 
@@ -38,6 +41,7 @@ export class ParamsPage implements OnInit {
   constructor(
     private _characterService: CharacterService,
     private _logsService: LogsService,
+    private _dailyQuestsService: DailyQuestsService,
     private _questsService: QuestsService
   ) {}
 
@@ -51,8 +55,12 @@ export class ParamsPage implements OnInit {
       this.logs = logs;
     });
 
-    this._questsService.dailyQuests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailyQuests => {
+    this._dailyQuestsService.dailyQuests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailyQuests => {
       this.dailyQuests = dailyQuests;
+    });
+
+    this._questsService.quests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(quests => {
+      this.quests = quests;
     });
   }
 
@@ -74,6 +82,18 @@ export class ParamsPage implements OnInit {
 
     dialogRef.result$.subscribe(res => {
       if (res) localStorage.removeItem('dailyQuests');
+    });
+  }
+
+  public resetQuests() {
+    const dialogRef = this.#dialog.open({
+      content: ConfirmDialogComponent,
+      data: {},
+      size: 'S',
+    });
+
+    dialogRef.result$.subscribe(res => {
+      if (res) localStorage.removeItem('quests');
     });
   }
 

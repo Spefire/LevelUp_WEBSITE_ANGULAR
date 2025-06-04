@@ -39,7 +39,7 @@ export class DailyCardComponent implements OnInit {
   }
 
   public completeQuest() {
-    this.logLinked = { date: this.currentDate(), quest: this.quest() };
+    this.logLinked = { id: null, id_quest: this.quest().id, date: this.currentDate(), quest: this.quest() };
     this._logsService.addLog(this.logLinked);
   }
 

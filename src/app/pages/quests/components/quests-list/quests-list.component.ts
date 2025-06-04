@@ -7,8 +7,10 @@ import { EmptyStateSectionComponent } from '@lucca-front/ng/empty-state';
 import { IconComponent } from '@lucca-front/ng/icon';
 import { StatusBadgeComponent } from '@lucca-front/ng/statusBadge';
 
+import { DailyQuest } from '@src/models/daily-quests.model';
 import { Quest, QuestCategory, QuestDifficulty, QuestsFilters } from '@src/models/quests.model';
 import { QuestsCardComponent } from '@src/pages/quests/components/quests-card/quests-card.component';
+import { DailyQuestsService } from '@src/services/daily-quests.service';
 import { QuestsService } from '@src/services/quests.service';
 
 @Component({
@@ -21,15 +23,18 @@ export class QuestsListComponent implements OnInit {
 
   public QuestDifficulty = QuestDifficulty;
   public categories = [null, ...Object.values(QuestCategory)];
-  public dailyQuests: Quest[];
+  public dailyQuests: DailyQuest[];
   public filters: QuestsFilters;
 
   private readonly _destroyRef = inject(DestroyRef);
 
-  constructor(private _questsService: QuestsService) {}
+  constructor(
+    private _dailyQuestsService: DailyQuestsService,
+    private _questsService: QuestsService
+  ) {}
 
   public ngOnInit(): void {
-    this._questsService.dailyQuests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailyQuests => {
+    this._dailyQuestsService.dailyQuests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailyQuests => {
       this.dailyQuests = dailyQuests;
     });
 

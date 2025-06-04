@@ -10,7 +10,7 @@ import { ConfirmDialogComponent } from '@src/components/confirm-dialog/confirm-d
 import { QuestRewardsComponent } from '@src/components/quest-rewards/quest-rewards.component';
 import { Quest } from '@src/models/quests.model';
 import { DaysOfWeekPipe } from '@src/pipes/days-of-week.pipe';
-import { QuestsService } from '@src/services/quests.service';
+import { DailyQuestsService } from '@src/services/daily-quests.service';
 
 @Component({
   selector: 'quests-card',
@@ -28,10 +28,10 @@ export class QuestsCardComponent implements OnInit {
 
   #dialog = inject(LuDialogService);
 
-  constructor(private _questsService: QuestsService) {}
+  constructor(private _dailyQuestsService: DailyQuestsService) {}
 
   public ngOnInit() {
-    this._questsService.dailyQuests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailyQuests => {
+    this._dailyQuestsService.dailyQuests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailyQuests => {
       this.isChecked = !!dailyQuests.find(dailyQuest => dailyQuest.id === this.quest().id);
     });
   }
@@ -47,12 +47,12 @@ export class QuestsCardComponent implements OnInit {
       dialogRef.result$.subscribe(res => {
         if (res) {
           this.isChecked = !this.isChecked;
-          this._questsService.toggleQuest(this.quest());
+          // this._dailyQuestsService.removeDailyQuest(this.quest());
         }
       });
     } else {
       this.isChecked = !this.isChecked;
-      this._questsService.toggleQuest(this.quest());
+      // this._dailyQuestsService.addDailyQuest(this.quest());
     }
   }
 }

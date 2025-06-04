@@ -6,6 +6,8 @@ import { createClient, Session, SupabaseClient } from '@supabase/supabase-js';
 
 import { Avatar, Character } from '@src/models/character.model';
 import { adjectives, nouns } from '@src/models/character.options';
+import { DailyQuest } from '@src/models/daily-quests.model';
+import { Log } from '@src/models/logs.model';
 
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -134,6 +136,54 @@ export class SupabaseService {
 
   // --------------------------------------------------------------------------------------------------
 
+  public async getLogs() {
+    const resultLogs = await this._requestGetAll('logs');
+    if (!resultLogs) return null;
+    else return resultLogs;
+  }
+
+  public async postLog(log: Log) {
+    const resultLog = await this._requestPost('logs', log);
+    if (!resultLog) return null;
+    else return resultLog;
+  }
+
+  public async deleteLog(log: Log) {
+    const resultLog = await this._requestDelete('logs', log.id);
+    if (!resultLog) return null;
+    else return resultLog;
+  }
+
+  // --------------------------------------------------------------------------------------------------
+
+  public async getDailyQuests() {
+    const resultLogs = await this._requestGetAll('dailyQuests');
+    if (!resultLogs) return null;
+    else return resultLogs;
+  }
+
+  public async postDailyQuest(dailyQuest: DailyQuest) {
+    const resultLog = await this._requestPost('dailyQuests', dailyQuest);
+    if (!resultLog) return null;
+    else return resultLog;
+  }
+
+  public async deleteDailyQuest(dailyQuest: DailyQuest) {
+    const resultLog = await this._requestDelete('dailyQuests', dailyQuest.id);
+    if (!resultLog) return null;
+    else return resultLog;
+  }
+
+  // --------------------------------------------------------------------------------------------------
+
+  public async getQuests() {
+    const resultLogs = await this._requestGetAll('quests');
+    if (!resultLogs) return null;
+    else return resultLogs;
+  }
+
+  // --------------------------------------------------------------------------------------------------
+
   private async _requestGet(target: string): Promise<any> {
     const result = await this._supabase.from(target).select().eq('user_id', this.user_id).maybeSingle();
     if (this._degubMode) console.log('requestGet', result);
@@ -141,12 +191,12 @@ export class SupabaseService {
     return result.data;
   }
 
-  /* private async _requestGetAll(target: string): Promise<any[]> {
+  private async _requestGetAll(target: string): Promise<any[]> {
     const result = await this._supabase.from(target).select().eq('user_id', this.user_id);
     if (this._degubMode) console.log('requestGetAll', result);
     if (result.error) console.error('requestGetAll', result.error.message);
     return result.data;
-  }*/
+  }
 
   private async _requestPost(target: string, item: any): Promise<any> {
     const result = await this._supabase.from(target).insert(item).select().single();
@@ -169,10 +219,10 @@ export class SupabaseService {
     return result.data;
   }
 
-  /* private async _requestDelete(target: string, id: number | null): Promise<boolean> {
+  private async _requestDelete(target: string, id: number | null): Promise<boolean> {
     const result = await this._supabase.from(target).delete().eq('id', id).select();
     if (this._degubMode) console.log('requestDelete', result);
     if (result.error) console.error('requestDelete', result.error.message);
     return true;
-  }*/
+  }
 }

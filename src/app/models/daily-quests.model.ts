@@ -1,8 +1,7 @@
 import { Quest } from '@src/models/quests.model';
 
-export interface Log {
+export interface DailyQuest {
   id: number;
   id_quest: number;
-  date: Date;
   quest: Quest;
 }

@@ -6,10 +6,11 @@ import { FancyBoxComponent } from '@lucca-front/ng/fancy-box';
 import { PageHeaderComponent } from '@lucca-front/ng/page-header';
 
 import { NotchComponent } from '@src/components/notch/notch.component';
-import { Caracteristics, CaractKeys, Character, Stats } from '@src/models/character.model';
+import { Caracteristics, CaractKeys, Character } from '@src/models/character.model';
 import { Log } from '@src/models/logs.model';
 import { PageTitles } from '@src/models/pages.model';
 import { QuestDifficulty } from '@src/models/quests.model';
+import { Stats } from '@src/models/stats.model';
 import { CharacterService } from '@src/services/character.service';
 import { LogsService } from '@src/services/logs.service';
 
