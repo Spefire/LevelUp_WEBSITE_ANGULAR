@@ -44,7 +44,7 @@ export class ParamsPage implements OnInit {
   public ngOnInit(): void {
     this._characterService.character$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(character => {
       this.character = character;
-      this.avatarURL = getAvatarURL(this.character.avatar);
+      if (character) this.avatarURL = getAvatarURL(this.character.avatar);
     });
 
     this._logsService.logs$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(logs => {
@@ -57,17 +57,11 @@ export class ParamsPage implements OnInit {
   }
 
   public modifyCharacter() {
-    const dialogRef = this.#dialog.open({
+    this.#dialog.open({
       content: ParamsCharacterDialogComponent,
       data: { character: this.character },
       panelClasses: ['mod-neutralBackground'],
       size: 'L',
-    });
-
-    dialogRef.result$.subscribe(res => {
-      if (res) {
-        console.warn('Avatar modifié');
-      }
     });
   }
 

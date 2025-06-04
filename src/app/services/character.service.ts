@@ -40,6 +40,14 @@ export class CharacterService {
     }
   }
 
+  public async saveCharacter(newCharacter: Character) {
+    const character = await this._supabaseService.putCharacter(newCharacter);
+    if (character) {
+      this._save(character);
+      return true;
+    } else return false;
+  }
+
   private _load() {
     const storage = localStorage.getItem('character');
     if (storage) {

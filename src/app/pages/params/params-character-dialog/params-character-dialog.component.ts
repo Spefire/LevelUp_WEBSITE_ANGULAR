@@ -19,6 +19,7 @@ import { LuSimpleSelectInputComponent } from '@lucca-front/ng/simple-select';
 
 import { Avatar, Character, getAvatarURL } from '@src/models/character.model';
 import { adjectives, nouns } from '@src/models/character.options';
+import { CharacterService } from '@src/services/character.service';
 
 @Component({
   selector: 'params-character-dialog',
@@ -45,20 +46,34 @@ export class ParamsCharacterDialogComponent implements OnInit {
   public adjectives = adjectives;
   public nouns = nouns;
 
+  public id: number;
   public avatar: Avatar;
   public avatarURL: string;
   public lastName: string;
   public firstName: string;
+  public isAdmin: boolean;
+
+  constructor(private _characterService: CharacterService) {}
 
   public ngOnInit() {
+    this.id = this.data.character.id;
+    this.avatar = this.data.character.avatar;
     this.lastName = this.data.character.lastName;
     this.firstName = this.data.character.firstName;
-    this.avatar = this.data.character.avatar;
+    this.isAdmin = this.data.character.isAdmin;
     this.update();
   }
 
-  public confirm() {
-    this.ref.close(true);
+  public async confirm() {
+    const character: Character = {
+      id: this.id,
+      avatar: this.avatar,
+      lastName: this.lastName,
+      firstName: this.firstName,
+      isAdmin: this.isAdmin,
+    };
+    const result = await this._characterService.saveCharacter(character);
+    if (result) this.ref.close(true);
   }
 
   public update() {

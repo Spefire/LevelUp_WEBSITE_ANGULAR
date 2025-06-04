@@ -12,10 +12,11 @@ export interface Avatar {
 }
 
 export interface Character {
+  id: number;
   avatar: Avatar;
   lastName: string;
   firstName: string;
-  isAdmin: false;
+  isAdmin: boolean;
 }
 
 export interface Caract {

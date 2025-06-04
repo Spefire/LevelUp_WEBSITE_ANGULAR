@@ -44,6 +44,8 @@ export class SupabaseService {
     });
   }
 
+  // --------------------------------------------------------------------------------------------------
+
   public async login(email: string, password: string) {
     const result = await this._supabase.auth.signInWithPassword({ email, password });
     if (result.error) return { success: '', error: result.error.message };
@@ -64,6 +66,8 @@ export class SupabaseService {
       return null;
     }
   }
+
+  // --------------------------------------------------------------------------------------------------
 
   public async getCharacter() {
     let resultCharacter = await this._requestGet('characters');
@@ -88,6 +92,7 @@ export class SupabaseService {
         mouth: resultCharacter.avatar ? resultCharacter.avatar[4] : 1,
       };
       const character: Character = {
+        id: resultCharacter.id,
         avatar: avatar,
         lastName: resultCharacter.lastName,
         firstName: resultCharacter.firstName,
@@ -96,6 +101,38 @@ export class SupabaseService {
       return character;
     }
   }
+
+  public async putCharacter(character: Character) {
+    const item: any = {
+      id: character.id,
+      user_id: this.user_id,
+      isAdmin: character.isAdmin,
+      avatar: [character.avatar.eyebrows, character.avatar.eyes, character.avatar.hasGlasses ? 1 : 0, character.avatar.glasses, character.avatar.mouth],
+      lastName: character.lastName,
+      firstName: character.firstName,
+    };
+    const resultCharacter = await this._requestPut('characters', item);
+    if (!resultCharacter) return null;
+    else {
+      const avatar: Avatar = {
+        eyebrows: resultCharacter.avatar ? resultCharacter.avatar[0] : 1,
+        eyes: resultCharacter.avatar ? resultCharacter.avatar[1] : 1,
+        hasGlasses: resultCharacter.avatar ? (resultCharacter.avatar[2] ? true : false) : false,
+        glasses: resultCharacter.avatar ? resultCharacter.avatar[3] : 1,
+        mouth: resultCharacter.avatar ? resultCharacter.avatar[4] : 1,
+      };
+      const character: Character = {
+        id: resultCharacter.id,
+        avatar: avatar,
+        lastName: resultCharacter.lastName,
+        firstName: resultCharacter.firstName,
+        isAdmin: resultCharacter.isAdmin,
+      };
+      return character;
+    }
+  }
+
+  // --------------------------------------------------------------------------------------------------
 
   private async _requestGet(target: string): Promise<any> {
     const result = await this._supabase.from(target).select().eq('user_id', this.user_id).maybeSingle();
@@ -123,16 +160,16 @@ export class SupabaseService {
     if (this._degubMode) console.log('requestPostAll', result);
     if (result.error) console.error('requestPostAll', result.error.message);
     return result.data;
-  }
+  }*/
 
   private async _requestPut(target: string, item: any): Promise<any> {
-    const result = await this._supabase.from(target).update(item).eq('id', item.id).select();
+    const result = await this._supabase.from(target).update(item).eq('id', item.id).select().single();
     if (this._degubMode) console.log('requestPut', result);
     if (result.error) console.error('requestPut', result.error.message);
     return result.data;
   }
 
-  private async _requestDelete(target: string, id: number | null): Promise<boolean> {
+  /* private async _requestDelete(target: string, id: number | null): Promise<boolean> {
     const result = await this._supabase.from(target).delete().eq('id', id).select();
     if (this._degubMode) console.log('requestDelete', result);
     if (result.error) console.error('requestDelete', result.error.message);
