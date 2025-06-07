@@ -41,8 +41,10 @@ export class HistoricTableComponent implements OnInit {
 
   public ngOnInit() {
     this._logsService.logs$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(logs => {
-      this.logs = logs;
-      this.filteredLogs = this.logs.slice(0, Math.min(logs.length, this.nbByPage));
+      if (logs) {
+        this.logs = logs;
+        this.filteredLogs = this.logs.slice(0, Math.min(logs.length, this.nbByPage));
+      }
     });
   }
 

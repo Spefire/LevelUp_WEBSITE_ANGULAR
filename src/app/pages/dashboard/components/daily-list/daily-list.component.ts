@@ -29,10 +29,12 @@ export class DailyListComponent implements OnInit {
 
   public ngOnInit() {
     this._dailyQuestsService.dailyQuests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailyQuests => {
-      this.dailyQuests = dailyQuests.filter(dailyQuest => dailyQuest.quest.daysOfWeek.includes(this.currentDate().getDay()) && !dailyQuest.quest.isOptional);
-      this.optionnalDailyQuests = dailyQuests.filter(
-        dailyQuest => dailyQuest.quest.daysOfWeek.includes(this.currentDate().getDay()) && dailyQuest.quest.isOptional
-      );
+      if (dailyQuests) {
+        this.dailyQuests = dailyQuests.filter(dailyQuest => dailyQuest.quest.daysOfWeek.includes(this.currentDate().getDay()) && !dailyQuest.quest.isOptional);
+        this.optionnalDailyQuests = dailyQuests.filter(
+          dailyQuest => dailyQuest.quest.daysOfWeek.includes(this.currentDate().getDay()) && dailyQuest.quest.isOptional
+        );
+      }
     });
   }
 }

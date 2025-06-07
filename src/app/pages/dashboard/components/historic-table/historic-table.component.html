@@ -59,5 +59,7 @@
       }
     </tbody>
   </table>
-  <pagination [items]="logs" [nbByPage]="nbByPage" (updateItems)="changePagination($event)" />
+  @if (filteredLogs) {
+    <pagination [items]="logs" [nbByPage]="nbByPage" (updateItems)="changePagination($event)" />
+  }
 </div>

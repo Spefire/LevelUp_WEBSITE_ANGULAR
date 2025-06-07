@@ -1,6 +1,6 @@
-@if (dailyQuests.length && optionnalDailyQuests.length) {
+@if (dailyQuests?.length && optionnalDailyQuests?.length) {
   <div class="u-displayFlex u-flexDirectionColumn pr-u-gap200">
-    @if (dailyQuests.length) {
+    @if (dailyQuests?.length) {
       <section class="card">
         <div class="u-displayFlex u-alignItemsCenter pr-u-gap100">
           <h2 class="u-h3">Quêtes obligatoires</h2>
@@ -18,7 +18,7 @@
         </div>
       </section>
     }
-    @if (optionnalDailyQuests.length) {
+    @if (optionnalDailyQuests?.length) {
       <section class="card">
         <div class="u-displayFlex u-alignItemsCenter pr-u-gap100">
           <h2 class="u-h3">Quêtes optionnelles</h2>

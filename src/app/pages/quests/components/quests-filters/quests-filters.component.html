@@ -1,36 +1,38 @@
-<lu-filter-bar>
-  <ul *luFilterPillAddonBefore class="segmentedControl filterBar-segmentedControl" role="presentation">
-    @for (category of categories; track category) {
-      <li class="segmentedControl-item">
-        <input
-          type="radio"
-          class="segmentedControl-item-input"
-          name="tab"
-          [id]="'tab-' + category"
-          [value]="category"
-          [ngModel]="filters.category"
-          (ngModelChange)="changeCategory($event)"
-        />
-        <label [for]="'tab-' + category" class="segmentedControl-item-action">
-          {{ category ? category : 'Toutes' }}
-          @if (getQuestsByCategory(category).length; as nbQuest) {
-            <span class="numericBadge">{{ nbQuest }}</span>
-          }
-        </label>
-      </li>
-    }
-  </ul>
-  <lu-filter-pill label="Quêtes sélectionnées seulement">
-    <lu-checkbox-input [ngModel]="filters.onlySelected" (ngModelChange)="changeOnlySelected($event)" />
-  </lu-filter-pill>
-  <lu-form-field *luFilterPillAddonAfter label="Rechercher une quête" hiddenLabel>
-    <lu-text-input
-      [ngModel]="filters.search"
-      [ngModelOptions]="{ standalone: true }"
-      (ngModelChange)="changeSearch($event)"
-      hasSearchIcon
-      hasClearer
-      placeholder="Rechercher..."
-    />
-  </lu-form-field>
-</lu-filter-bar>
+@if (filters) {
+  <lu-filter-bar>
+    <ul *luFilterPillAddonBefore class="segmentedControl filterBar-segmentedControl" role="presentation">
+      @for (category of categories; track category) {
+        <li class="segmentedControl-item">
+          <input
+            type="radio"
+            class="segmentedControl-item-input"
+            name="tab"
+            [id]="'tab-' + category"
+            [value]="category"
+            [ngModel]="filters.category"
+            (ngModelChange)="changeCategory($event)"
+          />
+          <label [for]="'tab-' + category" class="segmentedControl-item-action">
+            {{ category ? category : 'Toutes' }}
+            @if (getQuestsByCategory(category).length; as nbQuest) {
+              <span class="numericBadge">{{ nbQuest }}</span>
+            }
+          </label>
+        </li>
+      }
+    </ul>
+    <lu-filter-pill label="Quêtes sélectionnées seulement">
+      <lu-checkbox-input [ngModel]="filters.onlySelected" (ngModelChange)="changeOnlySelected($event)" />
+    </lu-filter-pill>
+    <lu-form-field *luFilterPillAddonAfter label="Rechercher une quête" hiddenLabel>
+      <lu-text-input
+        [ngModel]="filters.search"
+        [ngModelOptions]="{ standalone: true }"
+        (ngModelChange)="changeSearch($event)"
+        hasSearchIcon
+        hasClearer
+        placeholder="Rechercher..."
+      />
+    </lu-form-field>
+  </lu-filter-bar>
+}

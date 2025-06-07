@@ -40,8 +40,10 @@ export class QuestsPage implements OnInit {
 
   public ngOnInit(): void {
     this._questsService.quests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(quests => {
-      this.quests = quests.filter(quest => !quest.isOptional);
-      this.optionnalQuests = quests.filter(quest => quest.isOptional);
+      if (quests) {
+        this.quests = quests.filter(quest => !quest.isOptional);
+        this.optionnalQuests = quests.filter(quest => quest.isOptional);
+      }
     });
   }
 

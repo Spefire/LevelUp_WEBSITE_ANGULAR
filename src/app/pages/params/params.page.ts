@@ -47,20 +47,22 @@ export class ParamsPage implements OnInit {
 
   public ngOnInit(): void {
     this._characterService.character$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(character => {
-      this.character = character;
-      if (character) this.avatarURL = getAvatarURL(this.character.avatar);
+      if (character) {
+        this.character = character;
+        this.avatarURL = getAvatarURL(this.character.avatar);
+      }
     });
 
     this._logsService.logs$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(logs => {
-      this.logs = logs;
+      if (logs) this.logs = logs;
     });
 
     this._dailyQuestsService.dailyQuests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailyQuests => {
-      this.dailyQuests = dailyQuests;
+      if (dailyQuests) this.dailyQuests = dailyQuests;
     });
 
     this._questsService.quests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(quests => {
-      this.quests = quests;
+      if (quests) this.quests = quests;
     });
   }
 

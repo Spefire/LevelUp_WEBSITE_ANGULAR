@@ -27,7 +27,7 @@
   <div class="grid-column card" [attr.style]="'--grid-colspan: 12; --grid-colspanAtMediaMinM: 4'">
     <h2 class="pr-u-marginBottom150">Quêtes journalières</h2>
     <p>
-      Nombre de quêtes sélectionnées : <b>{{ dailyQuests.length }}</b>
+      Nombre de quêtes sélectionnées : <b>{{ dailyQuests?.length ?? 0 }}</b>
     </p>
     <button type="button" luButton size="S" class="pr-u-marginTop200" (click)="resetDailyQuests()">
       Réinitialiser
@@ -37,7 +37,7 @@
   <div class="grid-column card" [attr.style]="'--grid-colspan: 12; --grid-colspanAtMediaMinM: 4'">
     <h2 class="pr-u-marginBottom150">Quêtes disponibles</h2>
     <p>
-      Nombre de quêtes disponibles : <b>{{ quests.length }}</b>
+      Nombre de quêtes disponibles : <b>{{ quests?.length ?? 0 }}</b>
     </p>
     <button type="button" luButton size="S" class="pr-u-marginTop200" (click)="resetQuests()">Réinitialiser</button>
   </div>
@@ -45,7 +45,7 @@
   <div class="grid-column card" [attr.style]="'--grid-colspan: 12; --grid-colspanAtMediaMinM: 4'">
     <h2 class="pr-u-marginBottom150">Historique</h2>
     <p>
-      Nombre de quêtes réalisées : <b>{{ logs.length }}</b>
+      Nombre de quêtes réalisées : <b>{{ logs?.length ?? 0 }}</b>
     </p>
     <button type="button" luButton size="S" class="pr-u-marginTop200" (click)="resetLogs()">Réinitialiser</button>
   </div>

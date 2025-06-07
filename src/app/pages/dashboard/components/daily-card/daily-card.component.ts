@@ -30,7 +30,7 @@ export class DailyCardComponent implements OnInit {
 
   constructor(private _logsService: LogsService) {
     this._logsService.logs$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(logs => {
-      this.logs = logs;
+      if (logs) this.logs = logs;
     });
   }
 

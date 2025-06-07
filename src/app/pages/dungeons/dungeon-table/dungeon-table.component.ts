@@ -46,13 +46,17 @@ export class DungeonTableComponent implements OnInit, OnChanges {
 
   public ngOnInit() {
     this._dailyQuestsService.dailyQuests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailyQuests => {
-      this.dailyQuests = dailyQuests.sort((a, b) => a.quest.name.localeCompare(b.quest.name));
-      this._createTable();
+      if (dailyQuests) {
+        this.dailyQuests = dailyQuests.sort((a, b) => a.quest.name.localeCompare(b.quest.name));
+        this._createTable();
+      }
     });
 
     this._logsService.logs$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(logs => {
-      this.logs = logs;
-      this._createTable();
+      if (logs) {
+        this.logs = logs;
+        this._createTable();
+      }
     });
   }
 

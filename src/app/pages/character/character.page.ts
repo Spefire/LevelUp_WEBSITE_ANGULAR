@@ -38,18 +38,24 @@ export class CharacterPage implements OnInit {
 
   public ngOnInit() {
     this._characterService.character$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(character => {
-      this.character = character;
-      this._updateStats();
+      if (character) {
+        this.character = character;
+        this._updateStats();
+      }
     });
 
     this._characterService.stats$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(stats => {
-      this.stats = stats;
-      this._updateStats();
+      if (stats) {
+        this.stats = stats;
+        this._updateStats();
+      }
     });
 
     this._logsService.logs$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(logs => {
-      this.logs = logs;
-      this._updateStats();
+      if (logs) {
+        this.logs = logs;
+        this._updateStats();
+      }
     });
   }
 

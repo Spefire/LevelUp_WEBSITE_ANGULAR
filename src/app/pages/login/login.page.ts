@@ -20,8 +20,8 @@ import { SupabaseService } from '@src/services/supabase.service';
 export class LoginPage {
   public pages = PageTitles;
 
-  public email = '';
-  public password = '';
+  public email = 'nicholasb@hotmail.fr';
+  public password = 'ilovecookies<3';
   public success: string | null = null;
   public error: string | null = null;
 

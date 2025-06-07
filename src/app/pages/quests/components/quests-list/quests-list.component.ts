@@ -35,15 +35,16 @@ export class QuestsListComponent implements OnInit {
 
   public ngOnInit(): void {
     this._dailyQuestsService.dailyQuests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailyQuests => {
-      this.dailyQuests = dailyQuests;
+      if (dailyQuests) this.dailyQuests = dailyQuests;
     });
 
     this._questsService.filters$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(filters => {
-      this.filters = filters;
+      if (filters) this.filters = filters;
     });
   }
 
   public getQuestsByFilters() {
+    if (!this.quests()) return [];
     if (!this.filters) return this.quests();
     let quests = this.quests();
     quests = quests.filter(quest => !this.filters.category || (this.filters.category && quest.category === this.filters.category));

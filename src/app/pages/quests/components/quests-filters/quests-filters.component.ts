@@ -37,7 +37,7 @@ export class QuestsFiltersComponent implements OnInit {
 
   public ngOnInit() {
     this._questsService.filters$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(filters => {
-      this.filters = filters;
+      if (filters) this.filters = filters;
     });
   }
 
@@ -57,6 +57,7 @@ export class QuestsFiltersComponent implements OnInit {
   }
 
   public getQuestsByCategory(category: string) {
+    if (!this.quests()) return [];
     if (!category) return this.quests();
     return this.quests().filter(quest => quest.category === category);
   }

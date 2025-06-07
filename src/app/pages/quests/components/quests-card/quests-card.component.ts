@@ -32,7 +32,8 @@ export class QuestsCardComponent implements OnInit {
 
   public ngOnInit() {
     this._dailyQuestsService.dailyQuests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailyQuests => {
-      this.isChecked = !!dailyQuests.find(dailyQuest => dailyQuest.id === this.quest().id);
+      if (dailyQuests) this.isChecked = !!dailyQuests.find(dailyQuest => dailyQuest.id === this.quest().id);
+      else this.isChecked = false;
     });
   }
 
