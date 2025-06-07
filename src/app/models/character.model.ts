@@ -12,7 +12,11 @@ export interface ICharacter {
   lastName: string;
   firstName: string;
   isAdmin: boolean;
-  avatar: number[];
+  eyebrows: number;
+  eyes: number;
+  hasGlasses: boolean;
+  glasses: number;
+  mouth: number;
 }
 
 export class Character {

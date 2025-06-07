@@ -4,9 +4,11 @@ import { Router } from '@angular/router';
 
 import { createClient, Session, SupabaseClient } from '@supabase/supabase-js';
 
+import { TCaractKey } from '@src/models/caracts.model';
 import { Adjectives, Avatar, Character, ICharacter, Nouns } from '@src/models/character.model';
 import { DailyQuest } from '@src/models/daily-quests.model';
 import { Log } from '@src/models/logs.model';
+import { IQuest, Quest, QuestCategory, QuestDifficulty } from '@src/models/quests.model';
 
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -77,7 +79,7 @@ export class SupabaseService {
   // --------------------------------------------------------------------------------------------------
 
   public async getCharacter() {
-    let resultCharacter = await this._requestGet('characters');
+    let resultCharacter: ICharacter = await this._requestGet('characters');
     if (!resultCharacter) {
       const item: ICharacter = {
         id: null,
@@ -85,19 +87,22 @@ export class SupabaseService {
         lastName: Adjectives[Math.floor(Math.random() * Adjectives.length)],
         firstName: Nouns[Math.floor(Math.random() * Nouns.length)],
         isAdmin: false,
-        avatar: [1, 1, 0, 1, 1],
+        eyebrows: 1,
+        eyes: 1,
+        hasGlasses: false,
+        glasses: 1,
+        mouth: 1,
       };
       resultCharacter = await this._requestPost('characters', item);
     }
-
     if (!resultCharacter) return null;
     else {
       const avatar: Avatar = {
-        eyebrows: resultCharacter.avatar ? resultCharacter.avatar[0] : 1,
-        eyes: resultCharacter.avatar ? resultCharacter.avatar[1] : 1,
-        hasGlasses: resultCharacter.avatar ? (resultCharacter.avatar[2] ? true : false) : false,
-        glasses: resultCharacter.avatar ? resultCharacter.avatar[3] : 1,
-        mouth: resultCharacter.avatar ? resultCharacter.avatar[4] : 1,
+        eyebrows: resultCharacter.eyebrows,
+        eyes: resultCharacter.eyes,
+        hasGlasses: resultCharacter.hasGlasses,
+        glasses: resultCharacter.glasses,
+        mouth: resultCharacter.mouth,
       };
       const character: Character = {
         id: resultCharacter.id,
@@ -117,17 +122,21 @@ export class SupabaseService {
       lastName: character.lastName,
       firstName: character.firstName,
       isAdmin: character.isAdmin,
-      avatar: [character.avatar.eyebrows, character.avatar.eyes, character.avatar.hasGlasses ? 1 : 0, character.avatar.glasses, character.avatar.mouth],
+      eyebrows: character.avatar.eyebrows,
+      eyes: character.avatar.eyes,
+      hasGlasses: character.avatar.hasGlasses,
+      glasses: character.avatar.glasses,
+      mouth: character.avatar.mouth,
     };
-    const resultCharacter = await this._requestPut('characters', item);
+    const resultCharacter: ICharacter = await this._requestPut('characters', item);
     if (!resultCharacter) return null;
     else {
       const avatar: Avatar = {
-        eyebrows: resultCharacter.avatar ? resultCharacter.avatar[0] : 1,
-        eyes: resultCharacter.avatar ? resultCharacter.avatar[1] : 1,
-        hasGlasses: resultCharacter.avatar ? (resultCharacter.avatar[2] ? true : false) : false,
-        glasses: resultCharacter.avatar ? resultCharacter.avatar[3] : 1,
-        mouth: resultCharacter.avatar ? resultCharacter.avatar[4] : 1,
+        eyebrows: resultCharacter.eyebrows,
+        eyes: resultCharacter.eyes,
+        hasGlasses: resultCharacter.hasGlasses,
+        glasses: resultCharacter.glasses,
+        mouth: resultCharacter.mouth,
       };
       const character: Character = {
         id: resultCharacter.id,
@@ -183,9 +192,33 @@ export class SupabaseService {
   // --------------------------------------------------------------------------------------------------
 
   public async getQuests() {
-    const result = await this._requestGetAll('quests');
-    if (!result) return null;
-    else return result;
+    const results: IQuest[] = await this._requestGetAll('quests');
+    if (!results) return null;
+    else {
+      const quests: Quest[] = [];
+      results.forEach(result => {
+        const xpRewards: Record<TCaractKey, number> = {
+          force: result.force,
+          habilete: result.habilete,
+          tenacite: result.tenacite,
+          intelligence: result.intelligence,
+          charisme: result.charisme,
+          magie: result.magie,
+        };
+        const quest: Quest = {
+          id: result.id,
+          name: result.name,
+          description: result.description,
+          difficulty: result.difficulty as QuestDifficulty,
+          category: result.category as QuestCategory,
+          daysOfWeek: [1, 2, 3, 4, 5, 6, 0],
+          isOptional: result.isOptional,
+          xpRewards: xpRewards,
+        };
+        quests.push(quest);
+      });
+      return quests;
+    }
   }
 
   // --------------------------------------------------------------------------------------------------
@@ -205,14 +238,22 @@ export class SupabaseService {
   }
 
   private async _requestPost(target: string, item: any): Promise<any> {
-    const result = await this._supabase.from(target).insert(item).select().single();
+    const newItem: any = Object.assign({}, item);
+    delete newItem['id'];
+    const result = await this._supabase.from(target).insert(newItem).select().single();
     if (this._degubMode) console.log('requestPost', result);
     if (result.error) console.error('requestPost', result.error.message);
     return result.data;
   }
 
   /* private async _requestPostAll(target: string, items: any[]): Promise<any[]> {
-    const result = await this._supabase.from(target).insert(items).select();
+    const newItems: any[] = [];
+    items.forEach(item => {
+      const newItem: any = Object.assign({}, item);
+      delete newItem['id'];
+      newItems.push(newItem);
+    });
+    const result = await this._supabase.from(target).insert(newItems).select();
     if (this._degubMode) console.log('requestPostAll', result);
     if (result.error) console.error('requestPostAll', result.error.message);
     return result.data;

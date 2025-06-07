@@ -22,7 +22,6 @@ export interface IQuestsFilters {
 
 export interface IQuest {
   id: number;
-  user_id: string;
   name: string;
   description: string;
   difficulty: string;
