@@ -17,8 +17,7 @@ import { NumberInputComponent } from '@lucca-front/ng/forms';
 import { CheckboxInputComponent } from '@lucca-front/ng/forms';
 import { LuSimpleSelectInputComponent } from '@lucca-front/ng/simple-select';
 
-import { Avatar, Character, getAvatarURL } from '@src/models/character.model';
-import { adjectives, nouns } from '@src/models/character.options';
+import { Adjectives, Avatar, Character, getAvatarURL, Nouns } from '@src/models/character.model';
 import { CharacterService } from '@src/services/character.service';
 
 @Component({
@@ -43,8 +42,8 @@ export class ParamsCharacterDialogComponent implements OnInit {
   public data = injectDialogData<{ character: Character }>();
   public ref = injectDialogRef<boolean>();
 
-  public adjectives = adjectives;
-  public nouns = nouns;
+  public adjectives = Adjectives;
+  public nouns = Nouns;
 
   public id: number;
   public avatar: Avatar;

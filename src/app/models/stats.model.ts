@@ -1,14 +1,14 @@
-import { CaractKey } from '@src/models/character.model';
+import { TCaractKey } from '@src/models/caracts.model';
 
-export interface StatProgress {
+export interface IStatProgress {
   currentXP: number;
   level: number;
   xpToNextLevel: number;
 }
 
-export interface Stats {
+export interface IStats {
   currentXP: number;
   level: number;
   xpToNextLevel: number;
-  caracts: Record<CaractKey, StatProgress>;
+  caracts: Record<TCaractKey, IStatProgress>;
 }

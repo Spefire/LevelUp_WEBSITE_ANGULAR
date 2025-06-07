@@ -6,11 +6,12 @@ import { FancyBoxComponent } from '@lucca-front/ng/fancy-box';
 import { PageHeaderComponent } from '@lucca-front/ng/page-header';
 
 import { NotchComponent } from '@src/components/notch/notch.component';
-import { Caracteristics, CaractKeys, Character } from '@src/models/character.model';
+import { Caracteristics, CaractKeys } from '@src/models/caracts.model';
+import { Character } from '@src/models/character.model';
 import { Log } from '@src/models/logs.model';
 import { PageTitles } from '@src/models/pages.model';
 import { QuestDifficulty } from '@src/models/quests.model';
-import { Stats } from '@src/models/stats.model';
+import { IStats } from '@src/models/stats.model';
 import { CharacterService } from '@src/services/character.service';
 import { LogsService } from '@src/services/logs.service';
 
@@ -26,7 +27,7 @@ export class CharacterPage implements OnInit {
   public Caracteristics = Caracteristics;
   public QuestDifficulty = QuestDifficulty;
   public character: Character;
-  public stats: Stats;
+  public stats: IStats;
   public logs: Log[];
 
   private readonly _destroyRef = inject(DestroyRef);

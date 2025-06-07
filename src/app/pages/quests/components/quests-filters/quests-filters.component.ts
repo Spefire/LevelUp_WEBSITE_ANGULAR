@@ -7,7 +7,7 @@ import { FilterBarComponent, FilterPillAddonAfterDirective, FilterPillAddonBefor
 import { FormFieldComponent } from '@lucca-front/ng/form-field';
 import { CheckboxInputComponent, TextInputComponent } from '@lucca-front/ng/forms';
 
-import { Quest, QuestCategory, QuestsFilters } from '@src/models/quests.model';
+import { IQuestsFilters, Quest, QuestCategory } from '@src/models/quests.model';
 import { QuestsService } from '@src/services/quests.service';
 
 @Component({
@@ -29,7 +29,7 @@ export class QuestsFiltersComponent implements OnInit {
   public readonly quests = input.required<Quest[]>();
 
   public categories = [null, ...Object.values(QuestCategory)];
-  public filters: QuestsFilters;
+  public filters: IQuestsFilters;
 
   private readonly _destroyRef = inject(DestroyRef);
 

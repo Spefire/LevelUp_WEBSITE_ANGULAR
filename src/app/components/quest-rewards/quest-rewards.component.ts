@@ -4,7 +4,7 @@ import { Component, input } from '@angular/core';
 import { DecorativePalette, Palette } from '@lucca-front/ng/core';
 import { TagComponent } from '@lucca-front/ng/tag';
 
-import { Caracteristics, CaractKey } from '@src/models/character.model';
+import { Caracteristics, TCaractKey } from '@src/models/caracts.model';
 import { Quest } from '@src/models/quests.model';
 
 @Component({
@@ -19,7 +19,7 @@ export class QuestRewardsComponent {
 
   public Caracteristics = Caracteristics;
 
-  public getCaractKey(key: string): CaractKey {
-    return key as CaractKey;
+  public getCaractKey(key: string): TCaractKey {
+    return key as TCaractKey;
   }
 }

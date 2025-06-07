@@ -1,4 +1,4 @@
-import { CaractKey } from '@src/models/character.model';
+import { TCaractKey } from '@src/models/caracts.model';
 
 export enum QuestDifficulty {
   SIMPLE = 'Simple',
@@ -14,24 +14,40 @@ export enum QuestCategory {
   OTHER = 'Autre',
 }
 
-export interface Quest {
-  id: number;
-  name: string;
-  description: string;
-  difficulty: QuestDifficulty;
-  category: QuestCategory;
-  daysOfWeek: number[]; // 0 = Dimanche, 1 = Lundi, ..., 6 = Samedi
-  isOptional: boolean;
-  xpRewards: Record<CaractKey, number>;
-}
-
-export interface QuestsFilters {
+export interface IQuestsFilters {
   category: string;
   onlySelected: boolean;
   search: string;
 }
 
-export const listQuests: Quest[] = [
+export interface IQuest {
+  id: number;
+  user_id: string;
+  name: string;
+  description: string;
+  difficulty: string;
+  category: string;
+  isOptional: boolean;
+  force: number;
+  habilete: number;
+  tenacite: number;
+  intelligence: number;
+  charisme: number;
+  magie: number;
+}
+
+export class Quest {
+  public id: number;
+  public name: string;
+  public description: string;
+  public difficulty: QuestDifficulty;
+  public category: QuestCategory;
+  public daysOfWeek: number[]; // 0 = Dimanche, 1 = Lundi, ..., 6 = Samedi
+  public isOptional: boolean;
+  public xpRewards: Record<TCaractKey, number>;
+}
+
+/* export const listQuests: Quest[] = [
   {
     id: 1,
     name: 'Musculation',
@@ -185,4 +201,4 @@ export const listQuests: Quest[] = [
       magie: null,
     },
   },
-];
+];*/

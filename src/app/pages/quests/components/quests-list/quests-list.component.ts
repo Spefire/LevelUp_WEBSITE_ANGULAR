@@ -8,7 +8,7 @@ import { IconComponent } from '@lucca-front/ng/icon';
 import { StatusBadgeComponent } from '@lucca-front/ng/statusBadge';
 
 import { DailyQuest } from '@src/models/daily-quests.model';
-import { Quest, QuestCategory, QuestDifficulty, QuestsFilters } from '@src/models/quests.model';
+import { IQuestsFilters, Quest, QuestCategory, QuestDifficulty } from '@src/models/quests.model';
 import { QuestsCardComponent } from '@src/pages/quests/components/quests-card/quests-card.component';
 import { DailyQuestsService } from '@src/services/daily-quests.service';
 import { QuestsService } from '@src/services/quests.service';
@@ -24,7 +24,7 @@ export class QuestsListComponent implements OnInit {
   public QuestDifficulty = QuestDifficulty;
   public categories = [null, ...Object.values(QuestCategory)];
   public dailyQuests: DailyQuest[];
-  public filters: QuestsFilters;
+  public filters: IQuestsFilters;
 
   private readonly _destroyRef = inject(DestroyRef);
 

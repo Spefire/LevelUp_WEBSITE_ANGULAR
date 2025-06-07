@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Quest, QuestsFilters } from '@src/models/quests.model';
+import { IQuestsFilters, Quest } from '@src/models/quests.model';
 import { SupabaseService } from '@src/services/supabase.service';
 
 import { BehaviorSubject } from 'rxjs';
@@ -10,7 +10,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class QuestsService {
   private _questsSubject = new BehaviorSubject<Quest[]>(null);
-  private _filtersSubject = new BehaviorSubject<QuestsFilters>({
+  private _filtersSubject = new BehaviorSubject<IQuestsFilters>({
     category: null,
     onlySelected: false,
     search: null,
@@ -32,7 +32,7 @@ export class QuestsService {
     }
   }
 
-  public setFilters(newFilters: QuestsFilters) {
+  public setFilters(newFilters: IQuestsFilters) {
     this._filtersSubject.next(newFilters);
   }
 

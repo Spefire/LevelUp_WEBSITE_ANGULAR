@@ -4,8 +4,7 @@ import { Router } from '@angular/router';
 
 import { createClient, Session, SupabaseClient } from '@supabase/supabase-js';
 
-import { Avatar, Character } from '@src/models/character.model';
-import { adjectives, nouns } from '@src/models/character.options';
+import { Adjectives, Avatar, Character, ICharacter, Nouns } from '@src/models/character.model';
 import { DailyQuest } from '@src/models/daily-quests.model';
 import { Log } from '@src/models/logs.model';
 
@@ -31,7 +30,7 @@ export class SupabaseService {
   constructor(private _router: Router) {
     const url = environment.NG_APP_SUPABASE_URL || '';
     const key = environment.NG_APP_SUPABASE_ANON_KEY || '';
-    localStorage.setItem('redirectAfterLogin', this._router.url);
+    if (this._router.url.length > 1) localStorage.setItem('redirectAfterLogin', this._router.url);
     this._supabase = createClient(url, key);
 
     // Gérer les événements de la session au fil du temps
@@ -80,12 +79,13 @@ export class SupabaseService {
   public async getCharacter() {
     let resultCharacter = await this._requestGet('characters');
     if (!resultCharacter) {
-      const item: any = {
+      const item: ICharacter = {
+        id: null,
         user_id: this.user_id,
+        lastName: Adjectives[Math.floor(Math.random() * Adjectives.length)],
+        firstName: Nouns[Math.floor(Math.random() * Nouns.length)],
         isAdmin: false,
         avatar: [1, 1, 0, 1, 1],
-        lastName: adjectives[Math.floor(Math.random() * adjectives.length)],
-        firstName: nouns[Math.floor(Math.random() * nouns.length)],
       };
       resultCharacter = await this._requestPost('characters', item);
     }
@@ -101,23 +101,23 @@ export class SupabaseService {
       };
       const character: Character = {
         id: resultCharacter.id,
-        avatar: avatar,
         lastName: resultCharacter.lastName,
         firstName: resultCharacter.firstName,
         isAdmin: resultCharacter.isAdmin,
+        avatar: avatar,
       };
       return character;
     }
   }
 
   public async putCharacter(character: Character) {
-    const item: any = {
+    const item: ICharacter = {
       id: character.id,
       user_id: this.user_id,
-      isAdmin: character.isAdmin,
-      avatar: [character.avatar.eyebrows, character.avatar.eyes, character.avatar.hasGlasses ? 1 : 0, character.avatar.glasses, character.avatar.mouth],
       lastName: character.lastName,
       firstName: character.firstName,
+      isAdmin: character.isAdmin,
+      avatar: [character.avatar.eyebrows, character.avatar.eyes, character.avatar.hasGlasses ? 1 : 0, character.avatar.glasses, character.avatar.mouth],
     };
     const resultCharacter = await this._requestPut('characters', item);
     if (!resultCharacter) return null;
@@ -131,10 +131,10 @@ export class SupabaseService {
       };
       const character: Character = {
         id: resultCharacter.id,
-        avatar: avatar,
         lastName: resultCharacter.lastName,
         firstName: resultCharacter.firstName,
         isAdmin: resultCharacter.isAdmin,
+        avatar: avatar,
       };
       return character;
     }

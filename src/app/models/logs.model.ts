@@ -1,8 +1,14 @@
 import { Quest } from '@src/models/quests.model';
 
-export interface Log {
+export interface ILog {
   id: number;
+  user_id: string;
   id_quest: number;
-  date: Date;
-  quest: Quest;
+  str_date: string;
+}
+
+export class Log {
+  public id: number;
+  public date: Date;
+  public quest: Quest;
 }

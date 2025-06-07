@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Character } from '@src/models/character.model';
-import { Stats } from '@src/models/stats.model';
+import { IStats } from '@src/models/stats.model';
 import { SupabaseService } from '@src/services/supabase.service';
 
 import { BehaviorSubject } from 'rxjs';
@@ -11,7 +11,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class CharacterService {
   private _characterSubject = new BehaviorSubject<Character>(null);
-  private _statsSubject = new BehaviorSubject<Stats>({
+  private _statsSubject = new BehaviorSubject<IStats>({
     currentXP: 0,
     level: 1,
     xpToNextLevel: 100,
