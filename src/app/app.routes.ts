@@ -24,7 +24,7 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'character',
+    path: 'personnage',
     loadComponent: () => import('./pages/character/character.page').then(m => m.CharacterPage),
     title: PageTitles.character + ' - ' + PageTitles.app,
     canActivate: [AuthGuard],

@@ -143,49 +143,49 @@ export class SupabaseService {
   // --------------------------------------------------------------------------------------------------
 
   public async getLogs() {
-    const resultLogs = await this._requestGetAll('logs');
-    if (!resultLogs) return null;
-    else return resultLogs;
+    const result = await this._requestGetAll('logs');
+    if (!result) return null;
+    else return result;
   }
 
   public async postLog(log: Log) {
-    const resultLog = await this._requestPost('logs', log);
-    if (!resultLog) return null;
-    else return resultLog;
+    const result = await this._requestPost('logs', log);
+    if (!result) return null;
+    else return result;
   }
 
   public async deleteLog(log: Log) {
-    const resultLog = await this._requestDelete('logs', log.id);
-    if (!resultLog) return null;
-    else return resultLog;
+    const result = await this._requestDelete('logs', log.id);
+    if (!result) return null;
+    else return result;
   }
 
   // --------------------------------------------------------------------------------------------------
 
   public async getDailyQuests() {
-    const resultLogs = await this._requestGetAll('dailyQuests');
-    if (!resultLogs) return null;
-    else return resultLogs;
+    const result = await this._requestGetAll('dailyQuests');
+    if (!result) return null;
+    else return result;
   }
 
   public async postDailyQuest(dailyQuest: DailyQuest) {
-    const resultLog = await this._requestPost('dailyQuests', dailyQuest);
-    if (!resultLog) return null;
-    else return resultLog;
+    const result = await this._requestPost('dailyQuests', dailyQuest);
+    if (!result) return null;
+    else return result;
   }
 
   public async deleteDailyQuest(dailyQuest: DailyQuest) {
-    const resultLog = await this._requestDelete('dailyQuests', dailyQuest.id);
-    if (!resultLog) return null;
-    else return resultLog;
+    const result = await this._requestDelete('dailyQuests', dailyQuest.id);
+    if (!result) return null;
+    else return result;
   }
 
   // --------------------------------------------------------------------------------------------------
 
   public async getQuests() {
-    const resultLogs = await this._requestGetAll('quests');
-    if (!resultLogs) return null;
-    else return resultLogs;
+    const result = await this._requestGetAll('quests');
+    if (!result) return null;
+    else return result;
   }
 
   // --------------------------------------------------------------------------------------------------
