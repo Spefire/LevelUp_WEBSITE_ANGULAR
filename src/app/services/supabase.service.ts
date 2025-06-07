@@ -31,15 +31,21 @@ export class SupabaseService {
   constructor(private _router: Router) {
     const url = environment.NG_APP_SUPABASE_URL || '';
     const key = environment.NG_APP_SUPABASE_ANON_KEY || '';
+    localStorage.setItem('redirectAfterLogin', this._router.url);
     this._supabase = createClient(url, key);
+
+    // Gérer les événements de la session au fil du temps
     this._supabase.auth.onAuthStateChange((_event, session) => {
       // Connexion
       if (!this.session.value && session) {
+        console.warn('Connexion');
         this.session.next(session);
-        this._router.navigate(['/']);
+        const redirectUrl = localStorage.getItem('redirectAfterLogin') || '/tableau-de-bord';
+        this._router.navigate([redirectUrl]);
       }
       // Déconnexion
       else if (this.session.value && !session) {
+        console.warn('Déconnexion');
         this.session.next(null);
         this._router.navigate(['/connexion']);
       }

@@ -18,7 +18,7 @@ export const routes: Routes = [
     canActivate: [NoAuthGuard],
   },
   {
-    path: '',
+    path: 'tableau-de-bord',
     loadComponent: () => import('./pages/dashboard/dashboard.page').then(m => m.DashboardPage),
     title: PageTitles.dashboard + ' - ' + PageTitles.app,
     canActivate: [AuthGuard],
