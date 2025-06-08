@@ -41,7 +41,7 @@ export class HeaderComponent implements OnInit {
     });
     this._supabaseService.session$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(session => {
       this.isConnected = session ? true : false;
-      if (this.isConnected) this._characterService.loadCharacter();
+      if (this.isConnected) this._characterService.loadCharacter(true);
     });
   }
 

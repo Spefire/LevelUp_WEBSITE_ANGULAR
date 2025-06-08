@@ -25,6 +25,40 @@ export class Character {
   public firstName: string;
   public isAdmin: boolean;
   public avatar: Avatar;
+
+  public static getICharacter(user_id: string, character: Character) {
+    const item: ICharacter = {
+      id: character.id,
+      user_id,
+      lastName: character.lastName,
+      firstName: character.firstName,
+      isAdmin: character.isAdmin,
+      eyebrows: character.avatar.eyebrows,
+      eyes: character.avatar.eyes,
+      hasGlasses: character.avatar.hasGlasses,
+      glasses: character.avatar.glasses,
+      mouth: character.avatar.mouth,
+    };
+    return item;
+  }
+
+  public static getCharacter(result: ICharacter) {
+    const avatar: Avatar = {
+      eyebrows: result.eyebrows,
+      eyes: result.eyes,
+      hasGlasses: result.hasGlasses,
+      glasses: result.glasses,
+      mouth: result.mouth,
+    };
+    const character: Character = {
+      id: result.id,
+      lastName: result.lastName,
+      firstName: result.firstName,
+      isAdmin: result.isAdmin,
+      avatar: avatar,
+    };
+    return character;
+  }
 }
 
 export const getAvatarURL = (avatar: Avatar) => {

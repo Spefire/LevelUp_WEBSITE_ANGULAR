@@ -4,11 +4,10 @@ import { Router } from '@angular/router';
 
 import { createClient, Session, SupabaseClient } from '@supabase/supabase-js';
 
-import { TCaractKey } from '@src/models/caracts.model';
-import { Adjectives, Avatar, Character, ICharacter, Nouns } from '@src/models/character.model';
+import { Adjectives, Character, ICharacter, Nouns } from '@src/models/character.model';
 import { DailyQuest } from '@src/models/daily-quests.model';
 import { Log } from '@src/models/logs.model';
-import { IQuest, Quest, QuestCategory, QuestDifficulty } from '@src/models/quests.model';
+import { IQuest, Quest } from '@src/models/quests.model';
 
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -79,7 +78,7 @@ export class SupabaseService {
   // --------------------------------------------------------------------------------------------------
 
   public async getCharacter() {
-    let resultCharacter: ICharacter = await this._requestGet('characters');
+    let resultCharacter: ICharacter = await this._requestGet('characters', true);
     if (!resultCharacter) {
       const item: ICharacter = {
         id: null,
@@ -96,63 +95,19 @@ export class SupabaseService {
       resultCharacter = await this._requestPost('characters', item);
     }
     if (!resultCharacter) return null;
-    else {
-      const avatar: Avatar = {
-        eyebrows: resultCharacter.eyebrows,
-        eyes: resultCharacter.eyes,
-        hasGlasses: resultCharacter.hasGlasses,
-        glasses: resultCharacter.glasses,
-        mouth: resultCharacter.mouth,
-      };
-      const character: Character = {
-        id: resultCharacter.id,
-        lastName: resultCharacter.lastName,
-        firstName: resultCharacter.firstName,
-        isAdmin: resultCharacter.isAdmin,
-        avatar: avatar,
-      };
-      return character;
-    }
+    else return Character.getCharacter(resultCharacter);
   }
 
   public async putCharacter(character: Character) {
-    const item: ICharacter = {
-      id: character.id,
-      user_id: this.user_id,
-      lastName: character.lastName,
-      firstName: character.firstName,
-      isAdmin: character.isAdmin,
-      eyebrows: character.avatar.eyebrows,
-      eyes: character.avatar.eyes,
-      hasGlasses: character.avatar.hasGlasses,
-      glasses: character.avatar.glasses,
-      mouth: character.avatar.mouth,
-    };
-    const resultCharacter: ICharacter = await this._requestPut('characters', item);
+    const resultCharacter: ICharacter = await this._requestPut('characters', Character.getICharacter(this.user_id, character));
     if (!resultCharacter) return null;
-    else {
-      const avatar: Avatar = {
-        eyebrows: resultCharacter.eyebrows,
-        eyes: resultCharacter.eyes,
-        hasGlasses: resultCharacter.hasGlasses,
-        glasses: resultCharacter.glasses,
-        mouth: resultCharacter.mouth,
-      };
-      const character: Character = {
-        id: resultCharacter.id,
-        lastName: resultCharacter.lastName,
-        firstName: resultCharacter.firstName,
-        isAdmin: resultCharacter.isAdmin,
-        avatar: avatar,
-      };
-      return character;
-    }
+    else return Character.getCharacter(resultCharacter);
   }
 
   // --------------------------------------------------------------------------------------------------
 
   public async getLogs() {
-    const result = await this._requestGetAll('logs');
+    const result = await this._requestGetAll('logs', true);
     if (!result) return null;
     else return result;
   }
@@ -172,7 +127,7 @@ export class SupabaseService {
   // --------------------------------------------------------------------------------------------------
 
   public async getDailyQuests() {
-    const result = await this._requestGetAll('dailyQuests');
+    const result = await this._requestGetAll('dailyQuests', true);
     if (!result) return null;
     else return result;
   }
@@ -192,46 +147,48 @@ export class SupabaseService {
   // --------------------------------------------------------------------------------------------------
 
   public async getQuests() {
-    const results: IQuest[] = await this._requestGetAll('quests');
+    const results: IQuest[] = await this._requestGetAll('quests', false);
     if (!results) return null;
     else {
       const quests: Quest[] = [];
       results.forEach(result => {
-        const xpRewards: Record<TCaractKey, number> = {
-          force: result.force,
-          habilete: result.habilete,
-          tenacite: result.tenacite,
-          intelligence: result.intelligence,
-          charisme: result.charisme,
-          magie: result.magie,
-        };
-        const quest: Quest = {
-          id: result.id,
-          name: result.name,
-          description: result.description,
-          difficulty: result.difficulty as QuestDifficulty,
-          category: result.category as QuestCategory,
-          daysOfWeek: [1, 2, 3, 4, 5, 6, 0],
-          isOptional: result.isOptional,
-          xpRewards: xpRewards,
-        };
-        quests.push(quest);
+        quests.push(Quest.getQuest(result));
       });
       return quests;
     }
   }
 
+  public async postQuest(quest: Quest) {
+    const result = await this._requestPost('quests', Quest.getIQuest(quest));
+    if (!result) return null;
+    else return Quest.getQuest(result);
+  }
+
+  public async putQuest(quest: Quest) {
+    const result = await this._requestPut('quests', Quest.getIQuest(quest));
+    if (!result) return null;
+    else return Quest.getQuest(result);
+  }
+
+  public async deleteQuest(quest: Quest) {
+    const result = await this._requestDelete('quests', quest.id);
+    if (!result) return null;
+    else return true;
+  }
+
   // --------------------------------------------------------------------------------------------------
 
-  private async _requestGet(target: string): Promise<any> {
-    const result = await this._supabase.from(target).select().eq('user_id', this.user_id).maybeSingle();
+  private async _requestGet(target: string, withUserId: boolean): Promise<any> {
+    const result = withUserId
+      ? await this._supabase.from(target).select().eq('user_id', this.user_id).maybeSingle()
+      : await this._supabase.from(target).select().maybeSingle();
     if (this._degubMode) console.log('requestGet', result);
     if (result.error) console.error('requestGet', result.error.message);
     return result.data;
   }
 
-  private async _requestGetAll(target: string): Promise<any[]> {
-    const result = await this._supabase.from(target).select().eq('user_id', this.user_id);
+  private async _requestGetAll(target: string, withUserId: boolean): Promise<any[]> {
+    const result = withUserId ? await this._supabase.from(target).select().eq('user_id', this.user_id) : await this._supabase.from(target).select();
     if (this._degubMode) console.log('requestGetAll', result);
     if (result.error) console.error('requestGetAll', result.error.message);
     return result.data;

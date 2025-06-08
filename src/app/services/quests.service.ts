@@ -9,7 +9,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class QuestsService {
-  private _questsSubject = new BehaviorSubject<Quest[]>(null);
+  private _questsSubject = new BehaviorSubject<Quest[]>([]);
   private _filtersSubject = new BehaviorSubject<IQuestsFilters>({
     category: null,
     onlySelected: false,
@@ -25,11 +25,40 @@ export class QuestsService {
     this._load();
   }
 
-  public async loadQuests() {
-    if (!this._questsSubject.value) {
+  public async loadQuests(forced = false) {
+    if (!this._questsSubject.value || forced) {
       const quests = await this._supabaseService.getQuests();
       if (quests) this._save(quests);
     }
+  }
+
+  public async addQuest(newQuest: Quest) {
+    const quest = await this._supabaseService.postQuest(newQuest);
+    if (quest) {
+      const quests = this._questsSubject.value;
+      quests.push(quest);
+      this._save(quests);
+      return true;
+    } else return false;
+  }
+
+  public async modifyQuest(newQuest: Quest) {
+    const quest = await this._supabaseService.putQuest(newQuest);
+    if (quest) {
+      const quests = this._questsSubject.value.filter(quest => !(newQuest.id === quest.id));
+      quests.push(quest);
+      this._save(quests);
+      return true;
+    } else return false;
+  }
+
+  public async removeQuest(deletedQuest: Quest) {
+    const quest = await this._supabaseService.deleteQuest(deletedQuest);
+    if (quest) {
+      const quests = this._questsSubject.value.filter(quest => !(deletedQuest.id === quest.id));
+      this._save(quests);
+      return true;
+    } else return false;
   }
 
   public setFilters(newFilters: IQuestsFilters) {

@@ -8,8 +8,11 @@ import { CheckboxInputComponent } from '@lucca-front/ng/forms';
 
 import { ConfirmDialogComponent } from '@src/components/confirm-dialog/confirm-dialog.component';
 import { QuestRewardsComponent } from '@src/components/quest-rewards/quest-rewards.component';
+import { Character } from '@src/models/character.model';
 import { Quest } from '@src/models/quests.model';
+import { QuestDialogComponent } from '@src/pages/quests/components/quest-dialog/quest-dialog.component';
 import { DaysOfWeekPipe } from '@src/pipes/days-of-week.pipe';
+import { CharacterService } from '@src/services/character.service';
 import { DailyQuestsService } from '@src/services/daily-quests.service';
 
 @Component({
@@ -22,18 +25,35 @@ import { DailyQuestsService } from '@src/services/daily-quests.service';
 export class QuestsCardComponent implements OnInit {
   public readonly quest = input.required<Quest>();
 
+  public character: Character;
   public isChecked: boolean;
 
   private readonly _destroyRef = inject(DestroyRef);
 
   #dialog = inject(LuDialogService);
 
-  constructor(private _dailyQuestsService: DailyQuestsService) {}
+  constructor(
+    private _characterService: CharacterService,
+    private _dailyQuestsService: DailyQuestsService
+  ) {}
 
   public ngOnInit() {
+    this._characterService.character$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(character => {
+      if (character) this.character = character;
+    });
+
     this._dailyQuestsService.dailyQuests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailyQuests => {
       if (dailyQuests) this.isChecked = !!dailyQuests.find(dailyQuest => dailyQuest.id === this.quest().id);
       else this.isChecked = false;
+    });
+  }
+
+  public modifyQuest() {
+    this.#dialog.open({
+      content: QuestDialogComponent,
+      data: { quest: this.quest() },
+      panelClasses: ['mod-neutralBackground'],
+      size: 'L',
     });
   }
 

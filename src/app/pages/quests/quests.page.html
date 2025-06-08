@@ -2,12 +2,14 @@
   [label]="pages.quests"
   description="Choisissez dans la liste vos quêtes en cours, ou créez-en vous une."
 >
-  <ng-container pageHeaderActions>
-    <button type="button" luButton disabled>
-      <lu-icon icon="mathsPlus" />
-      Créer une quête
-    </button>
-  </ng-container>
+  @if (character.isAdmin) {
+    <ng-container pageHeaderActions>
+      <button type="button" luButton (click)="addQuest()">
+        <lu-icon icon="mathsPlus" />
+        Créer une quête
+      </button>
+    </ng-container>
+  }
 
   <ng-container pageHeaderNavigation>
     <lu-horizontal-navigation>

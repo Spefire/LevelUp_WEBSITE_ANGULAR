@@ -44,6 +44,63 @@ export class Quest {
   public daysOfWeek: number[]; // 0 = Dimanche, 1 = Lundi, ..., 6 = Samedi
   public isOptional: boolean;
   public xpRewards: Record<TCaractKey, number>;
+
+  constructor() {
+    this.id = 0;
+    this.name = '';
+    this.description = '';
+    this.difficulty = QuestDifficulty.SIMPLE;
+    this.category = QuestCategory.OTHER;
+    this.isOptional = false;
+    this.xpRewards = {
+      force: 0,
+      habilete: 0,
+      tenacite: 0,
+      intelligence: 0,
+      charisme: 0,
+      magie: 0,
+    };
+  }
+
+  public static getIQuest(quest: Quest) {
+    const item: IQuest = {
+      id: quest.id,
+      name: quest.name,
+      description: quest.description,
+      difficulty: quest.difficulty,
+      category: quest.category,
+      isOptional: quest.isOptional,
+      force: quest.xpRewards.force,
+      habilete: quest.xpRewards.habilete,
+      tenacite: quest.xpRewards.tenacite,
+      intelligence: quest.xpRewards.intelligence,
+      charisme: quest.xpRewards.charisme,
+      magie: quest.xpRewards.magie,
+    };
+    return item;
+  }
+
+  public static getQuest(result: IQuest) {
+    const xpRewards: Record<TCaractKey, number> = {
+      force: result.force,
+      habilete: result.habilete,
+      tenacite: result.tenacite,
+      intelligence: result.intelligence,
+      charisme: result.charisme,
+      magie: result.magie,
+    };
+    const quest: Quest = {
+      id: result.id,
+      name: result.name,
+      description: result.description,
+      difficulty: result.difficulty as QuestDifficulty,
+      category: result.category as QuestCategory,
+      daysOfWeek: [1, 2, 3, 4, 5, 6, 0],
+      isOptional: result.isOptional,
+      xpRewards: xpRewards,
+    };
+    return quest;
+  }
 }
 
 /* export const listQuests: Quest[] = [
