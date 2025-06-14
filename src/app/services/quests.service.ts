@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { IQuestsFilters, Quest } from '@src/models/quests.model';
+import { IQuest, IQuestsFilters, Quest } from '@src/models/quests.model';
 import { SupabaseService } from '@src/services/supabase.service';
 
 import { BehaviorSubject } from 'rxjs';
@@ -68,13 +68,15 @@ export class QuestsService {
   private _load() {
     const storage = localStorage.getItem('quests');
     if (storage) {
-      const quests: Quest[] = JSON.parse(storage);
+      const results: IQuest[] = JSON.parse(storage);
+      const quests = results.map(result => Quest.getQuest(result));
       this._questsSubject.next(quests);
     }
   }
 
   private _save(quests: Quest[]) {
     this._questsSubject.next(quests);
-    localStorage.setItem('quests', JSON.stringify(quests));
+    const storage = quests.map(quest => Quest.getIQuest(quest));
+    localStorage.setItem('quests', JSON.stringify(storage));
   }
 }

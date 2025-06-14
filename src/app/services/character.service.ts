@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Character } from '@src/models/character.model';
+import { Character, ICharacter } from '@src/models/character.model';
 import { IStats } from '@src/models/stats.model';
 import { SupabaseService } from '@src/services/supabase.service';
 
@@ -52,13 +52,15 @@ export class CharacterService {
   private _load() {
     const storage = localStorage.getItem('character');
     if (storage) {
-      const character: Character = JSON.parse(storage);
+      const result: ICharacter = JSON.parse(storage);
+      const character = Character.getCharacter(result);
       this._characterSubject.next(character);
     }
   }
 
   private _save(character: Character) {
     this._characterSubject.next(character);
-    localStorage.setItem('character', JSON.stringify(character));
+    const storage = Character.getICharacter(null, character);
+    localStorage.setItem('character', JSON.stringify(storage));
   }
 }
