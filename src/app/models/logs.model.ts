@@ -23,7 +23,7 @@ export class Log {
       id: log.id,
       user_id: user_id,
       id_quest: log.quest.id,
-      str_date: log.date.toDateString(),
+      str_date: log.date.toISOString(),
     };
     return item;
   }
