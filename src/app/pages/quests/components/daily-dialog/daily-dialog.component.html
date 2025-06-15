@@ -1,23 +1,83 @@
 <lu-dialog #dialog>
   <form class="dialog-inside-formOptional">
     <lu-dialog-header>
-      <h1>Ajout d'une quête journalière</h1>
+      <h1>Ajout d'une quête en cours</h1>
     </lu-dialog-header>
 
     <lu-dialog-content>
       @if (iDaily) {
-        <lu-form-field label="Quête optionnelle">
+        <lu-form-field label="Quête obligatoire">
           <lu-checkbox-input [(ngModel)]="iDaily.is_mandatory" [ngModelOptions]="{ standalone: true }" />
         </lu-form-field>
-        <lu-form-field label="Fois par semaine" tooltip="Valeur entre 0 et 14">
-          <lu-number-input
-            [step]="1"
-            [min]="0"
-            [max]="14"
-            [(ngModel)]="iDaily.semaine"
-            [ngModelOptions]="{ standalone: true }"
-          />
-        </lu-form-field>
+        <lu-horizontal-navigation>
+          <button
+            type="button"
+            *luHorizontalNavigationLink
+            class="horizontalNavigation-list-item-action"
+            [attr.aria-current]="currentMode === 'day' ? 'page' : null"
+            (click)="setMode('day')"
+          >
+            Gestion par jour
+          </button>
+          <button
+            type="button"
+            *luHorizontalNavigationLink
+            class="horizontalNavigation-list-item-action"
+            [attr.aria-current]="currentMode === 'week' ? 'page' : null"
+            (click)="setMode('week')"
+          >
+            Gestion par semaine
+          </button>
+        </lu-horizontal-navigation>
+        <div class="u-displayFlex u-flexDirectionColumn pr-u-gap100 pr-u-marginTop200">
+          @if (currentMode === 'day') {
+            <lu-callout icon="signInfo" size="S">
+              Dans ce mode de gestion, choisissez les jours où la quête pourra être validée.
+              @if (iDaily.is_mandatory) {
+                <br />
+                Une pénalité sera appliquée par chaque jour manqué.
+              }
+            </lu-callout>
+            <lu-form-field label="Lundi">
+              <lu-switch-input [(ngModel)]="iDaily.lundi" [ngModelOptions]="{ standalone: true }" />
+            </lu-form-field>
+            <lu-form-field label="Mardi">
+              <lu-switch-input [(ngModel)]="iDaily.mardi" [ngModelOptions]="{ standalone: true }" />
+            </lu-form-field>
+            <lu-form-field label="Mercredi">
+              <lu-switch-input [(ngModel)]="iDaily.mercredi" [ngModelOptions]="{ standalone: true }" />
+            </lu-form-field>
+            <lu-form-field label="Jeudi">
+              <lu-switch-input [(ngModel)]="iDaily.jeudi" [ngModelOptions]="{ standalone: true }" />
+            </lu-form-field>
+            <lu-form-field label="Vendredi">
+              <lu-switch-input [(ngModel)]="iDaily.vendredi" [ngModelOptions]="{ standalone: true }" />
+            </lu-form-field>
+            <lu-form-field label="Samedi">
+              <lu-switch-input [(ngModel)]="iDaily.samedi" [ngModelOptions]="{ standalone: true }" />
+            </lu-form-field>
+            <lu-form-field label="Dimanche">
+              <lu-switch-input [(ngModel)]="iDaily.dimanche" [ngModelOptions]="{ standalone: true }" />
+            </lu-form-field>
+          } @else {
+            <lu-callout icon="signInfo" size="S">
+              Dans ce mode de gestion, choisissez combien de fois par semaine où la quête pourra être validée.
+              @if (iDaily.is_mandatory) {
+                <br />
+                Une pénalité sera appliquée, si à la fin de la semaine la quête n'est pas réalisée dans son entièreté.
+              }
+            </lu-callout>
+            <lu-form-field label="Fois par semaine" tooltip="Valeur entre 0 et 14">
+              <lu-number-input
+                [step]="1"
+                [min]="0"
+                [max]="14"
+                [(ngModel)]="iDaily.semaine"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </lu-form-field>
+          }
+        </div>
       }
     </lu-dialog-content>
 

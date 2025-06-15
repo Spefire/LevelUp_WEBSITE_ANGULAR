@@ -9,7 +9,17 @@
     <quest-rewards [quest]="quest()" [forced]="isDaily() ? 'product' : null" />
   </div>
   @if (isDaily()) {
-    <p class="u-textS u-textNeutral">{{ daily.daysOfWeek | daysOfWeek }}</p>
+    <p class="u-textS u-textNeutral">
+      @if (isDaily() && daily.daysOfWeek.length) {
+        {{ daily.daysOfWeek | daysOfWeek }}
+      }
+      @if (isDaily() && daily.timesByWeek) {
+        {{ daily.timesByWeek }} fois par semaine
+      }
+      @if (isDaily() && daily.isMandatory) {
+        (obligatoire)
+      }
+    </p>
   }
   <div class="u-displayFlex u-justifyContentFlexEnd pr-u-gap50">
     @if (!isDaily()) {
