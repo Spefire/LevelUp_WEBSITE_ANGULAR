@@ -7,7 +7,7 @@
     @if (character) {
       <div class="mobileHeader-title u-displayNoneAtMediaMaxM">
         <h1 class="mobileHeader-title-main">{{ character.lastName }} {{ character.firstName }}</h1>
-        <div class="mobileHeader-title-sub">Débutant {{ character.isAdmin ? '(Admin)' : '' }}</div>
+        <div class="mobileHeader-title-sub">Débutant {{ character.isAdmin ? '(Premium)' : '' }}</div>
       </div>
     }
     <div class="mobileHeader-actions">
@@ -16,7 +16,7 @@
           @if (character) {
             <div class="u-textAlignRight">
               <h1 class="mobileHeader-title-main">{{ character.lastName }} {{ character.firstName }}</h1>
-              <div class="mobileHeader-title-sub">Débutant {{ character.isAdmin ? '(Admin)' : '' }}</div>
+              <div class="mobileHeader-title-sub">Débutant {{ character.isAdmin ? '(Premium)' : '' }}</div>
             </div>
             <span class="avatar">
               <img class="avatar-picture" loading="lazy" [src]="avatarURL" alt="Avatar" />

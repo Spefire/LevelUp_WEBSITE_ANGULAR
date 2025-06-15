@@ -3,11 +3,9 @@ import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { ButtonComponent } from '@lucca-front/ng/button';
-import { CalloutComponent } from '@lucca-front/ng/callout';
 import { LuDialogService } from '@lucca-front/ng/dialog';
 import { PageHeaderComponent } from '@lucca-front/ng/page-header';
 
-import { ConfirmDialogComponent } from '@src/components/confirm-dialog/confirm-dialog.component';
 import { Character, getAvatarURL } from '@src/models/character.model';
 import { Daily } from '@src/models/dailys.model';
 import { Log } from '@src/models/logs.model';
@@ -21,7 +19,7 @@ import { QuestsService } from '@src/services/quests.service';
 
 @Component({
   selector: 'params-page',
-  imports: [CommonModule, PageHeaderComponent, CalloutComponent, ButtonComponent],
+  imports: [CommonModule, PageHeaderComponent, ButtonComponent],
   templateUrl: './params.page.html',
   providers: [LuDialogService],
 })
@@ -72,57 +70,6 @@ export class ParamsPage implements OnInit {
       data: { character: this.character },
       panelClasses: ['mod-neutralBackground'],
       size: 'L',
-    });
-  }
-
-  public resetDailys() {
-    const dialogRef = this.#dialog.open({
-      content: ConfirmDialogComponent,
-      data: {},
-      size: 'S',
-    });
-
-    dialogRef.result$.subscribe(res => {
-      if (res) localStorage.removeItem('dailys');
-    });
-  }
-
-  public resetQuests() {
-    const dialogRef = this.#dialog.open({
-      content: ConfirmDialogComponent,
-      data: {},
-      size: 'S',
-    });
-
-    dialogRef.result$.subscribe(res => {
-      if (res) localStorage.removeItem('quests');
-    });
-  }
-
-  public resetLogs() {
-    const dialogRef = this.#dialog.open({
-      content: ConfirmDialogComponent,
-      data: {},
-      size: 'S',
-    });
-
-    dialogRef.result$.subscribe(res => {
-      if (res) localStorage.removeItem('logs');
-    });
-  }
-
-  public cleanAll() {
-    const dialogRef = this.#dialog.open({
-      content: ConfirmDialogComponent,
-      data: {},
-      size: 'S',
-    });
-
-    dialogRef.result$.subscribe(res => {
-      if (res) {
-        localStorage.clear();
-        window.location.reload();
-      }
     });
   }
 }

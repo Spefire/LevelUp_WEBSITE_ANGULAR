@@ -1,13 +1,9 @@
 <lu-page-header
   [label]="pages.params"
   description="Gère ton profil, renomme ton personnage et maîtrise les réglages de ton aventure."
->
-  <ng-container pageHeaderActions>
-    <button type="button" luButton palette="error" (click)="cleanAll()">Tout réinitialiser</button>
-  </ng-container>
-</lu-page-header>
+/>
 
-<lu-callout state="warning">Attention : certaines actions sont irréversibles.</lu-callout>
+<!--lu-callout state="warning">Attention : certaines actions sont irréversibles.</lu-callout-->
 
 <div class="grid pr-u-marginTop200">
   <div class="grid-column card" [attr.style]="'--grid-colspan: 12; --grid-colspanAtMediaMinM: 4'">
@@ -18,33 +14,24 @@
     <p>
       Nom : <b>{{ character.lastName }} {{ character.firstName }}</b>
     </p>
-    <p>
-      Admin : <b>{{ character.isAdmin ? 'Oui' : 'Non' }}</b>
-    </p>
+    <p>Niveau : <b>Débutant</b></p>
     <button type="button" luButton size="S" class="pr-u-marginTop200" (click)="modifyCharacter()">Modifier</button>
   </div>
 
   <div class="grid-column card" [attr.style]="'--grid-colspan: 12; --grid-colspanAtMediaMinM: 4'">
-    <h2 class="pr-u-marginBottom150">Quêtes journalières</h2>
+    <h2 class="pr-u-marginBottom150">Quêtes</h2>
     <p>
-      Nombre de quêtes sélectionnées : <b>{{ dailys?.length ?? 0 }}</b>
+      Nombre de quêtes en cours : <b>{{ dailys?.length ?? 0 }}</b>
     </p>
-    <button type="button" luButton size="S" class="pr-u-marginTop200" (click)="resetDailys()">Réinitialiser</button>
-  </div>
-
-  <div class="grid-column card" [attr.style]="'--grid-colspan: 12; --grid-colspanAtMediaMinM: 4'">
-    <h2 class="pr-u-marginBottom150">Quêtes disponibles</h2>
-    <p>
-      Nombre de quêtes disponibles : <b>{{ quests?.length ?? 0 }}</b>
-    </p>
-    <button type="button" luButton size="S" class="pr-u-marginTop200" (click)="resetQuests()">Réinitialiser</button>
-  </div>
-
-  <div class="grid-column card" [attr.style]="'--grid-colspan: 12; --grid-colspanAtMediaMinM: 4'">
-    <h2 class="pr-u-marginBottom150">Historique</h2>
     <p>
       Nombre de quêtes réalisées : <b>{{ logs?.length ?? 0 }}</b>
     </p>
-    <button type="button" luButton size="S" class="pr-u-marginTop200" (click)="resetLogs()">Réinitialiser</button>
+  </div>
+
+  <div class="grid-column card" [attr.style]="'--grid-colspan: 12; --grid-colspanAtMediaMinM: 4'">
+    <h2 class="pr-u-marginBottom150">Compte</h2>
+    <p>
+      Mode Premium : <b>{{ character.isAdmin ? 'Activé' : 'Désactivé' }}</b>
+    </p>
   </div>
 </div>
