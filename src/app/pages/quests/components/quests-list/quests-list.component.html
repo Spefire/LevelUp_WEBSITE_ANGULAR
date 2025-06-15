@@ -1,41 +1,41 @@
-@if (getQuestsByFilters(); as filteredQuests) {
+@if (getByFilters(); as filteredQuests) {
   <div class="u-displayFlex u-flexDirectionColumn pr-u-gap200 pr-u-marginTop200">
     @if (filteredQuests.length) {
-      @if (getQuestsByDifficulty(filteredQuests, QuestDifficulty.COMPLEXE); as complexeQuests) {
+      @if (getByDifficulty(filteredQuests, QuestDifficulty.COMPLEXE); as complexeQuests) {
         <section class="card">
           <h2 class="u-h3 u-displayFlex u-alignItemsCenter pr-u-gap100">
-            <span>Difficulté</span>
+            <span>Quêtes de difficulté</span>
             <lu-status-badge palette="error" [label]="QuestDifficulty.COMPLEXE" />
           </h2>
           <div class="grid pr-u-marginTop100" style="--grid-columns: 4; --grid-colspan: 4">
             @for (quest of complexeQuests; track quest.id) {
-              <quests-card [quest]="quest" />
+              <quest-card [quest]="quest" [isDaily]="isDaily()" />
             }
           </div>
         </section>
       }
-      @if (getQuestsByDifficulty(filteredQuests, QuestDifficulty.STANDARD); as standardQuests) {
+      @if (getByDifficulty(filteredQuests, QuestDifficulty.STANDARD); as standardQuests) {
         <section class="card">
           <h2 class="u-h3 u-displayFlex u-alignItemsCenter pr-u-gap100">
-            <span>Difficulté</span>
+            <span>Quêtes de difficulté</span>
             <lu-status-badge palette="warning" [label]="QuestDifficulty.STANDARD" />
           </h2>
           <div class="grid pr-u-marginTop100" style="--grid-columns: 4; --grid-colspan: 4">
             @for (quest of standardQuests; track quest.id) {
-              <quests-card [quest]="quest" />
+              <quest-card [quest]="quest" [isDaily]="isDaily()" />
             }
           </div>
         </section>
       }
-      @if (getQuestsByDifficulty(filteredQuests, QuestDifficulty.SIMPLE); as simpleQuests) {
+      @if (getByDifficulty(filteredQuests, QuestDifficulty.SIMPLE); as simpleQuests) {
         <section class="card">
           <h2 class="u-h3 u-displayFlex u-alignItemsCenter pr-u-gap100">
-            <span>Difficulté</span>
+            <span>Quêtes de difficulté</span>
             <lu-status-badge palette="success" [label]="QuestDifficulty.SIMPLE" />
           </h2>
           <div class="grid pr-u-marginTop100" style="--grid-columns: 4; --grid-colspan: 4">
             @for (quest of simpleQuests; track quest.id) {
-              <quests-card [quest]="quest" />
+              <quest-card [quest]="quest" [isDaily]="isDaily()" />
             }
           </div>
         </section>
@@ -46,13 +46,8 @@
           hx="3"
           icon="https://cdn.lucca.fr/lucca-front/assets/empty-states/icons/iconPaperAction.svg"
           heading="Aucune quête disponible"
-          description="Vous pouvez changer les filtres, ou créer une nouvelle quête."
-        >
-          <button type="button" luButton disabled>
-            <lu-icon icon="mathsPlus" />
-            Créer une quête
-          </button>
-        </lu-empty-state-section>
+          description="Vous pouvez peut-être changer les filtres."
+        />
       </div>
     }
   </div>

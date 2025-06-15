@@ -1,9 +1,17 @@
-import { DecorativePalette, Palette } from '@lucca-front/ng/core';
+export class Avatar {
+  public eyebrows: number;
+  public eyes: number;
+  public hasGlasses: boolean;
+  public glasses: number;
+  public mouth: number;
+}
 
-export type CaractKey = 'force' | 'habilete' | 'tenacite' | 'intelligence' | 'charisme' | 'magie';
-export const CaractKeys: CaractKey[] = ['force', 'habilete', 'tenacite', 'intelligence', 'charisme', 'magie'];
-
-export interface Avatar {
+export interface ICharacter {
+  id: number;
+  user_id: string;
+  lastName: string;
+  firstName: string;
+  isAdmin: boolean;
   eyebrows: number;
   eyes: number;
   hasGlasses: boolean;
@@ -11,42 +19,47 @@ export interface Avatar {
   mouth: number;
 }
 
-export interface Character {
-  id: number;
-  avatar: Avatar;
-  lastName: string;
-  firstName: string;
-  isAdmin: boolean;
-}
+export class Character {
+  public id: number;
+  public lastName: string;
+  public firstName: string;
+  public isAdmin: boolean;
+  public avatar: Avatar;
 
-export interface Caract {
-  libelle: string;
-  code: string;
-  description: string;
-  color: Palette | DecorativePalette;
-}
+  public static getICharacter(user_id: string, character: Character) {
+    const item: ICharacter = {
+      id: character.id,
+      user_id,
+      lastName: character.lastName,
+      firstName: character.firstName,
+      isAdmin: character.isAdmin,
+      eyebrows: character.avatar.eyebrows,
+      eyes: character.avatar.eyes,
+      hasGlasses: character.avatar.hasGlasses,
+      glasses: character.avatar.glasses,
+      mouth: character.avatar.mouth,
+    };
+    return item;
+  }
 
-export interface StatProgress {
-  currentXP: number;
-  level: number;
-  xpToNextLevel: number;
+  public static getCharacter(result: ICharacter) {
+    const avatar: Avatar = {
+      eyebrows: result.eyebrows,
+      eyes: result.eyes,
+      hasGlasses: result.hasGlasses,
+      glasses: result.glasses,
+      mouth: result.mouth,
+    };
+    const character: Character = {
+      id: result.id,
+      lastName: result.lastName,
+      firstName: result.firstName,
+      isAdmin: result.isAdmin,
+      avatar: avatar,
+    };
+    return character;
+  }
 }
-
-export interface Stats {
-  currentXP: number;
-  level: number;
-  xpToNextLevel: number;
-  caracts: Record<CaractKey, StatProgress>;
-}
-
-export const Caracteristics: Record<CaractKey, Caract> = {
-  force: { libelle: 'Force', code: 'FOR', description: 'Physique, puissance musculaire', color: 'watermelon' },
-  habilete: { libelle: 'Habileté', code: 'HAB', description: 'Mobilité, souplesse, agilité', color: 'pineapple' },
-  tenacite: { libelle: 'Ténacité', code: 'TEN', description: 'Endurance, discipline, santé', color: 'cucumber' },
-  intelligence: { libelle: 'Intelligence', code: 'INT', description: 'Mental, réflexion, équilibre psychique', color: 'glacier' },
-  charisme: { libelle: 'Charisme', code: 'CHA', description: 'Présentation, hygiène, aura sociale', color: 'blueberry' },
-  magie: { libelle: 'Magie', code: 'MAG', description: 'Créativité, expression, imagination', color: 'grape' },
-};
 
 export const getAvatarURL = (avatar: Avatar) => {
   let result = 'https://api.dicebear.com/9.x/adventurer-neutral/svg?backgroundColor[]&';
@@ -62,3 +75,150 @@ export const getAvatarURL = (avatar: Avatar) => {
   });
   return result;
 };
+
+export const Adjectives = [
+  'Sombre',
+  'Noble',
+  'Vaillant',
+  'Svelte',
+  'Fier',
+  'Sage',
+  'Rusé',
+  'Vif',
+  'Ténébreux',
+  'Brillant',
+  'Intrépide',
+  'Calme',
+  'Ancien',
+  'Hurlant',
+  'Brumeux',
+  'Rieur',
+  'Tempétueux',
+  'Loyal',
+  'Ombre',
+  'Hardy',
+  'Gracieux',
+  'Mystique',
+  'Alerte',
+  'Silencieux',
+  'Éclatant',
+  'Droit',
+  'Féerique',
+  'Brûlant',
+  'Insaisissable',
+  'Nébuleux',
+  'Franc',
+  'Bondissant',
+  'Glorieux',
+  'Vénérable',
+  'Agile',
+  'Habile',
+  'Majestueux',
+  'Bouillant',
+  'Pur',
+  'Serein',
+  'Tranchant',
+  'Profond',
+  'Doux',
+  'Ardent',
+  'Velu',
+  'Poétique',
+  'Étoilé',
+  'Héroïque',
+  'Frémissant',
+  'Captivant',
+  'Mystérieux',
+  'Étincelant',
+  'Flottant',
+  'Indomptable',
+  'Hésitant',
+  'Calme',
+  'Lourd',
+  'Enchanteur',
+  'Hâtif',
+  'Délicat',
+  'Pointu',
+  'Téméraire',
+  'Super',
+].sort((a, b) => a.localeCompare(b));
+
+export const Nouns = [
+  'Lame',
+  'Flamme',
+  'Aigle',
+  'Loup',
+  'Chêne',
+  'Hibou',
+  'Renard',
+  'Corbeau',
+  'Vipère',
+  'Faucon',
+  'Écarlate',
+  'Serpent',
+  'Lézard',
+  'Cristal',
+  'Chardon',
+  'Rivière',
+  'Saphir',
+  'Roc',
+  'Sentier',
+  'Sylphe',
+  'Griffon',
+  'Corail',
+  'Cerf',
+  'Chasseur',
+  'Moineau',
+  'Pic',
+  'Lys',
+  'Lutin',
+  'Écureuil',
+  'Colombe',
+  'Cygne',
+  'Rune',
+  'Lierre',
+  'Dahu',
+  'Épine',
+  'Galet',
+  'Grimoire',
+  'Flocon',
+  'Flambeau',
+  'Nectar',
+  'Silex',
+  'Lueur',
+  'Faon',
+  'Ramure',
+  'Lièvre',
+  'Trèfle',
+  'Statuette',
+  'Chimère',
+  'Parchemin',
+  'Boussole',
+  'Sapin',
+  'Lanterne',
+  'Voile',
+  'Mistral',
+  'Sanglier',
+  'Oursin',
+  'Goupil',
+  'Brise',
+  'Archet',
+  'Pin',
+  'Marbre',
+  'Zéphyr',
+  'Glycine',
+  'Souffle',
+  'Abîme',
+  'Vent',
+  'Phénix',
+  'Grizzli',
+  'Kobold',
+  'Golem',
+  'Minotaure',
+  'Brume',
+  'Écu',
+  'Marteau',
+  'Serpe',
+  'Nénuphar',
+  'Sylvain',
+  'Oracle',
+].sort((a, b) => a.localeCompare(b));

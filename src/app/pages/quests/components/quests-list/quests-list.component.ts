@@ -2,54 +2,58 @@ import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { ButtonComponent } from '@lucca-front/ng/button';
 import { EmptyStateSectionComponent } from '@lucca-front/ng/empty-state';
-import { IconComponent } from '@lucca-front/ng/icon';
 import { StatusBadgeComponent } from '@lucca-front/ng/statusBadge';
 
-import { Quest, QuestCategory, QuestDifficulty, QuestsFilters } from '@src/models/quests.model';
-import { QuestsCardComponent } from '@src/pages/quests/components/quests-card/quests-card.component';
+import { Daily } from '@src/models/dailys.model';
+import { IQuestsFilters, Quest, QuestCategory, QuestDifficulty } from '@src/models/quests.model';
+import { QuestCardComponent } from '@src/pages/quests/components/quest-card/quest-card.component';
 import { QuestsService } from '@src/services/quests.service';
 
 @Component({
   selector: 'quests-list',
-  imports: [CommonModule, EmptyStateSectionComponent, QuestsCardComponent, StatusBadgeComponent, ButtonComponent, IconComponent],
+  imports: [CommonModule, EmptyStateSectionComponent, QuestCardComponent, StatusBadgeComponent],
   templateUrl: './quests-list.component.html',
 })
 export class QuestsListComponent implements OnInit {
-  public readonly quests = input.required<Quest[]>();
+  public readonly isDaily = input.required<boolean>();
+  public readonly dailys = input<Daily[]>();
+  public readonly quests = input<Quest[]>();
 
   public QuestDifficulty = QuestDifficulty;
   public categories = [null, ...Object.values(QuestCategory)];
-  public dailyQuests: Quest[];
-  public filters: QuestsFilters;
+  public filters: IQuestsFilters;
 
   private readonly _destroyRef = inject(DestroyRef);
 
   constructor(private _questsService: QuestsService) {}
 
   public ngOnInit(): void {
-    this._questsService.dailyQuests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailyQuests => {
-      this.dailyQuests = dailyQuests;
-    });
-
     this._questsService.filters$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(filters => {
-      this.filters = filters;
+      if (filters) this.filters = filters;
     });
   }
 
-  public getQuestsByFilters() {
-    if (!this.filters) return this.quests();
-    let quests = this.quests();
-    quests = quests.filter(quest => !this.filters.category || (this.filters.category && quest.category === this.filters.category));
-    quests = quests.filter(quest => !this.filters.search || normalize(quest.name).includes(normalize(this.filters.search)));
-    quests = quests.filter(
-      quest => !this.filters.onlySelected || (this.filters.onlySelected && this.dailyQuests.find(dailyQuest => dailyQuest.id === quest.id))
-    );
-    return quests;
+  public getByFilters(): Quest[] {
+    if (this.isDaily()) {
+      if (!this.dailys()) return [];
+      if (!this.filters) return this.dailys().map(daily => daily.quest);
+      let dailys = this.dailys();
+      dailys = dailys.filter(daily => !this.filters.category || (this.filters.category && daily.quest.category === this.filters.category));
+      dailys = dailys.filter(daily => !this.filters.search || normalize(daily.quest.name).includes(normalize(this.filters.search)));
+      dailys = dailys.filter(daily => !this.filters.isMandatory || (this.filters.isMandatory && daily.isMandatory));
+      return dailys.map(daily => daily.quest);
+    } else {
+      if (!this.quests()) return [];
+      if (!this.filters) return this.quests();
+      let quests = this.quests();
+      quests = quests.filter(quest => !this.filters.category || (this.filters.category && quest.category === this.filters.category));
+      quests = quests.filter(quest => !this.filters.search || normalize(quest.name).includes(normalize(this.filters.search)));
+      return quests;
+    }
   }
 
-  public getQuestsByDifficulty(quests: Quest[], difficulty: string) {
+  public getByDifficulty(quests: Quest[], difficulty: string) {
     const result = quests.filter(quest => quest.difficulty === difficulty);
     return result.length ? result : null;
   }

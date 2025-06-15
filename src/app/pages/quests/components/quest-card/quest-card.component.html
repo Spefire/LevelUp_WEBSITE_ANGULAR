@@ -1,0 +1,64 @@
+<div
+  class="grid-column card mod-actions u-displayFlex u-flexDirectionColumn pr-u-gap50"
+  [class.mod-selected]="isDaily()"
+  [attr.style]="'--grid-colspanAtMediaMinS: 2; --grid-colspanAtMediaMinM: 1'"
+>
+  <h4>{{ quest().name }}</h4>
+  <p>{{ quest().description }}</p>
+  <div class="u-displayFlex u-flexWrapWrap pr-u-gap100">
+    <quest-rewards [quest]="quest()" [forced]="isDaily() ? 'product' : null" />
+  </div>
+  @if (isDaily()) {
+    <p class="u-textS u-textNeutral">
+      @if (isDaily() && daily.daysOfWeek.length) {
+        {{ daily.daysOfWeek | daysOfWeek }}
+      }
+      @if (isDaily() && daily.timesByWeek) {
+        {{ daily.timesByWeek }} fois par semaine
+      }
+      @if (isDaily() && daily.isMandatory) {
+        (obligatoire)
+      }
+    </p>
+  }
+  <div class="u-displayFlex u-justifyContentFlexEnd pr-u-gap50">
+    @if (!isDaily()) {
+      <button type="button" luButton="outlined" size="S" (click)="addDaily()">Accepter</button>
+      @if (character?.isAdmin) {
+        <button
+          type="button"
+          luButton="text"
+          size="S"
+          luTooltip="Modifier la quête"
+          luTooltipOnlyForDisplay
+          (click)="modifyQuest()"
+        >
+          <lu-icon icon="officePen" alt="Modifier la quête" />
+        </button>
+        <button
+          type="button"
+          luButton="text"
+          size="S"
+          palette="error"
+          luTooltip="Supprimer la quête"
+          luTooltipOnlyForDisplay
+          (click)="deleteQuest()"
+        >
+          <lu-icon icon="trashDelete" alt="Supprimer la quête" />
+        </button>
+      }
+    } @else {
+      <button
+        type="button"
+        luButton="text"
+        size="S"
+        palette="product"
+        luTooltip="Abandonner la quête"
+        luTooltipOnlyForDisplay
+        (click)="removeDaily()"
+      >
+        <lu-icon icon="close" />
+      </button>
+    }
+  </div>
+</div>

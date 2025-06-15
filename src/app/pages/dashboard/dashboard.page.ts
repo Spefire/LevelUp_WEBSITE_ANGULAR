@@ -6,7 +6,7 @@ import { PageHeaderComponent } from '@lucca-front/ng/page-header';
 import { TagComponent } from '@lucca-front/ng/tag';
 
 import { PageTitles } from '@src/models/pages.model';
-import { DailyListComponent } from '@src/pages/dashboard/components/daily-list/daily-list.component';
+import { DailysListComponent } from '@src/pages/dashboard/components/dailys-list/dailys-list.component';
 import { HistoricTableComponent } from '@src/pages/dashboard/components/historic-table/historic-table.component';
 
 @Component({
@@ -17,7 +17,7 @@ import { HistoricTableComponent } from '@src/pages/dashboard/components/historic
     TagComponent,
     HorizontalNavigationComponent,
     HorizontalNavigationLinkDirective,
-    DailyListComponent,
+    DailysListComponent,
     HistoricTableComponent,
   ],
   templateUrl: './dashboard.page.html',

@@ -3,23 +3,21 @@ import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { ButtonComponent } from '@lucca-front/ng/button';
-import { CalloutComponent } from '@lucca-front/ng/callout';
 import { LuDialogService } from '@lucca-front/ng/dialog';
 import { PageHeaderComponent } from '@lucca-front/ng/page-header';
 
-import { ConfirmDialogComponent } from '@src/components/confirm-dialog/confirm-dialog.component';
 import { Character, getAvatarURL } from '@src/models/character.model';
+import { Daily } from '@src/models/dailys.model';
 import { Log } from '@src/models/logs.model';
 import { PageTitles } from '@src/models/pages.model';
-import { Quest } from '@src/models/quests.model';
 import { ParamsCharacterDialogComponent } from '@src/pages/params/params-character-dialog/params-character-dialog.component';
 import { CharacterService } from '@src/services/character.service';
+import { DailysService } from '@src/services/dailys.service';
 import { LogsService } from '@src/services/logs.service';
-import { QuestsService } from '@src/services/quests.service';
 
 @Component({
   selector: 'params-page',
-  imports: [CommonModule, PageHeaderComponent, CalloutComponent, ButtonComponent],
+  imports: [CommonModule, PageHeaderComponent, ButtonComponent],
   templateUrl: './params.page.html',
   providers: [LuDialogService],
 })
@@ -29,7 +27,7 @@ export class ParamsPage implements OnInit {
   public avatarURL: string;
   public character: Character;
   public logs: Log[];
-  public dailyQuests: Quest[];
+  public dailys: Daily[];
 
   private readonly _destroyRef = inject(DestroyRef);
 
@@ -38,21 +36,23 @@ export class ParamsPage implements OnInit {
   constructor(
     private _characterService: CharacterService,
     private _logsService: LogsService,
-    private _questsService: QuestsService
+    private _dailysService: DailysService
   ) {}
 
   public ngOnInit(): void {
     this._characterService.character$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(character => {
-      this.character = character;
-      if (character) this.avatarURL = getAvatarURL(this.character.avatar);
+      if (character) {
+        this.character = character;
+        this.avatarURL = getAvatarURL(this.character.avatar);
+      }
     });
 
     this._logsService.logs$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(logs => {
-      this.logs = logs;
+      if (logs) this.logs = logs;
     });
 
-    this._questsService.dailyQuests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailyQuests => {
-      this.dailyQuests = dailyQuests;
+    this._dailysService.dailys$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailys => {
+      if (dailys) this.dailys = dailys;
     });
   }
 
@@ -62,45 +62,6 @@ export class ParamsPage implements OnInit {
       data: { character: this.character },
       panelClasses: ['mod-neutralBackground'],
       size: 'L',
-    });
-  }
-
-  public resetDailyQuests() {
-    const dialogRef = this.#dialog.open({
-      content: ConfirmDialogComponent,
-      data: {},
-      size: 'S',
-    });
-
-    dialogRef.result$.subscribe(res => {
-      if (res) localStorage.removeItem('dailyQuests');
-    });
-  }
-
-  public resetLogs() {
-    const dialogRef = this.#dialog.open({
-      content: ConfirmDialogComponent,
-      data: {},
-      size: 'S',
-    });
-
-    dialogRef.result$.subscribe(res => {
-      if (res) localStorage.removeItem('logs');
-    });
-  }
-
-  public cleanAll() {
-    const dialogRef = this.#dialog.open({
-      content: ConfirmDialogComponent,
-      data: {},
-      size: 'S',
-    });
-
-    dialogRef.result$.subscribe(res => {
-      if (res) {
-        localStorage.clear();
-        window.location.reload();
-      }
     });
   }
 }

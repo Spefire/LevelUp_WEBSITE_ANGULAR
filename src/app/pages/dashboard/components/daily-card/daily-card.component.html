@@ -1,5 +1,5 @@
 <div
-  class="grid-column card mod-actions"
+  class="grid-column card mod-actions u-displayFlex u-flexDirectionColumn pr-u-gap50"
   [class.mod-succeed]="logLinked"
   [attr.style]="'--grid-colspanAtMediaMinS: 2; --grid-colspanAtMediaMinM: 1'"
 >
@@ -16,8 +16,10 @@
     }
   </div>
   <p>{{ quest().description }}</p>
-  <div class="u-displayFlex u-alignItemsCenter u-justifyContentSpaceBetween pr-u-gap100 pr-u-marginTop150">
-    <div></div>
+  <div class="u-displayFlex u-flexWrapWrap pr-u-gap100">
+    <quest-rewards [quest]="quest()" [forced]="logLinked ? 'success' : null" />
+  </div>
+  <div class="u-displayFlex u-justifyContentFlexEnd pr-u-gap50">
     @if (!logLinked) {
       @if (!isOptionnal()) {
         <button type="button" luButton size="S" [palette]="isOld() ? 'neutral' : 'product'" (click)="completeQuest()">
@@ -35,8 +37,16 @@
         </button>
       }
     } @else {
-      <button type="button" luButton="text" size="S" (click)="cancelQuest()">
-        <lu-icon icon="close" alt="Annuler" />
+      <button
+        type="button"
+        luButton="text"
+        size="S"
+        palette="success"
+        luTooltip="Annuler la validation"
+        luTooltipOnlyForDisplay
+        (click)="cancelQuest()"
+      >
+        <lu-icon icon="close" />
       </button>
     }
   </div>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { listQuests, Quest, QuestsFilters } from '@src/models/quests.model';
+import { IQuestsFilters, Quest } from '@src/models/quests.model';
+import { SupabaseService } from '@src/services/supabase.service';
 
 import { BehaviorSubject } from 'rxjs';
 
@@ -8,57 +9,64 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class QuestsService {
-  private _dailyQuestsSubject = new BehaviorSubject<Quest[]>([]);
-  private _questsSubject = new BehaviorSubject<Quest[]>(listQuests);
-  private _filtersSubject = new BehaviorSubject<QuestsFilters>({
+  private _questsSubject = new BehaviorSubject<Quest[]>(null);
+  private _filtersSubject = new BehaviorSubject<IQuestsFilters>({
     category: null,
-    onlySelected: false,
+    isMandatory: false,
     search: null,
   });
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  public dailyQuests$ = this._dailyQuestsSubject.asObservable();
-  // eslint-disable-next-line @typescript-eslint/member-ordering
   public quests$ = this._questsSubject.asObservable();
+  public get quests() {
+    return this._questsSubject.value;
+  }
+
   // eslint-disable-next-line @typescript-eslint/member-ordering
   public filters$ = this._filtersSubject.asObservable();
-
-  constructor() {
-    this._load();
+  public get filters() {
+    return this._filtersSubject.value;
   }
 
-  public setFilters(newFilters: QuestsFilters) {
+  constructor(private _supabaseService: SupabaseService) {}
+
+  public async loadQuests() {
+    if (!this._questsSubject.value) {
+      const quests = await this._supabaseService.getQuests();
+      if (quests) this._questsSubject.next(quests);
+    }
+  }
+
+  public async addQuest(newQuest: Quest) {
+    const quest = await this._supabaseService.postQuest(newQuest);
+    if (quest) {
+      const quests = this._questsSubject.value;
+      quests.push(quest);
+      this._questsSubject.next(quests);
+      return true;
+    } else return false;
+  }
+
+  public async modifyQuest(newQuest: Quest) {
+    const quest = await this._supabaseService.putQuest(newQuest);
+    if (quest) {
+      const quests = this._questsSubject.value.filter(quest => !(newQuest.id === quest.id));
+      quests.push(quest);
+      this._questsSubject.next(quests);
+      return true;
+    } else return false;
+  }
+
+  public async removeQuest(deletedQuest: Quest) {
+    const quest = await this._supabaseService.deleteQuest(deletedQuest);
+    if (quest) {
+      const quests = this._questsSubject.value.filter(quest => !(deletedQuest.id === quest.id));
+      this._questsSubject.next(quests);
+      return true;
+    } else return false;
+  }
+
+  public setFilters(newFilters: IQuestsFilters) {
     this._filtersSubject.next(newFilters);
-  }
-
-  public toggleQuest(quest: Quest): void {
-    let dailyQuests = this._dailyQuestsSubject.value;
-    if (dailyQuests.find(dailyQuest => dailyQuest.id === quest.id)) {
-      dailyQuests = dailyQuests.filter(dailyQuest => dailyQuest.id !== quest.id);
-    } else {
-      dailyQuests.push(quest);
-    }
-    this._save(dailyQuests);
-  }
-
-  private _load() {
-    const storage = localStorage.getItem('dailyQuests');
-    if (storage) {
-      const result: Quest[] = [];
-      const jsonObjs: string[] = JSON.parse(storage);
-      jsonObjs.forEach(jsonObj => {
-        const itemToFind = listQuests.find(quest => quest.id === jsonObj);
-        if (itemToFind) {
-          result.push(itemToFind);
-        }
-      });
-      this._dailyQuestsSubject.next(result);
-    }
-  }
-
-  private _save(dailyQuests: Quest[]) {
-    this._dailyQuestsSubject.next(dailyQuests);
-    const result = dailyQuests.map(dailyQuest => dailyQuest.id);
-    localStorage.setItem('dailyQuests', JSON.stringify(result));
   }
 }

@@ -2,12 +2,14 @@
   [label]="pages.quests"
   description="Choisissez dans la liste vos quêtes en cours, ou créez-en vous une."
 >
-  <ng-container pageHeaderActions>
-    <button type="button" luButton disabled>
-      <lu-icon icon="mathsPlus" />
-      Créer une quête
-    </button>
-  </ng-container>
+  @if (character.isAdmin) {
+    <ng-container pageHeaderActions>
+      <button type="button" luButton (click)="addQuest()">
+        <lu-icon icon="mathsPlus" />
+        Créer une quête
+      </button>
+    </ng-container>
+  }
 
   <ng-container pageHeaderNavigation>
     <lu-horizontal-navigation>
@@ -15,28 +17,29 @@
         type="button"
         *luHorizontalNavigationLink
         class="horizontalNavigation-list-item-action"
-        [attr.aria-current]="currentNav === 'obligatoires' ? 'page' : null"
-        (click)="setNav('obligatoires')"
+        [attr.aria-current]="currentNav === 'toselect' ? 'page' : null"
+        (click)="setNav('toselect')"
       >
-        Quêtes obligatoires
+        Disponibles
       </button>
       <button
         type="button"
         *luHorizontalNavigationLink
         class="horizontalNavigation-list-item-action"
-        [attr.aria-current]="currentNav === 'optionnelles' ? 'page' : null"
-        (click)="setNav('optionnelles')"
+        [attr.aria-current]="currentNav === 'selected' ? 'page' : null"
+        (click)="setNav('selected')"
       >
-        Quêtes optionnelles
+        En cours
+        <lu-numeric-badge [value]="dailys?.length" />
       </button>
     </lu-horizontal-navigation>
   </ng-container>
 </lu-page-header>
 
-@if (currentNav === 'obligatoires') {
-  <quests-filters [quests]="quests"></quests-filters>
-  <quests-list [quests]="quests"></quests-list>
+@if (currentNav === 'toselect') {
+  <quests-filters [quests]="toSelectQuests" [isDaily]="false" />
+  <quests-list [quests]="toSelectQuests" [isDaily]="false" />
 } @else {
-  <quests-filters [quests]="optionnalQuests"></quests-filters>
-  <quests-list [quests]="optionnalQuests"></quests-list>
+  <quests-filters [dailys]="dailys" [isDaily]="true" />
+  <quests-list [dailys]="dailys" [isDaily]="true" />
 }

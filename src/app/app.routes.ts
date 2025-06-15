@@ -18,13 +18,13 @@ export const routes: Routes = [
     canActivate: [NoAuthGuard],
   },
   {
-    path: '',
+    path: 'tableau-de-bord',
     loadComponent: () => import('./pages/dashboard/dashboard.page').then(m => m.DashboardPage),
     title: PageTitles.dashboard + ' - ' + PageTitles.app,
     canActivate: [AuthGuard],
   },
   {
-    path: 'character',
+    path: 'personnage',
     loadComponent: () => import('./pages/character/character.page').then(m => m.CharacterPage),
     title: PageTitles.character + ' - ' + PageTitles.app,
     canActivate: [AuthGuard],

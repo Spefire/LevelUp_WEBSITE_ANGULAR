@@ -12,7 +12,8 @@ export class AuthGuard implements CanActivate {
 
   public canActivate(): boolean | UrlTree {
     const session = this._supabaseService.session.value;
+    console.log('AuthGuard', session ? true : false, this._router.url);
     if (session) return true;
-    else return this._router.createUrlTree(['/connexion']);
+    else return false;
   }
 }

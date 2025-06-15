@@ -1,0 +1,116 @@
+<lu-dialog #dialog>
+  <form class="dialog-inside-formOptional">
+    <lu-dialog-header>
+      @if (isCreation) {
+        <h1>Création d'une quête</h1>
+      } @else {
+        <h1>Modification de la quête</h1>
+      }
+    </lu-dialog-header>
+
+    <lu-dialog-content>
+      @if (iQuest) {
+        <div class="grid pr-u-gap400" style="--grid-columns: 2; --grid-colspan: 2">
+          <div
+            class="grid-column card u-displayFlex u-flexDirectionColumn pr-u-gap100"
+            [attr.style]="'--grid-colspanAtMediaMinM: 1'"
+          >
+            <h2>Propriétés</h2>
+            <lu-form-field label="Nom" [counter]="50">
+              <lu-text-input required type="text" [(ngModel)]="iQuest.name" [ngModelOptions]="{ standalone: true }" />
+            </lu-form-field>
+            <lu-form-field label="Description" [counter]="150">
+              <lu-text-input
+                required
+                type="text"
+                [(ngModel)]="iQuest.description"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </lu-form-field>
+            <lu-form-field label="Difficulté">
+              <lu-simple-select
+                [options]="difficulty"
+                [(ngModel)]="iQuest.difficulty"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </lu-form-field>
+            <lu-form-field label="Catégorie">
+              <lu-simple-select
+                [options]="categories"
+                [(ngModel)]="iQuest.category"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </lu-form-field>
+          </div>
+          <div
+            class="grid-column card u-displayFlex u-flexDirectionColumn pr-u-gap100"
+            [attr.style]="'--grid-colspanAtMediaMinM: 1'"
+          >
+            <h2>Attributs gagnés</h2>
+            <lu-form-field label="Force (XP)" tooltip="Valeur entre 0 et 2">
+              <lu-number-input
+                [step]="1"
+                [min]="0"
+                [max]="2"
+                [(ngModel)]="iQuest.force"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </lu-form-field>
+            <lu-form-field label="Habileté (XP)" tooltip="Valeur entre 0 et 2">
+              <lu-number-input
+                [step]="1"
+                [min]="0"
+                [max]="2"
+                [(ngModel)]="iQuest.habilete"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </lu-form-field>
+            <lu-form-field label="Ténacité (XP)" tooltip="Valeur entre 0 et 2">
+              <lu-number-input
+                [step]="1"
+                [min]="0"
+                [max]="2"
+                [(ngModel)]="iQuest.tenacite"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </lu-form-field>
+            <lu-form-field label="Intelligence (XP)" tooltip="Valeur entre 0 et 2">
+              <lu-number-input
+                [step]="1"
+                [min]="0"
+                [max]="2"
+                [(ngModel)]="iQuest.intelligence"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </lu-form-field>
+            <lu-form-field label="Charisme (XP)" tooltip="Valeur entre 0 et 2">
+              <lu-number-input
+                [step]="1"
+                [min]="0"
+                [max]="2"
+                [(ngModel)]="iQuest.charisme"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </lu-form-field>
+            <lu-form-field label="Magie (XP)" tooltip="Valeur entre 0 et 2">
+              <lu-number-input
+                [step]="1"
+                [min]="0"
+                [max]="2"
+                [(ngModel)]="iQuest.magie"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </lu-form-field>
+          </div>
+        </div>
+      }
+    </lu-dialog-content>
+
+    <lu-dialog-footer>
+      <div class="footer-actions">
+        <button type="button" luButton="text" luDialogDismiss>Annuler</button>
+        <button type="button" luButton [disabled]="isInvalidForm" (click)="confirm()">Valider</button>
+      </div>
+    </lu-dialog-footer>
+  </form>
+</lu-dialog>

@@ -9,6 +9,7 @@ import { IconComponent } from '@lucca-front/ng/icon';
 
 import { Character, getAvatarURL } from '@src/models/character.model';
 import { PageTitles } from '@src/models/pages.model';
+import { AppService } from '@src/services/app.service';
 import { CharacterService } from '@src/services/character.service';
 import { SupabaseService } from '@src/services/supabase.service';
 
@@ -28,18 +29,21 @@ export class HeaderComponent implements OnInit {
   private readonly _destroyRef = inject(DestroyRef);
 
   constructor(
+    private _appService: AppService,
     private _characterService: CharacterService,
     private _supabaseService: SupabaseService
   ) {}
 
   public ngOnInit() {
     this._characterService.character$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(character => {
-      this.character = character;
-      if (character) this.avatarURL = getAvatarURL(this.character.avatar);
+      if (character) {
+        this.character = character;
+        this.avatarURL = getAvatarURL(this.character.avatar);
+      }
     });
     this._supabaseService.session$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(session => {
       this.isConnected = session ? true : false;
-      if (this.isConnected) this._characterService.loadCharacter();
+      if (this.isConnected) this._appService.loadAll();
     });
   }
 

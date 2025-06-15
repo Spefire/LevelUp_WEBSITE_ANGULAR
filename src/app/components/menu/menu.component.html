@@ -4,18 +4,13 @@
       @if (isConnected) {
         <ul class="navSide-scrollWrapper">
           <li class="navSide-item">
-            <a
-              class="navSide-item-link"
-              routerLink="/"
-              routerLinkActive="is-active"
-              [routerLinkActiveOptions]="{ exact: true }"
-            >
+            <a class="navSide-item-link" routerLink="/tableau-de-bord" routerLinkActive="is-active">
               <span aria-hidden="true" class="lucca-icon icon-chartLevels"></span>
               <span class="navSide-item-link-title">{{ pages.dashboard }}</span>
             </a>
           </li>
           <li class="navSide-item">
-            <a class="navSide-item-link" routerLink="/character" routerLinkActive="is-active">
+            <a class="navSide-item-link" routerLink="/personnage" routerLinkActive="is-active">
               <span aria-hidden="true" class="lucca-icon icon-peoplePerson"></span>
               <span class="navSide-item-link-title">{{ pages.character }}</span>
             </a>

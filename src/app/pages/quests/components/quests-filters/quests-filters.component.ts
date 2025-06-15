@@ -7,7 +7,8 @@ import { FilterBarComponent, FilterPillAddonAfterDirective, FilterPillAddonBefor
 import { FormFieldComponent } from '@lucca-front/ng/form-field';
 import { CheckboxInputComponent, TextInputComponent } from '@lucca-front/ng/forms';
 
-import { Quest, QuestCategory, QuestsFilters } from '@src/models/quests.model';
+import { Daily } from '@src/models/dailys.model';
+import { IQuestsFilters, Quest, QuestCategory } from '@src/models/quests.model';
 import { QuestsService } from '@src/services/quests.service';
 
 @Component({
@@ -26,10 +27,12 @@ import { QuestsService } from '@src/services/quests.service';
   templateUrl: './quests-filters.component.html',
 })
 export class QuestsFiltersComponent implements OnInit {
-  public readonly quests = input.required<Quest[]>();
+  public readonly isDaily = input.required<boolean>();
+  public readonly dailys = input<Daily[]>();
+  public readonly quests = input<Quest[]>();
 
   public categories = [null, ...Object.values(QuestCategory)];
-  public filters: QuestsFilters;
+  public filters: IQuestsFilters;
 
   private readonly _destroyRef = inject(DestroyRef);
 
@@ -37,7 +40,7 @@ export class QuestsFiltersComponent implements OnInit {
 
   public ngOnInit() {
     this._questsService.filters$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(filters => {
-      this.filters = filters;
+      if (filters) this.filters = filters;
     });
   }
 
@@ -46,8 +49,8 @@ export class QuestsFiltersComponent implements OnInit {
     this._questsService.setFilters(newFilters);
   }
 
-  public changeOnlySelected(onlySelected: boolean) {
-    const newFilters = { ...this.filters, onlySelected };
+  public changeMandatory(isMandatory: boolean) {
+    const newFilters = { ...this.filters, isMandatory };
     this._questsService.setFilters(newFilters);
   }
 
@@ -56,8 +59,17 @@ export class QuestsFiltersComponent implements OnInit {
     this._questsService.setFilters(newFilters);
   }
 
-  public getQuestsByCategory(category: string) {
-    if (!category) return this.quests();
-    return this.quests().filter(quest => quest.category === category);
+  public getQuestsByCategory(category: string): Quest[] {
+    if (this.isDaily()) {
+      if (!this.dailys()) return [];
+      if (!category) return this.dailys().map(daily => daily.quest);
+      return this.dailys()
+        .filter(daily => daily.quest.category === category)
+        .map(daily => daily.quest);
+    } else {
+      if (!this.quests()) return [];
+      if (!category) return this.quests();
+      return this.quests().filter(quest => quest.category === category);
+    }
   }
 }

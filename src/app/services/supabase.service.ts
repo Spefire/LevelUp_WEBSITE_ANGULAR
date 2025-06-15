@@ -4,8 +4,10 @@ import { Router } from '@angular/router';
 
 import { createClient, Session, SupabaseClient } from '@supabase/supabase-js';
 
-import { Avatar, Character } from '@src/models/character.model';
-import { adjectives, nouns } from '@src/models/character.options';
+import { Adjectives, Character, ICharacter, Nouns } from '@src/models/character.model';
+import { Daily, IDaily } from '@src/models/dailys.model';
+import { ILog, Log } from '@src/models/logs.model';
+import { IQuest, Quest } from '@src/models/quests.model';
 
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -29,15 +31,21 @@ export class SupabaseService {
   constructor(private _router: Router) {
     const url = environment.NG_APP_SUPABASE_URL || '';
     const key = environment.NG_APP_SUPABASE_ANON_KEY || '';
+    if (this._router.url.length > 1) localStorage.setItem('redirectAfterLogin', this._router.url);
     this._supabase = createClient(url, key);
+
+    // Gérer les événements de la session au fil du temps
     this._supabase.auth.onAuthStateChange((_event, session) => {
       // Connexion
       if (!this.session.value && session) {
+        if (this._degubMode) console.log('Connexion');
         this.session.next(session);
-        this._router.navigate(['/']);
+        const redirectUrl = localStorage.getItem('redirectAfterLogin') || '/tableau-de-bord';
+        this._router.navigate([redirectUrl]);
       }
       // Déconnexion
       else if (this.session.value && !session) {
+        if (this._degubMode) console.log('Déconnexion');
         this.session.next(null);
         this._router.navigate(['/connexion']);
       }
@@ -70,109 +78,162 @@ export class SupabaseService {
   // --------------------------------------------------------------------------------------------------
 
   public async getCharacter() {
-    let resultCharacter = await this._requestGet('characters');
+    let resultCharacter: ICharacter = await this._requestGet('characters', true);
     if (!resultCharacter) {
-      const item: any = {
+      const item: ICharacter = {
+        id: null,
         user_id: this.user_id,
+        lastName: Adjectives[Math.floor(Math.random() * Adjectives.length)],
+        firstName: Nouns[Math.floor(Math.random() * Nouns.length)],
         isAdmin: false,
-        avatar: [1, 1, 0, 1, 1],
-        lastName: adjectives[Math.floor(Math.random() * adjectives.length)],
-        firstName: nouns[Math.floor(Math.random() * nouns.length)],
+        eyebrows: 1,
+        eyes: 1,
+        hasGlasses: false,
+        glasses: 1,
+        mouth: 1,
       };
       resultCharacter = await this._requestPost('characters', item);
     }
-
     if (!resultCharacter) return null;
-    else {
-      const avatar: Avatar = {
-        eyebrows: resultCharacter.avatar ? resultCharacter.avatar[0] : 1,
-        eyes: resultCharacter.avatar ? resultCharacter.avatar[1] : 1,
-        hasGlasses: resultCharacter.avatar ? (resultCharacter.avatar[2] ? true : false) : false,
-        glasses: resultCharacter.avatar ? resultCharacter.avatar[3] : 1,
-        mouth: resultCharacter.avatar ? resultCharacter.avatar[4] : 1,
-      };
-      const character: Character = {
-        id: resultCharacter.id,
-        avatar: avatar,
-        lastName: resultCharacter.lastName,
-        firstName: resultCharacter.firstName,
-        isAdmin: resultCharacter.isAdmin,
-      };
-      return character;
-    }
+    else return Character.getCharacter(resultCharacter);
   }
 
   public async putCharacter(character: Character) {
-    const item: any = {
-      id: character.id,
-      user_id: this.user_id,
-      isAdmin: character.isAdmin,
-      avatar: [character.avatar.eyebrows, character.avatar.eyes, character.avatar.hasGlasses ? 1 : 0, character.avatar.glasses, character.avatar.mouth],
-      lastName: character.lastName,
-      firstName: character.firstName,
-    };
-    const resultCharacter = await this._requestPut('characters', item);
+    const resultCharacter: ICharacter = await this._requestPut('characters', Character.getICharacter(this.user_id, character));
     if (!resultCharacter) return null;
-    else {
-      const avatar: Avatar = {
-        eyebrows: resultCharacter.avatar ? resultCharacter.avatar[0] : 1,
-        eyes: resultCharacter.avatar ? resultCharacter.avatar[1] : 1,
-        hasGlasses: resultCharacter.avatar ? (resultCharacter.avatar[2] ? true : false) : false,
-        glasses: resultCharacter.avatar ? resultCharacter.avatar[3] : 1,
-        mouth: resultCharacter.avatar ? resultCharacter.avatar[4] : 1,
-      };
-      const character: Character = {
-        id: resultCharacter.id,
-        avatar: avatar,
-        lastName: resultCharacter.lastName,
-        firstName: resultCharacter.firstName,
-        isAdmin: resultCharacter.isAdmin,
-      };
-      return character;
-    }
+    else return Character.getCharacter(resultCharacter);
   }
 
   // --------------------------------------------------------------------------------------------------
 
-  private async _requestGet(target: string): Promise<any> {
-    const result = await this._supabase.from(target).select().eq('user_id', this.user_id).maybeSingle();
-    if (this._degubMode) console.log('requestGet', result);
-    if (result.error) console.error('requestGet', result.error.message);
+  public async getLogs(quests: Quest[]) {
+    const results: ILog[] = await this._requestGetAll('logs', true);
+    if (!results) return null;
+    else {
+      const logs: Log[] = [];
+      results.forEach(result => {
+        const quest = quests.find(quest => quest.id === result.id_quest);
+        logs.push(Log.getLog(result, quest));
+      });
+      return logs;
+    }
+  }
+
+  public async postLog(log: Log, quest: Quest) {
+    const result: ILog = await this._requestPost('logs', Log.getILog(this.user_id, log));
+    if (!result) return null;
+    else return Log.getLog(result, quest);
+  }
+
+  public async deleteLog(log: Log) {
+    const result: boolean = await this._requestDelete('logs', log.id);
+    if (!result) return null;
+    else return result;
+  }
+
+  // --------------------------------------------------------------------------------------------------
+
+  public async getDailys(quests: Quest[]) {
+    const results: IDaily[] = await this._requestGetAll('dailys', true);
+    if (!results) return null;
+    else {
+      const dailys: Daily[] = [];
+      results.forEach(result => {
+        const quest = quests.find(quest => quest.id === result.id_quest);
+        dailys.push(Daily.getDaily(result, quest));
+      });
+      return dailys;
+    }
+  }
+
+  public async postDaily(daily: Daily, quest: Quest) {
+    const result: IDaily = await this._requestPost('dailys', Daily.getIDaily(this.user_id, daily));
+    if (!result) return null;
+    else return Daily.getDaily(result, quest);
+  }
+
+  public async putDaily(daily: Daily, quest: Quest) {
+    const result: IDaily = await this._requestPut('dailys', Daily.getIDaily(this.user_id, daily));
+    if (!result) return null;
+    else return Daily.getDaily(result, quest);
+  }
+
+  public async deleteDaily(daily: Daily) {
+    const result: boolean = await this._requestDelete('dailys', daily.id);
+    if (!result) return null;
+    else return result;
+  }
+
+  // --------------------------------------------------------------------------------------------------
+
+  public async getQuests() {
+    const results: IQuest[] = await this._requestGetAll('quests', false);
+    if (!results) return null;
+    else {
+      const quests: Quest[] = [];
+      results.forEach(result => {
+        quests.push(Quest.getQuest(result));
+      });
+      return quests;
+    }
+  }
+
+  public async postQuest(quest: Quest) {
+    const result: IQuest = await this._requestPost('quests', Quest.getIQuest(quest));
+    if (!result) return null;
+    else return Quest.getQuest(result);
+  }
+
+  public async putQuest(quest: Quest) {
+    const result: IQuest = await this._requestPut('quests', Quest.getIQuest(quest));
+    if (!result) return null;
+    else return Quest.getQuest(result);
+  }
+
+  public async deleteQuest(quest: Quest) {
+    const result: boolean = await this._requestDelete('quests', quest.id);
+    if (!result) return null;
+    else return true;
+  }
+
+  // --------------------------------------------------------------------------------------------------
+
+  private async _requestGet(target: string, withUserId: boolean): Promise<any> {
+    const result = withUserId
+      ? await this._supabase.from(target).select().eq('user_id', this.user_id).maybeSingle()
+      : await this._supabase.from(target).select().maybeSingle();
+    if (this._degubMode) console.log('requestGet : ' + target, result);
+    if (result.error) console.error('requestGet : ' + target, result.error.message);
     return result.data;
   }
 
-  /* private async _requestGetAll(target: string): Promise<any[]> {
-    const result = await this._supabase.from(target).select().eq('user_id', this.user_id);
-    if (this._degubMode) console.log('requestGetAll', result);
-    if (result.error) console.error('requestGetAll', result.error.message);
+  private async _requestGetAll(target: string, withUserId: boolean): Promise<any[]> {
+    const result = withUserId ? await this._supabase.from(target).select().eq('user_id', this.user_id) : await this._supabase.from(target).select();
+    if (this._degubMode) console.log('requestGetAll : ' + target, result);
+    if (result.error) console.error('requestGetAll : ' + target, result.error.message);
     return result.data;
-  }*/
+  }
 
   private async _requestPost(target: string, item: any): Promise<any> {
-    const result = await this._supabase.from(target).insert(item).select().single();
-    if (this._degubMode) console.log('requestPost', result);
-    if (result.error) console.error('requestPost', result.error.message);
+    const newItem: any = Object.assign({}, item);
+    delete newItem['id'];
+    const result = await this._supabase.from(target).insert(newItem).select().single();
+    if (this._degubMode) console.log('requestPost : ' + target, result);
+    if (result.error) console.error('requestPost : ' + target, result.error.message);
     return result.data;
   }
-
-  /* private async _requestPostAll(target: string, items: any[]): Promise<any[]> {
-    const result = await this._supabase.from(target).insert(items).select();
-    if (this._degubMode) console.log('requestPostAll', result);
-    if (result.error) console.error('requestPostAll', result.error.message);
-    return result.data;
-  }*/
 
   private async _requestPut(target: string, item: any): Promise<any> {
     const result = await this._supabase.from(target).update(item).eq('id', item.id).select().single();
-    if (this._degubMode) console.log('requestPut', result);
-    if (result.error) console.error('requestPut', result.error.message);
+    if (this._degubMode) console.log('requestPut : ' + target, result);
+    if (result.error) console.error('requestPut : ' + target, result.error.message);
     return result.data;
   }
 
-  /* private async _requestDelete(target: string, id: number | null): Promise<boolean> {
+  private async _requestDelete(target: string, id: number | null): Promise<boolean> {
     const result = await this._supabase.from(target).delete().eq('id', id).select();
-    if (this._degubMode) console.log('requestDelete', result);
-    if (result.error) console.error('requestDelete', result.error.message);
+    if (this._degubMode) console.log('requestDelete : ' + target, result);
+    if (result.error) console.error('requestDelete : ' + target, result.error.message);
     return true;
-  }*/
+  }
 }

@@ -6,6 +6,7 @@ import { ButtonComponent } from '@lucca-front/ng/button';
 import { IconComponent } from '@lucca-front/ng/icon';
 import { StatusBadgeComponent } from '@lucca-front/ng/statusBadge';
 
+import { QuestRewardsComponent } from '@src/components/quest-rewards/quest-rewards.component';
 import { Log } from '@src/models/logs.model';
 import { Quest } from '@src/models/quests.model';
 import { LogsService } from '@src/services/logs.service';
@@ -13,7 +14,7 @@ import { isSameDay } from '@src/utils/time';
 
 @Component({
   selector: 'daily-card',
-  imports: [CommonModule, ButtonComponent, IconComponent, StatusBadgeComponent],
+  imports: [CommonModule, ButtonComponent, IconComponent, StatusBadgeComponent, QuestRewardsComponent],
   templateUrl: './daily-card.component.html',
   styles: ':host { display: contents }',
 })
@@ -23,24 +24,21 @@ export class DailyCardComponent implements OnInit {
   public readonly isOld = input.required<boolean>();
   public readonly isOptionnal = input.required<boolean>();
 
-  public logs: Log[];
   public logLinked: Log | null = null;
 
   private readonly _destroyRef = inject(DestroyRef);
 
-  constructor(private _logsService: LogsService) {
+  constructor(private _logsService: LogsService) {}
+
+  public ngOnInit() {
     this._logsService.logs$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(logs => {
-      this.logs = logs;
+      if (logs) this.logLinked = logs.find(log => this.quest().id === log.quest.id && isSameDay(this.currentDate(), new Date(log.date))) ?? null;
     });
   }
 
-  public ngOnInit() {
-    this.logLinked = this.logs.find(log => this.quest().id === log.quest.id && isSameDay(this.currentDate(), new Date(log.date))) ?? null;
-  }
-
   public completeQuest() {
-    this.logLinked = { date: this.currentDate(), quest: this.quest() };
-    this._logsService.addLog(this.logLinked);
+    this.logLinked = new Log(this.currentDate(), this.quest());
+    this._logsService.addLog(this.logLinked, this.quest());
   }
 
   public cancelQuest() {

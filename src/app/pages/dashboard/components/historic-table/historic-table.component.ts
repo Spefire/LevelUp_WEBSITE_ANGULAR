@@ -9,8 +9,10 @@ import { StatusBadgeComponent } from '@lucca-front/ng/statusBadge';
 
 import { PaginationComponent } from '@src/components/pagination/pagination.component';
 import { QuestRewardsComponent } from '@src/components/quest-rewards/quest-rewards.component';
+import { Character } from '@src/models/character.model';
 import { Log } from '@src/models/logs.model';
 import { QuestDifficulty } from '@src/models/quests.model';
+import { CharacterService } from '@src/services/character.service';
 import { LogsService } from '@src/services/logs.service';
 
 @Component({
@@ -31,18 +33,29 @@ import { LogsService } from '@src/services/logs.service';
 })
 export class HistoricTableComponent implements OnInit {
   public QuestDifficulty = QuestDifficulty;
+
+  public character: Character;
   public filteredLogs: Log[];
   public logs: Log[];
   public nbByPage = 10;
 
   private readonly _destroyRef = inject(DestroyRef);
 
-  constructor(private _logsService: LogsService) {}
+  constructor(
+    private _characterService: CharacterService,
+    private _logsService: LogsService
+  ) {}
 
   public ngOnInit() {
+    this._characterService.character$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(character => {
+      if (character) this.character = character;
+    });
+
     this._logsService.logs$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(logs => {
-      this.logs = logs;
-      this.filteredLogs = this.logs.slice(0, Math.min(logs.length, this.nbByPage));
+      if (logs) {
+        this.logs = logs;
+        this.filteredLogs = this.logs.slice(0, Math.min(logs.length, this.nbByPage));
+      }
     });
   }
 

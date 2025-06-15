@@ -12,9 +12,11 @@
         </th>
         <th class="dataTable-head-row-cell">Difficulté</th>
         <th class="dataTable-head-row-cell">Effets</th>
-        <th class="dataTable-head-row-cell mod-actions">
-          <span class="u-mask">Actions</span>
-        </th>
+        @if (character.isAdmin) {
+          <th class="dataTable-head-row-cell mod-actions">
+            <span class="u-mask">Actions</span>
+          </th>
+        }
       </tr>
     </thead>
     <tbody class="dataTable-body">
@@ -39,15 +41,17 @@
               <quest-rewards [quest]="log.quest" />
             </div>
           </td>
-          <td class="dataTable-body-row-cell mod-actions">
-            <button type="button" luButton disabled>
-              <lu-icon icon="trashDelete" alt="Supprimer l'enregistrement" />
-            </button>
-          </td>
+          @if (character.isAdmin) {
+            <td class="dataTable-body-row-cell mod-actions">
+              <button type="button" luButton disabled>
+                <lu-icon icon="trashDelete" alt="Supprimer l'enregistrement" />
+              </button>
+            </td>
+          }
         </tr>
       } @empty {
         <tr class="dataTable-body-row">
-          <td class="dataTable-body-row-cell" colspan="5">
+          <td class="dataTable-body-row-cell" [attr.colspan]="character.isAdmin ? 5 : 4">
             <lu-empty-state-section
               hx="3"
               icon="https://cdn.lucca.fr/lucca-front/assets/empty-states/icons/iconPaper.svg"
@@ -59,5 +63,7 @@
       }
     </tbody>
   </table>
-  <pagination [items]="logs" [nbByPage]="nbByPage" (updateItems)="changePagination($event)" />
+  @if (filteredLogs) {
+    <pagination [items]="logs" [nbByPage]="nbByPage" (updateItems)="changePagination($event)" />
+  }
 </div>
