@@ -20,10 +20,10 @@ import { SupabaseService } from '@src/services/supabase.service';
 export class SignUpPage {
   public pages = PageTitles;
 
-  public email = 'nicholasb@hotmail.fr';
-  public emailConfirmed = 'nicholasb@hotmail.fr';
-  public password = 'ilovecookies<3';
-  public passwordConfirmed = 'ilovecookies<3';
+  public email = '';
+  public emailConfirmed = '';
+  public password = '';
+  public passwordConfirmed = '';
   public success: string | null = null;
   public error: string | null = null;
 
