@@ -86,6 +86,10 @@
   margin-top: calc(var(--component-notchbox-badge-actualHeight) / 2);
 }
 
+.emptyState-content {
+  inline-size: auto !important;
+}
+
 .emptyState.mod-page .emptyState-content-heading {
   --sizes-verticalPadding: var(--sizes-XXL-verticalPadding) !important;
   --sizes-fontSize: var(--sizes-XXL-fontSize) !important;

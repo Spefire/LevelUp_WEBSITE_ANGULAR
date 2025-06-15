@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { RouterModule } from '@angular/router';
 
 import { ButtonComponent } from '@lucca-front/ng/button';
 import { EmptyStateSectionComponent } from '@lucca-front/ng/empty-state';
@@ -13,7 +14,7 @@ import { DailysService } from '@src/services/dailys.service';
 
 @Component({
   selector: 'dailys-list',
-  imports: [CommonModule, EmptyStateSectionComponent, DailyCardComponent, ButtonComponent, TagComponent, DayOfWeekPipe],
+  imports: [RouterModule, CommonModule, EmptyStateSectionComponent, DailyCardComponent, ButtonComponent, TagComponent, DayOfWeekPipe],
   templateUrl: './dailys-list.component.html',
   styles: ':host { display: contents }',
 })

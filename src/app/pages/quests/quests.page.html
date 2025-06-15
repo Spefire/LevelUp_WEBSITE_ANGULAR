@@ -20,7 +20,7 @@
         [attr.aria-current]="currentNav === 'toselect' ? 'page' : null"
         (click)="setNav('toselect')"
       >
-        À sélectionner
+        Disponibles
       </button>
       <button
         type="button"
@@ -29,7 +29,8 @@
         [attr.aria-current]="currentNav === 'selected' ? 'page' : null"
         (click)="setNav('selected')"
       >
-        Sélectionnées
+        En cours
+        <lu-numeric-badge [value]="dailys?.length" />
       </button>
     </lu-horizontal-navigation>
   </ng-container>

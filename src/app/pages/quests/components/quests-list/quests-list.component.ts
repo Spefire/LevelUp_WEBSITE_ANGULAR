@@ -2,9 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { ButtonComponent } from '@lucca-front/ng/button';
 import { EmptyStateSectionComponent } from '@lucca-front/ng/empty-state';
-import { IconComponent } from '@lucca-front/ng/icon';
 import { StatusBadgeComponent } from '@lucca-front/ng/statusBadge';
 
 import { Daily } from '@src/models/dailys.model';
@@ -14,7 +12,7 @@ import { QuestsService } from '@src/services/quests.service';
 
 @Component({
   selector: 'quests-list',
-  imports: [CommonModule, EmptyStateSectionComponent, QuestCardComponent, StatusBadgeComponent, ButtonComponent, IconComponent],
+  imports: [CommonModule, EmptyStateSectionComponent, QuestCardComponent, StatusBadgeComponent],
   templateUrl: './quests-list.component.html',
 })
 export class QuestsListComponent implements OnInit {

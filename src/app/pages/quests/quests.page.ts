@@ -6,6 +6,7 @@ import { ButtonComponent } from '@lucca-front/ng/button';
 import { LuDialogService } from '@lucca-front/ng/dialog';
 import { HorizontalNavigationComponent, HorizontalNavigationLinkDirective } from '@lucca-front/ng/horizontal-navigation';
 import { IconComponent } from '@lucca-front/ng/icon';
+import { NumericBadgeComponent } from '@lucca-front/ng/numeric-badge';
 import { PageHeaderComponent } from '@lucca-front/ng/page-header';
 
 import { Character } from '@src/models/character.model';
@@ -29,6 +30,7 @@ import { QuestsService } from '@src/services/quests.service';
     QuestsFiltersComponent,
     QuestsListComponent,
     ButtonComponent,
+    NumericBadgeComponent,
     IconComponent,
   ],
   templateUrl: './quests.page.html',
