@@ -47,11 +47,11 @@
 </lu-page-header>
 
 @if (currentNav === 'j-0') {
-  <daily-list [currentDate]="today" [isOld]="false" />
+  <dailys-list [currentDate]="today" [isOld]="false" />
 } @else if (currentNav === 'j-1') {
-  <daily-list [currentDate]="yesterday" [isOld]="true" />
+  <dailys-list [currentDate]="yesterday" [isOld]="true" />
 } @else if (currentNav === 'j-2') {
-  <daily-list [currentDate]="lastYesterday" [isOld]="true" />
+  <dailys-list [currentDate]="lastYesterday" [isOld]="true" />
 } @else {
   <historic-table />
 }

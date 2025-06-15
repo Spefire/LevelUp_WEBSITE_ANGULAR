@@ -6,11 +6,11 @@ import { EmptyStateSectionComponent } from '@lucca-front/ng/empty-state';
 import { HighlightDataComponent } from '@lucca-front/ng/highlight-data';
 import { IconComponent } from '@lucca-front/ng/icon';
 
-import { DailyQuest } from '@src/models/daily-quests.model';
+import { Daily } from '@src/models/dailys.model';
 import { Log } from '@src/models/logs.model';
-import { Quest, QuestDifficulty } from '@src/models/quests.model';
+import { QuestDifficulty } from '@src/models/quests.model';
 import { DayOfWeekPipe } from '@src/pipes/day-of-week.pipe';
-import { DailyQuestsService } from '@src/services/daily-quests.service';
+import { DailysService } from '@src/services/dailys.service';
 import { LogsService } from '@src/services/logs.service';
 import { isSameDay } from '@src/utils/time';
 
@@ -28,7 +28,7 @@ export class DungeonTableComponent implements OnInit, OnChanges {
   public QuestDifficulty = QuestDifficulty;
   public daysOfWeek: number[] = [1, 2, 3, 4, 5, 6, 0]; // 0 = Dimanche, 1 = Lundi, ..., 6 = Samedi
   public logs: Log[];
-  public dailyQuests: DailyQuest[];
+  public dailys: Daily[];
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public headData: any;
@@ -41,13 +41,13 @@ export class DungeonTableComponent implements OnInit, OnChanges {
 
   constructor(
     private _logsService: LogsService,
-    private _dailyQuestsService: DailyQuestsService
+    private _dailysService: DailysService
   ) {}
 
   public ngOnInit() {
-    this._dailyQuestsService.dailyQuests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailyQuests => {
-      if (dailyQuests) {
-        this.dailyQuests = dailyQuests.sort((a, b) => a.quest.name.localeCompare(b.quest.name));
+    this._dailysService.dailys$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailys => {
+      if (dailys) {
+        this.dailys = dailys.sort((a, b) => a.quest.name.localeCompare(b.quest.name));
         this._createTable();
       }
     });
@@ -78,7 +78,7 @@ export class DungeonTableComponent implements OnInit, OnChanges {
     return day02 >= day01;
   }
 
-  private _checkLog(quest: Quest, dayOfWeek: number) {
+  private _checkLog(daily: Daily, dayOfWeek: number) {
     const currentDay = this.currentDate().getDay();
     const diff = dayOfWeek - currentDay;
 
@@ -86,15 +86,15 @@ export class DungeonTableComponent implements OnInit, OnChanges {
     targetDate.setDate(this.currentDate().getDate() + diff);
     targetDate.setHours(0, 0, 0, 0);
 
-    const log = this.logs.find(log => quest.id === log.quest.id && isSameDay(targetDate, new Date(log.date)));
+    const log = this.logs.find(log => daily.quest.id === log.quest.id && isSameDay(targetDate, new Date(log.date)));
     if (!log) {
-      if (quest.isOptional) return 0;
-      if (quest.difficulty === this.QuestDifficulty.COMPLEXE) return -3;
-      else if (quest.difficulty === this.QuestDifficulty.STANDARD) return -2;
+      if (!daily.isMandatory) return 0;
+      if (daily.quest.difficulty === this.QuestDifficulty.COMPLEXE) return -3;
+      else if (daily.quest.difficulty === this.QuestDifficulty.STANDARD) return -2;
       else return -1;
     } else {
-      if (quest.difficulty === this.QuestDifficulty.COMPLEXE) return 3;
-      else if (quest.difficulty === this.QuestDifficulty.STANDARD) return 2;
+      if (daily.quest.difficulty === this.QuestDifficulty.COMPLEXE) return 3;
+      else if (daily.quest.difficulty === this.QuestDifficulty.STANDARD) return 2;
       else return 1;
     }
   }
@@ -112,7 +112,7 @@ export class DungeonTableComponent implements OnInit, OnChanges {
   }
 
   private _createTable() {
-    if (!this.dailyQuests || !this.logs) return;
+    if (!this.dailys || !this.logs) return;
     this.bodyTable = [];
     this.footTable = {};
     let totalLundi = 0;
@@ -123,45 +123,44 @@ export class DungeonTableComponent implements OnInit, OnChanges {
     let totalSamedi = 0;
     let totalDimanche = 0;
     let nbQuests = 0;
-    this.dailyQuests.forEach(dailyQuest => {
-      const quest = dailyQuest.quest;
-      const lundi = this._checkDayOfWeek(1) ? this._checkLog(quest, 1) : null;
+    this.dailys.forEach(daily => {
+      const lundi = this._checkDayOfWeek(1) ? this._checkLog(daily, 1) : null;
       if (lundi) {
         totalLundi += lundi;
         if (lundi > 0) nbQuests++;
       }
-      const mardi = this._checkDayOfWeek(2) ? this._checkLog(quest, 2) : null;
+      const mardi = this._checkDayOfWeek(2) ? this._checkLog(daily, 2) : null;
       if (mardi) {
         totalMardi += mardi;
         if (mardi > 0) nbQuests++;
       }
-      const mercredi = this._checkDayOfWeek(3) ? this._checkLog(quest, 3) : null;
+      const mercredi = this._checkDayOfWeek(3) ? this._checkLog(daily, 3) : null;
       if (mercredi) {
         totalMercredi += mercredi;
         if (mercredi > 0) nbQuests++;
       }
-      const jeudi = this._checkDayOfWeek(4) ? this._checkLog(quest, 4) : null;
+      const jeudi = this._checkDayOfWeek(4) ? this._checkLog(daily, 4) : null;
       if (jeudi) {
         totalJeudi += jeudi;
         if (jeudi > 0) nbQuests++;
       }
-      const vendredi = this._checkDayOfWeek(5) ? this._checkLog(quest, 5) : null;
+      const vendredi = this._checkDayOfWeek(5) ? this._checkLog(daily, 5) : null;
       if (vendredi) {
         totalVendredi += vendredi;
         if (vendredi > 0) nbQuests++;
       }
-      const samedi = this._checkDayOfWeek(6) ? this._checkLog(quest, 6) : null;
+      const samedi = this._checkDayOfWeek(6) ? this._checkLog(daily, 6) : null;
       if (samedi) {
         totalSamedi += samedi;
         if (samedi > 0) nbQuests++;
       }
-      const dimanche = this._checkDayOfWeek(0) ? this._checkLog(quest, 0) : null;
+      const dimanche = this._checkDayOfWeek(0) ? this._checkLog(daily, 0) : null;
       if (dimanche) {
         totalDimanche += dimanche;
         if (dimanche > 0) nbQuests++;
       }
       this.bodyTable.push({
-        name: quest.name,
+        name: daily.quest.name,
         1: lundi,
         2: mardi,
         3: mercredi,

@@ -1,0 +1,31 @@
+<lu-dialog #dialog>
+  <form class="dialog-inside-formOptional">
+    <lu-dialog-header>
+      <h1>Ajout d'une quête journalière</h1>
+    </lu-dialog-header>
+
+    <lu-dialog-content>
+      @if (iQuest) {
+        <lu-form-field label="Quête optionnelle">
+          <lu-checkbox-input [(ngModel)]="iQuest.isOptional" [ngModelOptions]="{ standalone: true }" />
+        </lu-form-field>
+        <lu-form-field label="Fois par semaine" tooltip="Valeur entre 0 et 14">
+          <lu-number-input
+            [step]="1"
+            [min]="0"
+            [max]="14"
+            [(ngModel)]="iQuest.force"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </lu-form-field>
+      }
+    </lu-dialog-content>
+
+    <lu-dialog-footer>
+      <div class="footer-actions">
+        <button type="button" luButton="text" luDialogDismiss>Annuler</button>
+        <button type="button" luButton [disabled]="isInvalidForm" (click)="confirm()">Valider</button>
+      </div>
+    </lu-dialog-footer>
+  </form>
+</lu-dialog>

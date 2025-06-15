@@ -14,14 +14,13 @@ import {
 } from '@lucca-front/ng/dialog';
 import { FormFieldComponent } from '@lucca-front/ng/form-field';
 import { NumberInputComponent } from '@lucca-front/ng/forms';
-import { TextInputComponent } from '@lucca-front/ng/forms';
-import { LuSimpleSelectInputComponent } from '@lucca-front/ng/simple-select';
+import { CheckboxInputComponent } from '@lucca-front/ng/forms';
 
 import { IQuest, Quest, QuestCategory, QuestDifficulty } from '@src/models/quests.model';
 import { QuestsService } from '@src/services/quests.service';
 
 @Component({
-  selector: 'quest-dialog',
+  selector: 'daily-dialog',
   imports: [
     CommonModule,
     FormsModule,
@@ -31,14 +30,13 @@ import { QuestsService } from '@src/services/quests.service';
     DialogFooterComponent,
     DialogDismissDirective,
     FormFieldComponent,
-    TextInputComponent,
+    CheckboxInputComponent,
     NumberInputComponent,
-    LuSimpleSelectInputComponent,
     ButtonComponent,
   ],
-  templateUrl: './quest-dialog.component.html',
+  templateUrl: './daily-dialog.component.html',
 })
-export class QuestDialogComponent implements OnInit {
+export class DailyDialogComponent implements OnInit {
   public data = injectDialogData<{ quest: Quest } | null>();
   public ref = injectDialogRef<boolean>();
 
@@ -50,8 +48,6 @@ export class QuestDialogComponent implements OnInit {
 
   public get isInvalidForm() {
     if (!this.iQuest) return true;
-    if (!this.iQuest.name || this.iQuest.name.length > 50) return true;
-    if (!this.iQuest.description || this.iQuest.description.length > 150) return true;
     return false;
   }
 

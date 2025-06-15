@@ -7,6 +7,7 @@ import { FilterBarComponent, FilterPillAddonAfterDirective, FilterPillAddonBefor
 import { FormFieldComponent } from '@lucca-front/ng/form-field';
 import { CheckboxInputComponent, TextInputComponent } from '@lucca-front/ng/forms';
 
+import { Daily } from '@src/models/dailys.model';
 import { IQuestsFilters, Quest, QuestCategory } from '@src/models/quests.model';
 import { QuestsService } from '@src/services/quests.service';
 
@@ -26,7 +27,9 @@ import { QuestsService } from '@src/services/quests.service';
   templateUrl: './quests-filters.component.html',
 })
 export class QuestsFiltersComponent implements OnInit {
-  public readonly quests = input.required<Quest[]>();
+  public readonly isDaily = input.required<boolean>();
+  public readonly dailys = input<Daily[]>();
+  public readonly quests = input<Quest[]>();
 
   public categories = [null, ...Object.values(QuestCategory)];
   public filters: IQuestsFilters;
@@ -46,8 +49,8 @@ export class QuestsFiltersComponent implements OnInit {
     this._questsService.setFilters(newFilters);
   }
 
-  public changeOnlySelected(onlySelected: boolean) {
-    const newFilters = { ...this.filters, onlySelected };
+  public changeMandatory(isMandatory: boolean) {
+    const newFilters = { ...this.filters, isMandatory };
     this._questsService.setFilters(newFilters);
   }
 
@@ -56,9 +59,17 @@ export class QuestsFiltersComponent implements OnInit {
     this._questsService.setFilters(newFilters);
   }
 
-  public getQuestsByCategory(category: string) {
-    if (!this.quests()) return [];
-    if (!category) return this.quests();
-    return this.quests().filter(quest => quest.category === category);
+  public getQuestsByCategory(category: string): Quest[] {
+    if (this.isDaily()) {
+      if (!this.dailys()) return [];
+      if (!category) return this.dailys().map(daily => daily.quest);
+      return this.dailys()
+        .filter(daily => daily.quest.category === category)
+        .map(daily => daily.quest);
+    } else {
+      if (!this.quests()) return [];
+      if (!category) return this.quests();
+      return this.quests().filter(quest => quest.category === category);
+    }
   }
 }

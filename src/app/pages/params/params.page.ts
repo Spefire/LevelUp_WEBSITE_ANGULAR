@@ -9,13 +9,13 @@ import { PageHeaderComponent } from '@lucca-front/ng/page-header';
 
 import { ConfirmDialogComponent } from '@src/components/confirm-dialog/confirm-dialog.component';
 import { Character, getAvatarURL } from '@src/models/character.model';
-import { DailyQuest } from '@src/models/daily-quests.model';
+import { Daily } from '@src/models/dailys.model';
 import { Log } from '@src/models/logs.model';
 import { PageTitles } from '@src/models/pages.model';
 import { Quest } from '@src/models/quests.model';
 import { ParamsCharacterDialogComponent } from '@src/pages/params/params-character-dialog/params-character-dialog.component';
 import { CharacterService } from '@src/services/character.service';
-import { DailyQuestsService } from '@src/services/daily-quests.service';
+import { DailysService } from '@src/services/dailys.service';
 import { LogsService } from '@src/services/logs.service';
 import { QuestsService } from '@src/services/quests.service';
 
@@ -31,7 +31,7 @@ export class ParamsPage implements OnInit {
   public avatarURL: string;
   public character: Character;
   public logs: Log[];
-  public dailyQuests: DailyQuest[];
+  public dailys: Daily[];
   public quests: Quest[];
 
   private readonly _destroyRef = inject(DestroyRef);
@@ -41,7 +41,7 @@ export class ParamsPage implements OnInit {
   constructor(
     private _characterService: CharacterService,
     private _logsService: LogsService,
-    private _dailyQuestsService: DailyQuestsService,
+    private _dailysService: DailysService,
     private _questsService: QuestsService
   ) {}
 
@@ -57,8 +57,8 @@ export class ParamsPage implements OnInit {
       if (logs) this.logs = logs;
     });
 
-    this._dailyQuestsService.dailyQuests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailyQuests => {
-      if (dailyQuests) this.dailyQuests = dailyQuests;
+    this._dailysService.dailys$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailys => {
+      if (dailys) this.dailys = dailys;
     });
 
     this._questsService.quests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(quests => {
@@ -75,7 +75,7 @@ export class ParamsPage implements OnInit {
     });
   }
 
-  public resetDailyQuests() {
+  public resetDailys() {
     const dialogRef = this.#dialog.open({
       content: ConfirmDialogComponent,
       data: {},
@@ -83,7 +83,7 @@ export class ParamsPage implements OnInit {
     });
 
     dialogRef.result$.subscribe(res => {
-      if (res) localStorage.removeItem('dailyQuests');
+      if (res) localStorage.removeItem('dailys');
     });
   }
 

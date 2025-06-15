@@ -16,7 +16,7 @@ export enum QuestCategory {
 
 export interface IQuestsFilters {
   category: string;
-  onlySelected: boolean;
+  isMandatory: boolean;
   search: string;
 }
 
@@ -26,7 +26,6 @@ export interface IQuest {
   description: string;
   difficulty: string;
   category: string;
-  isOptional: boolean;
   force: number;
   habilete: number;
   tenacite: number;
@@ -41,8 +40,6 @@ export class Quest {
   public description: string;
   public difficulty: QuestDifficulty;
   public category: QuestCategory;
-  public daysOfWeek: number[]; // 0 = Dimanche, 1 = Lundi, ..., 6 = Samedi
-  public isOptional: boolean;
   public xpRewards: Record<TCaractKey, number>;
 
   constructor() {
@@ -51,7 +48,6 @@ export class Quest {
     this.description = '';
     this.difficulty = QuestDifficulty.SIMPLE;
     this.category = QuestCategory.OTHER;
-    this.isOptional = false;
     this.xpRewards = {
       force: 0,
       habilete: 0,
@@ -69,7 +65,6 @@ export class Quest {
       description: quest.description,
       difficulty: quest.difficulty,
       category: quest.category,
-      isOptional: quest.isOptional,
       force: quest.xpRewards.force,
       habilete: quest.xpRewards.habilete,
       tenacite: quest.xpRewards.tenacite,
@@ -95,8 +90,6 @@ export class Quest {
       description: result.description,
       difficulty: result.difficulty as QuestDifficulty,
       category: result.category as QuestCategory,
-      daysOfWeek: [1, 2, 3, 4, 5, 6, 0],
-      isOptional: result.isOptional,
       xpRewards: xpRewards,
     };
     return quest;

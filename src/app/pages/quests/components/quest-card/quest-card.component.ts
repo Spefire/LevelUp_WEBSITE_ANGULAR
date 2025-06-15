@@ -13,23 +13,21 @@ import { QuestRewardsComponent } from '@src/components/quest-rewards/quest-rewar
 import { Character } from '@src/models/character.model';
 import { Quest } from '@src/models/quests.model';
 import { QuestDialogComponent } from '@src/pages/quests/components/quest-dialog/quest-dialog.component';
-import { DaysOfWeekPipe } from '@src/pipes/days-of-week.pipe';
 import { CharacterService } from '@src/services/character.service';
-import { DailyQuestsService } from '@src/services/daily-quests.service';
 import { QuestsService } from '@src/services/quests.service';
 
 @Component({
-  selector: 'quests-card',
-  imports: [CommonModule, FormsModule, CheckboxInputComponent, IconComponent, ButtonComponent, QuestRewardsComponent, DaysOfWeekPipe],
-  templateUrl: './quests-card.component.html',
+  selector: 'quest-card',
+  imports: [CommonModule, FormsModule, CheckboxInputComponent, IconComponent, ButtonComponent, QuestRewardsComponent],
+  templateUrl: './quest-card.component.html',
   styles: ':host { display: contents }',
   providers: [LuDialogService],
 })
-export class QuestsCardComponent implements OnInit {
+export class QuestCardComponent implements OnInit {
+  public readonly isDaily = input.required<boolean>();
   public readonly quest = input.required<Quest>();
 
   public character: Character;
-  public isChecked: boolean;
 
   private readonly _destroyRef = inject(DestroyRef);
 
@@ -37,18 +35,12 @@ export class QuestsCardComponent implements OnInit {
 
   constructor(
     private _characterService: CharacterService,
-    private _questsService: QuestsService,
-    private _dailyQuestsService: DailyQuestsService
+    private _questsService: QuestsService
   ) {}
 
   public ngOnInit() {
     this._characterService.character$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(character => {
       if (character) this.character = character;
-    });
-
-    this._dailyQuestsService.dailyQuests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailyQuests => {
-      if (dailyQuests) this.isChecked = !!dailyQuests.find(dailyQuest => dailyQuest.id === this.quest().id);
-      else this.isChecked = false;
     });
   }
 
@@ -78,7 +70,7 @@ export class QuestsCardComponent implements OnInit {
   }
 
   public toggleQuest() {
-    if (this.isChecked) {
+    if (this.isDaily()) {
       const dialogRef = this.#dialog.open({
         content: ConfirmDialogComponent,
         data: {},
@@ -87,13 +79,11 @@ export class QuestsCardComponent implements OnInit {
 
       dialogRef.result$.subscribe(res => {
         if (res) {
-          this.isChecked = !this.isChecked;
-          // this._dailyQuestsService.removeDailyQuest(this.quest());
+          // this._dailysService.removeDaily(this.quest());
         }
       });
     } else {
-      this.isChecked = !this.isChecked;
-      // this._dailyQuestsService.addDailyQuest(this.quest());
+      // this._dailysService.addDaily(this.quest());
     }
   }
 }

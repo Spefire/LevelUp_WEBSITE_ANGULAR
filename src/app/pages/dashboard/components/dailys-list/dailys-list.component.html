@@ -1,36 +1,26 @@
-@if (dailyQuests?.length && optionnalDailyQuests?.length) {
+@if (dailys?.length && optionnalDailys?.length) {
   <div class="u-displayFlex u-flexDirectionColumn pr-u-gap200">
-    @if (dailyQuests?.length) {
+    @if (dailys?.length) {
       <section class="card">
         <div class="u-displayFlex u-alignItemsCenter pr-u-gap100">
           <h2 class="u-h3">Quêtes obligatoires</h2>
           <lu-tag [label]="currentDate() | dayOfWeek" [palette]="isOld() ? 'neutral' : 'product'" size="L" />
         </div>
         <div class="grid pr-u-marginTop100" style="--grid-columns: 4; --grid-colspan: 4">
-          @for (dailyQuest of dailyQuests; track dailyQuest.id) {
-            <daily-card
-              [currentDate]="currentDate()"
-              [quest]="dailyQuest.quest"
-              [isOld]="isOld()"
-              [isOptionnal]="false"
-            />
+          @for (daily of dailys; track daily.id) {
+            <daily-card [currentDate]="currentDate()" [quest]="daily.quest" [isOld]="isOld()" [isOptionnal]="false" />
           }
         </div>
       </section>
     }
-    @if (optionnalDailyQuests?.length) {
+    @if (optionnalDailys?.length) {
       <section class="card">
         <div class="u-displayFlex u-alignItemsCenter pr-u-gap100">
           <h2 class="u-h3">Quêtes optionnelles</h2>
         </div>
         <div class="grid pr-u-marginTop100" style="--grid-columns: 4; --grid-colspan: 4">
-          @for (dailyQuest of optionnalDailyQuests; track dailyQuest.id) {
-            <daily-card
-              [currentDate]="currentDate()"
-              [quest]="dailyQuest.quest"
-              [isOld]="isOld()"
-              [isOptionnal]="true"
-            />
+          @for (daily of optionnalDailys; track daily.id) {
+            <daily-card [currentDate]="currentDate()" [quest]="daily.quest" [isOld]="isOld()" [isOptionnal]="true" />
           }
         </div>
       </section>
@@ -44,7 +34,7 @@
       heading="Aucune quête en cours"
       description="Vous pouvez aller en sélectionner dans la liste des quêtes."
     >
-      <a routerLink="/dailyQuests" luButton> Voir les quêtes disponibles </a>
+      <a routerLink="/dailys" luButton> Voir les quêtes disponibles </a>
     </lu-empty-state-section>
   </div>
 }

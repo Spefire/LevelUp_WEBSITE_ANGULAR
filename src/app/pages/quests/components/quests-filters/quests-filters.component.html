@@ -21,9 +21,11 @@
         </li>
       }
     </ul>
-    <lu-filter-pill label="Quêtes sélectionnées seulement">
-      <lu-checkbox-input [ngModel]="filters.onlySelected" (ngModelChange)="changeOnlySelected($event)" />
-    </lu-filter-pill>
+    @if (isDaily()) {
+      <lu-filter-pill label="Quêtes obligatoires seulement">
+        <lu-checkbox-input [ngModel]="filters.isMandatory" (ngModelChange)="changeMandatory($event)" />
+      </lu-filter-pill>
+    }
     <lu-form-field *luFilterPillAddonAfter label="Rechercher une quête" hiddenLabel>
       <lu-text-input
         [ngModel]="filters.search"

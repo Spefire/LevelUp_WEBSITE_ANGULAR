@@ -1,19 +1,21 @@
 <div
   class="grid-column card mod-actions u-displayFlex u-flexDirectionColumn u-cursorPointer"
-  [class.mod-selected]="isChecked"
+  [class.mod-selected]="isDaily()"
   [attr.style]="'--grid-colspanAtMediaMinS: 2; --grid-colspanAtMediaMinM: 1'"
   (click)="toggleQuest()"
 >
   <div class="u-displayFlex u-justifyContentSpaceBetween u-alignItemsCenter">
     <h4>{{ quest().name }}</h4>
-    <lu-checkbox-input [(ngModel)]="isChecked" />
+    @if (isDaily()) {
+      <lu-checkbox-input [ngModel]="true" [ngModelOptions]="{ standalone: true }" />
+    }
   </div>
   <p>{{ quest().description }}</p>
-  <p class="u-textS u-textNeutral">{{ quest().daysOfWeek | daysOfWeek }}</p>
+  <!--p class="u-textS u-textNeutral">{{ quest().daysOfWeek | daysOfWeek }}</p-->
   <div class="u-displayFlex u-flexWrapWrap pr-u-gap100 pr-u-marginTop50">
-    <quest-rewards [quest]="quest()" [forced]="isChecked ? 'product' : null" />
+    <quest-rewards [quest]="quest()" [forced]="isDaily() ? 'product' : null" />
   </div>
-  @if (character?.isAdmin) {
+  @if (!isDaily() && character?.isAdmin) {
     <div class="u-displayFlex u-justifyContentFlexEnd pr-u-gap100 pr-u-marginTopAuto">
       <button type="button" luButton="text" size="S" (click)="$event.stopPropagation(); modifyQuest()">
         <lu-icon icon="officePen" alt="Modifier la quête" />

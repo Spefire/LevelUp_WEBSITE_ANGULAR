@@ -9,12 +9,14 @@ import { IconComponent } from '@lucca-front/ng/icon';
 import { PageHeaderComponent } from '@lucca-front/ng/page-header';
 
 import { Character } from '@src/models/character.model';
+import { Daily } from '@src/models/dailys.model';
 import { PageTitles } from '@src/models/pages.model';
 import { Quest } from '@src/models/quests.model';
 import { QuestDialogComponent } from '@src/pages/quests/components/quest-dialog/quest-dialog.component';
 import { QuestsFiltersComponent } from '@src/pages/quests/components/quests-filters/quests-filters.component';
 import { QuestsListComponent } from '@src/pages/quests/components/quests-list/quests-list.component';
 import { CharacterService } from '@src/services/character.service';
+import { DailysService } from '@src/services/dailys.service';
 import { QuestsService } from '@src/services/quests.service';
 
 @Component({
@@ -35,10 +37,12 @@ import { QuestsService } from '@src/services/quests.service';
 export class QuestsPage implements OnInit {
   public pages = PageTitles;
 
-  public currentNav = 'obligatoires';
+  public currentNav = 'toselect';
   public character: Character;
   public quests: Quest[];
-  public optionnalQuests: Quest[];
+  public dailys: Daily[];
+  public toSelectQuests: Quest[];
+  public selectedQuests: Quest[];
 
   private readonly _destroyRef = inject(DestroyRef);
 
@@ -46,20 +50,29 @@ export class QuestsPage implements OnInit {
 
   constructor(
     private _characterService: CharacterService,
+    private _dailysService: DailysService,
     private _questsService: QuestsService
   ) {}
 
   public ngOnInit(): void {
+    this._dailysService.loadDailys(true);
     this._questsService.loadQuests(true);
 
     this._characterService.character$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(character => {
       if (character) this.character = character;
     });
 
+    this._dailysService.dailys$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailys => {
+      if (dailys) {
+        this.dailys = dailys;
+        this._updateQuests();
+      }
+    });
+
     this._questsService.quests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(quests => {
       if (quests) {
-        this.quests = quests.filter(quest => !quest.isOptional);
-        this.optionnalQuests = quests.filter(quest => quest.isOptional);
+        this.quests = quests;
+        this._updateQuests();
       }
     });
   }
@@ -75,5 +88,12 @@ export class QuestsPage implements OnInit {
       panelClasses: ['mod-neutralBackground'],
       size: 'L',
     });
+  }
+
+  private _updateQuests() {
+    if (!this.quests || !this.dailys) return;
+    const idsSelected = this.dailys.map(daily => daily.quest.id);
+    this.toSelectQuests = this.quests.filter(quest => !idsSelected.includes(quest.id));
+    this.selectedQuests = this.quests.filter(quest => idsSelected.includes(quest.id));
   }
 }

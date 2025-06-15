@@ -12,7 +12,7 @@ export class QuestsService {
   private _questsSubject = new BehaviorSubject<Quest[]>([]);
   private _filtersSubject = new BehaviorSubject<IQuestsFilters>({
     category: null,
-    onlySelected: false,
+    isMandatory: false,
     search: null,
   });
 

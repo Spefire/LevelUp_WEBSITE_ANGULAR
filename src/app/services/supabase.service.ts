@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { createClient, Session, SupabaseClient } from '@supabase/supabase-js';
 
 import { Adjectives, Character, ICharacter, Nouns } from '@src/models/character.model';
-import { DailyQuest } from '@src/models/daily-quests.model';
+import { Daily } from '@src/models/dailys.model';
 import { Log } from '@src/models/logs.model';
 import { IQuest, Quest } from '@src/models/quests.model';
 
@@ -38,14 +38,14 @@ export class SupabaseService {
     this._supabase.auth.onAuthStateChange((_event, session) => {
       // Connexion
       if (!this.session.value && session) {
-        console.warn('Connexion');
+        if (this._degubMode) console.log('Connexion');
         this.session.next(session);
         const redirectUrl = localStorage.getItem('redirectAfterLogin') || '/tableau-de-bord';
         this._router.navigate([redirectUrl]);
       }
       // Déconnexion
       else if (this.session.value && !session) {
-        console.warn('Déconnexion');
+        if (this._degubMode) console.log('Déconnexion');
         this.session.next(null);
         this._router.navigate(['/connexion']);
       }
@@ -126,20 +126,20 @@ export class SupabaseService {
 
   // --------------------------------------------------------------------------------------------------
 
-  public async getDailyQuests() {
-    const result = await this._requestGetAll('dailyQuests', true);
+  public async getDailys() {
+    const result = await this._requestGetAll('dailys', true);
     if (!result) return null;
     else return result;
   }
 
-  public async postDailyQuest(dailyQuest: DailyQuest) {
-    const result = await this._requestPost('dailyQuests', dailyQuest);
+  public async postDaily(daily: Daily) {
+    const result = await this._requestPost('dailys', daily);
     if (!result) return null;
     else return result;
   }
 
-  public async deleteDailyQuest(dailyQuest: DailyQuest) {
-    const result = await this._requestDelete('dailyQuests', dailyQuest.id);
+  public async deleteDaily(daily: Daily) {
+    const result = await this._requestDelete('dailys', daily.id);
     if (!result) return null;
     else return result;
   }
