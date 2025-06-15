@@ -23,7 +23,7 @@
   }
   <div class="u-displayFlex u-justifyContentFlexEnd pr-u-gap50">
     @if (!isDaily()) {
-      <button type="button" luButton="text" size="S" (click)="addDaily()">Accepter la quête</button>
+      <button type="button" luButton="outlined" size="S" (click)="addDaily()">Accepter</button>
       @if (character?.isAdmin) {
         <button
           type="button"
@@ -48,8 +48,16 @@
         </button>
       }
     } @else {
-      <button type="button" luButton="text" size="S" palette="product" (click)="removeDaily()">
-        Abandonner la quête
+      <button
+        type="button"
+        luButton="text"
+        size="S"
+        palette="product"
+        luTooltip="Abandonner la quête"
+        luTooltipOnlyForDisplay
+        (click)="removeDaily()"
+      >
+        <lu-icon icon="close" />
       </button>
     }
   </div>

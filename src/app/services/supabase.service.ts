@@ -6,7 +6,7 @@ import { createClient, Session, SupabaseClient } from '@supabase/supabase-js';
 
 import { Adjectives, Character, ICharacter, Nouns } from '@src/models/character.model';
 import { Daily, IDaily } from '@src/models/dailys.model';
-import { Log } from '@src/models/logs.model';
+import { ILog, Log } from '@src/models/logs.model';
 import { IQuest, Quest } from '@src/models/quests.model';
 
 import { BehaviorSubject } from 'rxjs';
@@ -106,20 +106,27 @@ export class SupabaseService {
 
   // --------------------------------------------------------------------------------------------------
 
-  public async getLogs() {
-    const result = await this._requestGetAll('logs', true);
-    if (!result) return null;
-    else return result;
+  public async getLogs(quests: Quest[]) {
+    const results: ILog[] = await this._requestGetAll('logs', true);
+    if (!results) return null;
+    else {
+      const logs: Log[] = [];
+      results.forEach(result => {
+        const quest = quests.find(quest => quest.id === result.id_quest);
+        logs.push(Log.getLog(result, quest));
+      });
+      return logs;
+    }
   }
 
-  public async postLog(log: Log) {
-    const result = await this._requestPost('logs', log);
+  public async postLog(log: Log, quest: Quest) {
+    const result: ILog = await this._requestPost('logs', Log.getILog(this.user_id, log));
     if (!result) return null;
-    else return result;
+    else return Log.getLog(result, quest);
   }
 
   public async deleteLog(log: Log) {
-    const result = await this._requestDelete('logs', log.id);
+    const result: boolean = await this._requestDelete('logs', log.id);
     if (!result) return null;
     else return result;
   }

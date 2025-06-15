@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject, input } from '@angular/core';
+import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { ButtonComponent } from '@lucca-front/ng/button';
@@ -18,7 +18,7 @@ import { isSameDay } from '@src/utils/time';
   templateUrl: './daily-card.component.html',
   styles: ':host { display: contents }',
 })
-export class DailyCardComponent {
+export class DailyCardComponent implements OnInit {
   public readonly currentDate = input.required<Date>();
   public readonly quest = input.required<Quest>();
   public readonly isOld = input.required<boolean>();
@@ -28,15 +28,17 @@ export class DailyCardComponent {
 
   private readonly _destroyRef = inject(DestroyRef);
 
-  constructor(private _logsService: LogsService) {
+  constructor(private _logsService: LogsService) {}
+
+  public ngOnInit() {
     this._logsService.logs$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(logs => {
       if (logs) this.logLinked = logs.find(log => this.quest().id === log.quest.id && isSameDay(this.currentDate(), new Date(log.date))) ?? null;
     });
   }
 
   public completeQuest() {
-    this.logLinked = { id: null, date: this.currentDate(), quest: this.quest() };
-    this._logsService.addLog(this.logLinked);
+    this.logLinked = new Log(this.currentDate(), this.quest());
+    this._logsService.addLog(this.logLinked, this.quest());
   }
 
   public cancelQuest() {

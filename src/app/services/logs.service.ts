@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { Log } from '@src/models/logs.model';
+import { Quest } from '@src/models/quests.model';
+import { QuestsService } from '@src/services/quests.service';
 import { SupabaseService } from '@src/services/supabase.service';
 import { isSameDay } from '@src/utils/time';
 
@@ -18,17 +20,21 @@ export class LogsService {
     return this._logsSubject.value;
   }
 
-  constructor(private _supabaseService: SupabaseService) {}
+  constructor(
+    protected _questsService: QuestsService,
+    private _supabaseService: SupabaseService
+  ) {}
 
-  public async loadLogs(forced = false) {
-    if (!this._logsSubject.value || forced) {
-      const logs = await this._supabaseService.getLogs();
+  public async loadLogs() {
+    if (!this._logsSubject.value) {
+      const quests = this._questsService.quests;
+      const logs = await this._supabaseService.getLogs(quests);
       if (logs) this._logsSubject.next(logs);
     }
   }
 
-  public async addLog(newLog: Log) {
-    const log = await this._supabaseService.postLog(newLog);
+  public async addLog(newLog: Log, quest: Quest) {
+    const log = await this._supabaseService.postLog(newLog, quest);
     if (log) {
       const logs = this._logsSubject.value;
       logs.push(log);

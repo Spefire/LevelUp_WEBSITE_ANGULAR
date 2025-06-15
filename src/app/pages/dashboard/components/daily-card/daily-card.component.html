@@ -17,7 +17,7 @@
   </div>
   <p>{{ quest().description }}</p>
   <div class="u-displayFlex u-flexWrapWrap pr-u-gap100">
-    <quest-rewards [quest]="quest()" />
+    <quest-rewards [quest]="quest()" [forced]="logLinked ? 'success' : null" />
   </div>
   <div class="u-displayFlex u-justifyContentFlexEnd pr-u-gap50">
     @if (!logLinked) {
@@ -37,8 +37,16 @@
         </button>
       }
     } @else {
-      <button type="button" luButton="text" size="S" (click)="cancelQuest()">
-        <lu-icon icon="close" alt="Annuler" />
+      <button
+        type="button"
+        luButton="text"
+        size="S"
+        palette="success"
+        luTooltip="Annuler la validation"
+        luTooltipOnlyForDisplay
+        (click)="cancelQuest()"
+      >
+        <lu-icon icon="close" />
       </button>
     }
   </div>

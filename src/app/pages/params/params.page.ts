@@ -10,12 +10,10 @@ import { Character, getAvatarURL } from '@src/models/character.model';
 import { Daily } from '@src/models/dailys.model';
 import { Log } from '@src/models/logs.model';
 import { PageTitles } from '@src/models/pages.model';
-import { Quest } from '@src/models/quests.model';
 import { ParamsCharacterDialogComponent } from '@src/pages/params/params-character-dialog/params-character-dialog.component';
 import { CharacterService } from '@src/services/character.service';
 import { DailysService } from '@src/services/dailys.service';
 import { LogsService } from '@src/services/logs.service';
-import { QuestsService } from '@src/services/quests.service';
 
 @Component({
   selector: 'params-page',
@@ -30,7 +28,6 @@ export class ParamsPage implements OnInit {
   public character: Character;
   public logs: Log[];
   public dailys: Daily[];
-  public quests: Quest[];
 
   private readonly _destroyRef = inject(DestroyRef);
 
@@ -39,8 +36,7 @@ export class ParamsPage implements OnInit {
   constructor(
     private _characterService: CharacterService,
     private _logsService: LogsService,
-    private _dailysService: DailysService,
-    private _questsService: QuestsService
+    private _dailysService: DailysService
   ) {}
 
   public ngOnInit(): void {
@@ -57,10 +53,6 @@ export class ParamsPage implements OnInit {
 
     this._dailysService.dailys$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailys => {
       if (dailys) this.dailys = dailys;
-    });
-
-    this._questsService.quests$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(quests => {
-      if (quests) this.quests = quests;
     });
   }
 
