@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { createClient, Session, SupabaseClient } from '@supabase/supabase-js';
 
 import { Adjectives, Character, ICharacter, Nouns } from '@src/models/character.model';
-import { Daily } from '@src/models/dailys.model';
+import { Daily, IDaily } from '@src/models/dailys.model';
 import { Log } from '@src/models/logs.model';
 import { IQuest, Quest } from '@src/models/quests.model';
 
@@ -126,13 +126,13 @@ export class SupabaseService {
 
   // --------------------------------------------------------------------------------------------------
 
-  public async getDailys(quests: Quest[]): Promise<Daily[]> {
-    const results = await this._requestGetAll('dailys', true);
+  public async getDailys(quests: Quest[]) {
+    const results: IDaily[] = await this._requestGetAll('dailys', true);
     if (!results) return null;
     else {
       const dailys: Daily[] = [];
       results.forEach(result => {
-        const quest = quests.find(quest => quest.id === result.id);
+        const quest = quests.find(quest => quest.id === result.id_quest);
         dailys.push(Daily.getDaily(result, quest));
       });
       return dailys;
@@ -140,19 +140,19 @@ export class SupabaseService {
   }
 
   public async postDaily(daily: Daily, quest: Quest) {
-    const result = await this._requestPost('dailys', Daily.getIDaily(this.user_id, daily));
+    const result: IDaily = await this._requestPost('dailys', Daily.getIDaily(this.user_id, daily));
     if (!result) return null;
     else return Daily.getDaily(result, quest);
   }
 
   public async putDaily(daily: Daily, quest: Quest) {
-    const result = await this._requestPut('dailys', Daily.getIDaily(this.user_id, daily));
+    const result: IDaily = await this._requestPut('dailys', Daily.getIDaily(this.user_id, daily));
     if (!result) return null;
     else return Daily.getDaily(result, quest);
   }
 
   public async deleteDaily(daily: Daily) {
-    const result = await this._requestDelete('dailys', daily.id);
+    const result: boolean = await this._requestDelete('dailys', daily.id);
     if (!result) return null;
     else return result;
   }
@@ -172,19 +172,19 @@ export class SupabaseService {
   }
 
   public async postQuest(quest: Quest) {
-    const result = await this._requestPost('quests', Quest.getIQuest(quest));
+    const result: IQuest = await this._requestPost('quests', Quest.getIQuest(quest));
     if (!result) return null;
     else return Quest.getQuest(result);
   }
 
   public async putQuest(quest: Quest) {
-    const result = await this._requestPut('quests', Quest.getIQuest(quest));
+    const result: IQuest = await this._requestPut('quests', Quest.getIQuest(quest));
     if (!result) return null;
     else return Quest.getQuest(result);
   }
 
   public async deleteQuest(quest: Quest) {
-    const result = await this._requestDelete('quests', quest.id);
+    const result: boolean = await this._requestDelete('quests', quest.id);
     if (!result) return null;
     else return true;
   }

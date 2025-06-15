@@ -39,8 +39,8 @@ export class CharacterService {
 
   constructor(private _supabaseService: SupabaseService) {}
 
-  public async loadCharacter(forced = false) {
-    if (!this._characterSubject.value || forced) {
+  public async loadCharacter() {
+    if (!this._characterSubject.value) {
       const character = await this._supabaseService.getCharacter();
       if (character) this._characterSubject.next(character);
     }

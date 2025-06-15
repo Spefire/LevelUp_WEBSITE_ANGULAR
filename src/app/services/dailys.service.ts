@@ -24,8 +24,8 @@ export class DailysService {
     private _supabaseService: SupabaseService
   ) {}
 
-  public async loadDailys(forced = false) {
-    if (!this._dailysSubject.value || forced) {
+  public async loadDailys() {
+    if (!this._dailysSubject.value) {
       const quests = this._questsService.quests;
       const dailys = await this._supabaseService.getDailys(quests);
       if (dailys) this._dailysSubject.next(dailys);

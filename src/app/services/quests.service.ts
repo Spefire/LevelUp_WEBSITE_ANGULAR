@@ -30,8 +30,8 @@ export class QuestsService {
 
   constructor(private _supabaseService: SupabaseService) {}
 
-  public async loadQuests(forced = false) {
-    if (!this._questsSubject.value || forced) {
+  public async loadQuests() {
+    if (!this._questsSubject.value) {
       const quests = await this._supabaseService.getQuests();
       if (quests) this._questsSubject.next(quests);
     }
