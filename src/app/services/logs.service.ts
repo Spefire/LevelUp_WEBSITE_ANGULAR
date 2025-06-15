@@ -14,15 +14,16 @@ export class LogsService {
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   public logs$ = this._logsSubject.asObservable();
-
-  constructor(private _supabaseService: SupabaseService) {
-    this._load();
+  public get logs() {
+    return this._logsSubject.value;
   }
 
-  public async loadLogs() {
-    if (!this._logsSubject.value) {
+  constructor(private _supabaseService: SupabaseService) {}
+
+  public async loadLogs(forced = false) {
+    if (!this._logsSubject.value || forced) {
       const logs = await this._supabaseService.getLogs();
-      if (logs) this._save(logs);
+      if (logs) this._logsSubject.next(logs);
     }
   }
 
@@ -31,7 +32,7 @@ export class LogsService {
     if (log) {
       const logs = this._logsSubject.value;
       logs.push(log);
-      this._save(logs);
+      this._logsSubject.next(logs);
       return true;
     } else return false;
   }
@@ -40,21 +41,8 @@ export class LogsService {
     const log = await this._supabaseService.deleteLog(deletedLog);
     if (log) {
       const logs = this._logsSubject.value.filter(log => !(deletedLog.quest.id === log.quest.id && isSameDay(deletedLog.date, new Date(log.date))));
-      this._save(logs);
+      this._logsSubject.next(logs);
       return true;
     } else return false;
-  }
-
-  private _load() {
-    const storage = localStorage.getItem('logs');
-    if (storage) {
-      const logs: Log[] = JSON.parse(storage);
-      this._logsSubject.next(logs);
-    }
-  }
-
-  private _save(logs: Log[]) {
-    this._logsSubject.next(logs);
-    localStorage.setItem('logs', JSON.stringify(logs));
   }
 }

@@ -22,49 +22,48 @@ export class Daily {
   public daysOfWeek: number[]; // 0 = Dimanche, 1 = Lundi, ..., 6 = Samedi
   public timesByWeek: number;
 
-  constructor() {
+  constructor(quest: Quest) {
     this.id = 0;
-    this.quest = null;
+    this.quest = quest;
     this.isMandatory = false;
     this.daysOfWeek = [];
     this.timesByWeek = 0;
   }
 
-  /* public static getIDaily(daily: Daily) {
+  public static getIDaily(user_id: string, daily: Daily) {
     const item: IDaily = {
       id: daily.id,
-      user_id: '',
-      id_quest: 0,
+      user_id: user_id,
+      id_quest: daily.quest.id,
       is_mandatory: daily.isMandatory,
-      difficulty: quest.difficulty,
-      category: quest.category,
-      force: quest.xpRewards.force,
-      habilete: quest.xpRewards.habilete,
-      tenacite: quest.xpRewards.tenacite,
-      intelligence: quest.xpRewards.intelligence,
-      charisme: quest.xpRewards.charisme,
-      magie: quest.xpRewards.magie,
+      lundi: daily.daysOfWeek.includes(1),
+      mardi: daily.daysOfWeek.includes(2),
+      mercredi: daily.daysOfWeek.includes(3),
+      jeudi: daily.daysOfWeek.includes(4),
+      vendredi: daily.daysOfWeek.includes(5),
+      samedi: daily.daysOfWeek.includes(6),
+      dimanche: daily.daysOfWeek.includes(0),
+      semaine: daily.timesByWeek,
     };
     return item;
   }
 
-  public static getDaily(result: IDaily) {
-    const xpRewards: Record<TCaractKey, number> = {
-      force: result.force,
-      habilete: result.habilete,
-      tenacite: result.tenacite,
-      intelligence: result.intelligence,
-      charisme: result.charisme,
-      magie: result.magie,
-    };
+  public static getDaily(result: IDaily, quest: Quest) {
+    const daysOfWeek = [];
+    if (result.lundi) daysOfWeek.push(1);
+    if (result.mardi) daysOfWeek.push(2);
+    if (result.mercredi) daysOfWeek.push(3);
+    if (result.jeudi) daysOfWeek.push(4);
+    if (result.vendredi) daysOfWeek.push(5);
+    if (result.samedi) daysOfWeek.push(6);
+    if (result.dimanche) daysOfWeek.push(0);
     const daily: Daily = {
       id: result.id,
-      name: result.name,
-      description: result.description,
-      difficulty: result.difficulty as QuestDifficulty,
-      category: result.category as QuestCategory,
-      xpRewards: xpRewards,
+      quest: quest,
+      isMandatory: result.is_mandatory,
+      daysOfWeek: daysOfWeek,
+      timesByWeek: result.semaine,
     };
-    return quest;
-  }*/
+    return daily;
+  }
 }

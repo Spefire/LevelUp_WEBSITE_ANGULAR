@@ -12,7 +12,7 @@ export class NoAuthGuard implements CanActivate {
 
   public canActivate(): boolean | UrlTree {
     const session = this._supabaseService.session.value;
-    console.warn('NoAuthGuard', session ? true : false, this._router.url);
+    console.log('NoAuthGuard', session ? true : false, this._router.url);
     if (session) return false;
     else return true;
   }

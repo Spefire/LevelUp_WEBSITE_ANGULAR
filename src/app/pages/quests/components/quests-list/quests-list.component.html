@@ -4,7 +4,7 @@
       @if (getByDifficulty(filteredQuests, QuestDifficulty.COMPLEXE); as complexeQuests) {
         <section class="card">
           <h2 class="u-h3 u-displayFlex u-alignItemsCenter pr-u-gap100">
-            <span>Difficulté</span>
+            <span>Quêtes de difficulté</span>
             <lu-status-badge palette="error" [label]="QuestDifficulty.COMPLEXE" />
           </h2>
           <div class="grid pr-u-marginTop100" style="--grid-columns: 4; --grid-colspan: 4">
@@ -17,7 +17,7 @@
       @if (getByDifficulty(filteredQuests, QuestDifficulty.STANDARD); as standardQuests) {
         <section class="card">
           <h2 class="u-h3 u-displayFlex u-alignItemsCenter pr-u-gap100">
-            <span>Difficulté</span>
+            <span>Quêtes de difficulté</span>
             <lu-status-badge palette="warning" [label]="QuestDifficulty.STANDARD" />
           </h2>
           <div class="grid pr-u-marginTop100" style="--grid-columns: 4; --grid-colspan: 4">
@@ -30,7 +30,7 @@
       @if (getByDifficulty(filteredQuests, QuestDifficulty.SIMPLE); as simpleQuests) {
         <section class="card">
           <h2 class="u-h3 u-displayFlex u-alignItemsCenter pr-u-gap100">
-            <span>Difficulté</span>
+            <span>Quêtes de difficulté</span>
             <lu-status-badge palette="success" [label]="QuestDifficulty.SIMPLE" />
           </h2>
           <div class="grid pr-u-marginTop100" style="--grid-columns: 4; --grid-colspan: 4">

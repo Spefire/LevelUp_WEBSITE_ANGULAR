@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Character, ICharacter } from '@src/models/character.model';
+import { Character } from '@src/models/character.model';
 import { IStats } from '@src/models/stats.model';
 import { SupabaseService } from '@src/services/supabase.service';
 
@@ -27,40 +27,30 @@ export class CharacterService {
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   public character$ = this._characterSubject.asObservable();
+  public get character() {
+    return this._characterSubject.value;
+  }
+
   // eslint-disable-next-line @typescript-eslint/member-ordering
   public stats$ = this._statsSubject.asObservable();
-
-  constructor(private _supabaseService: SupabaseService) {
-    this._load();
+  public get stats() {
+    return this._statsSubject.value;
   }
+
+  constructor(private _supabaseService: SupabaseService) {}
 
   public async loadCharacter(forced = false) {
     if (!this._characterSubject.value || forced) {
       const character = await this._supabaseService.getCharacter();
-      if (character) this._save(character);
+      if (character) this._characterSubject.next(character);
     }
   }
 
   public async saveCharacter(newCharacter: Character) {
     const character = await this._supabaseService.putCharacter(newCharacter);
     if (character) {
-      this._save(character);
+      this._characterSubject.next(character);
       return true;
     } else return false;
-  }
-
-  private _load() {
-    const storage = localStorage.getItem('character');
-    if (storage) {
-      const result: ICharacter = JSON.parse(storage);
-      const character = Character.getCharacter(result);
-      this._characterSubject.next(character);
-    }
-  }
-
-  private _save(character: Character) {
-    this._characterSubject.next(character);
-    const storage = Character.getICharacter(null, character);
-    localStorage.setItem('character', JSON.stringify(storage));
   }
 }

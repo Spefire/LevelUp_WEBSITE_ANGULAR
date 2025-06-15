@@ -5,16 +5,16 @@
     </lu-dialog-header>
 
     <lu-dialog-content>
-      @if (iQuest) {
+      @if (iDaily) {
         <lu-form-field label="Quête optionnelle">
-          <lu-checkbox-input [(ngModel)]="iQuest.isOptional" [ngModelOptions]="{ standalone: true }" />
+          <lu-checkbox-input [(ngModel)]="iDaily.is_mandatory" [ngModelOptions]="{ standalone: true }" />
         </lu-form-field>
         <lu-form-field label="Fois par semaine" tooltip="Valeur entre 0 et 14">
           <lu-number-input
             [step]="1"
             [min]="0"
             [max]="14"
-            [(ngModel)]="iQuest.force"
+            [(ngModel)]="iDaily.semaine"
             [ngModelOptions]="{ standalone: true }"
           />
         </lu-form-field>

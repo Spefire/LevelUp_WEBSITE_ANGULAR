@@ -16,8 +16,11 @@ import { FormFieldComponent } from '@lucca-front/ng/form-field';
 import { NumberInputComponent } from '@lucca-front/ng/forms';
 import { CheckboxInputComponent } from '@lucca-front/ng/forms';
 
-import { IQuest, Quest, QuestCategory, QuestDifficulty } from '@src/models/quests.model';
-import { QuestsService } from '@src/services/quests.service';
+import { Daily } from '@src/models/dailys.model';
+import { IDaily } from '@src/models/dailys.model';
+import { Quest } from '@src/models/quests.model';
+import { DailysService } from '@src/services/dailys.service';
+import { SupabaseService } from '@src/services/supabase.service';
 
 @Component({
   selector: 'daily-dialog',
@@ -37,33 +40,34 @@ import { QuestsService } from '@src/services/quests.service';
   templateUrl: './daily-dialog.component.html',
 })
 export class DailyDialogComponent implements OnInit {
-  public data = injectDialogData<{ quest: Quest } | null>();
+  public data = injectDialogData<{ daily: Daily | null; quest: Quest }>();
   public ref = injectDialogRef<boolean>();
 
-  public difficulty = Object.values(QuestDifficulty);
-  public categories = Object.values(QuestCategory);
-
   public isCreation: boolean;
-  public iQuest: IQuest;
+  public iDaily: IDaily;
 
   public get isInvalidForm() {
-    if (!this.iQuest) return true;
+    if (!this.iDaily) return true;
     return false;
   }
 
-  constructor(private _questsService: QuestsService) {}
+  constructor(
+    private _supabaseService: SupabaseService,
+    private _dailysService: DailysService
+  ) {}
 
   public ngOnInit() {
-    if (this.data) this.iQuest = Quest.getIQuest(this.data.quest);
-    else {
+    if (this.data.daily) {
+      this.iDaily = Daily.getIDaily(this._supabaseService.user_id, this.data.daily);
+    } else {
       this.isCreation = true;
-      this.iQuest = Quest.getIQuest(new Quest());
+      this.iDaily = Daily.getIDaily(this._supabaseService.user_id, new Daily(this.data.quest));
     }
   }
 
   public async confirm() {
-    const quest = Quest.getQuest(this.iQuest);
-    const result = this.isCreation ? await this._questsService.addQuest(quest) : await this._questsService.modifyQuest(quest);
+    const daily = Daily.getDaily(this.iDaily, this.data.quest);
+    const result = this.isCreation ? await this._dailysService.addDaily(daily, this.data.quest) : await this._dailysService.modifyDaily(daily, this.data.quest);
     if (result) this.ref.close(true);
   }
 }

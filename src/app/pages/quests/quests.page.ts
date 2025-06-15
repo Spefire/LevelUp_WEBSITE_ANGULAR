@@ -57,9 +57,6 @@ export class QuestsPage implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this._dailysService.loadDailys(true);
-    this._questsService.loadQuests(true);
-
     this._characterService.character$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(character => {
       if (character) this.character = character;
     });

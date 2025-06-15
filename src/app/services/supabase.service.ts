@@ -126,16 +126,29 @@ export class SupabaseService {
 
   // --------------------------------------------------------------------------------------------------
 
-  public async getDailys() {
-    const result = await this._requestGetAll('dailys', true);
-    if (!result) return null;
-    else return result;
+  public async getDailys(quests: Quest[]): Promise<Daily[]> {
+    const results = await this._requestGetAll('dailys', true);
+    if (!results) return null;
+    else {
+      const dailys: Daily[] = [];
+      results.forEach(result => {
+        const quest = quests.find(quest => quest.id === result.id);
+        dailys.push(Daily.getDaily(result, quest));
+      });
+      return dailys;
+    }
   }
 
-  public async postDaily(daily: Daily) {
-    const result = await this._requestPost('dailys', daily);
+  public async postDaily(daily: Daily, quest: Quest) {
+    const result = await this._requestPost('dailys', Daily.getIDaily(this.user_id, daily));
     if (!result) return null;
-    else return result;
+    else return Daily.getDaily(result, quest);
+  }
+
+  public async putDaily(daily: Daily, quest: Quest) {
+    const result = await this._requestPut('dailys', Daily.getIDaily(this.user_id, daily));
+    if (!result) return null;
+    else return Daily.getDaily(result, quest);
   }
 
   public async deleteDaily(daily: Daily) {
@@ -182,15 +195,15 @@ export class SupabaseService {
     const result = withUserId
       ? await this._supabase.from(target).select().eq('user_id', this.user_id).maybeSingle()
       : await this._supabase.from(target).select().maybeSingle();
-    if (this._degubMode) console.log('requestGet', result);
-    if (result.error) console.error('requestGet', result.error.message);
+    if (this._degubMode) console.log('requestGet : ' + target, result);
+    if (result.error) console.error('requestGet : ' + target, result.error.message);
     return result.data;
   }
 
   private async _requestGetAll(target: string, withUserId: boolean): Promise<any[]> {
     const result = withUserId ? await this._supabase.from(target).select().eq('user_id', this.user_id) : await this._supabase.from(target).select();
-    if (this._degubMode) console.log('requestGetAll', result);
-    if (result.error) console.error('requestGetAll', result.error.message);
+    if (this._degubMode) console.log('requestGetAll : ' + target, result);
+    if (result.error) console.error('requestGetAll : ' + target, result.error.message);
     return result.data;
   }
 
@@ -198,35 +211,22 @@ export class SupabaseService {
     const newItem: any = Object.assign({}, item);
     delete newItem['id'];
     const result = await this._supabase.from(target).insert(newItem).select().single();
-    if (this._degubMode) console.log('requestPost', result);
-    if (result.error) console.error('requestPost', result.error.message);
+    if (this._degubMode) console.log('requestPost : ' + target, result);
+    if (result.error) console.error('requestPost : ' + target, result.error.message);
     return result.data;
   }
 
-  /* private async _requestPostAll(target: string, items: any[]): Promise<any[]> {
-    const newItems: any[] = [];
-    items.forEach(item => {
-      const newItem: any = Object.assign({}, item);
-      delete newItem['id'];
-      newItems.push(newItem);
-    });
-    const result = await this._supabase.from(target).insert(newItems).select();
-    if (this._degubMode) console.log('requestPostAll', result);
-    if (result.error) console.error('requestPostAll', result.error.message);
-    return result.data;
-  }*/
-
   private async _requestPut(target: string, item: any): Promise<any> {
     const result = await this._supabase.from(target).update(item).eq('id', item.id).select().single();
-    if (this._degubMode) console.log('requestPut', result);
-    if (result.error) console.error('requestPut', result.error.message);
+    if (this._degubMode) console.log('requestPut : ' + target, result);
+    if (result.error) console.error('requestPut : ' + target, result.error.message);
     return result.data;
   }
 
   private async _requestDelete(target: string, id: number | null): Promise<boolean> {
     const result = await this._supabase.from(target).delete().eq('id', id).select();
-    if (this._degubMode) console.log('requestDelete', result);
-    if (result.error) console.error('requestDelete', result.error.message);
+    if (this._degubMode) console.log('requestDelete : ' + target, result);
+    if (result.error) console.error('requestDelete : ' + target, result.error.message);
     return true;
   }
 }
