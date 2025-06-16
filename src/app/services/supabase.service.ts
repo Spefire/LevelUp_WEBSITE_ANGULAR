@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { createClient, Session, SupabaseClient } from '@supabase/supabase-js';
 
-import { Adjectives, Character, ICharacter, Nouns } from '@src/models/character.model';
+import { Character, ICharacter } from '@src/models/character.model';
 import { Daily, IDaily } from '@src/models/dailys.model';
 import { ILog, Log } from '@src/models/logs.model';
 import { IQuest, Quest } from '@src/models/quests.model';
@@ -80,19 +80,7 @@ export class SupabaseService {
   public async getCharacter() {
     let resultCharacter: ICharacter = await this._requestGet('characters', true);
     if (!resultCharacter) {
-      const item: ICharacter = {
-        id: null,
-        user_id: this.user_id,
-        lastName: Adjectives[Math.floor(Math.random() * Adjectives.length)],
-        firstName: Nouns[Math.floor(Math.random() * Nouns.length)],
-        isAdmin: false,
-        eyebrows: 1,
-        eyes: 1,
-        hasGlasses: false,
-        glasses: 1,
-        mouth: 1,
-      };
-      resultCharacter = await this._requestPost('characters', item);
+      resultCharacter = await this._requestPost('characters', Character.getICharacter(this.user_id, new Character()));
     }
     if (!resultCharacter) return null;
     else return Character.getCharacter(resultCharacter);

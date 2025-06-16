@@ -6,7 +6,8 @@ import { ButtonComponent } from '@lucca-front/ng/button';
 import { LuDialogService } from '@lucca-front/ng/dialog';
 import { PageHeaderComponent } from '@lucca-front/ng/page-header';
 
-import { Character, getAvatarURL } from '@src/models/character.model';
+import { AvatarComponent } from '@src/components/avatar/avatar.component';
+import { Character } from '@src/models/character.model';
 import { Daily } from '@src/models/dailys.model';
 import { Log } from '@src/models/logs.model';
 import { PageTitles } from '@src/models/pages.model';
@@ -17,14 +18,13 @@ import { LogsService } from '@src/services/logs.service';
 
 @Component({
   selector: 'params-page',
-  imports: [CommonModule, PageHeaderComponent, ButtonComponent],
+  imports: [CommonModule, PageHeaderComponent, ButtonComponent, AvatarComponent],
   templateUrl: './params.page.html',
   providers: [LuDialogService],
 })
 export class ParamsPage implements OnInit {
   public pages = PageTitles;
 
-  public avatarURL: string;
   public character: Character;
   public logs: Log[];
   public dailys: Daily[];
@@ -41,10 +41,7 @@ export class ParamsPage implements OnInit {
 
   public ngOnInit(): void {
     this._characterService.character$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(character => {
-      if (character) {
-        this.character = character;
-        this.avatarURL = getAvatarURL(this.character.avatar);
-      }
+      if (character) this.character = character;
     });
 
     this._logsService.logs$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(logs => {

@@ -5,14 +5,14 @@
     </lu-dialog-header>
 
     <lu-dialog-content>
-      <div class="grid pr-u-gap400" style="--grid-columns: 2; --grid-colspan: 2">
+      <div class="grid pr-u-gap200" style="--grid-columns: 2; --grid-colspan: 2">
         <div
           class="grid-column card u-displayFlex u-flexDirectionColumn pr-u-gap100"
           [attr.style]="'--grid-colspanAtMediaMinM: 1'"
         >
           <div class="pr-u-marginAuto">
-            <span class="avatar mod-XXXL">
-              <img class="avatar-picture" loading="lazy" [src]="avatarURL" alt="Avatar" />
+            <span class="avatar mod-XXXL pr-u-marginBlock400">
+              <avatar [avatar]="avatar" />
             </span>
           </div>
           <h2>Pseudo</h2>
@@ -27,56 +27,88 @@
           class="grid-column card u-displayFlex u-flexDirectionColumn pr-u-gap100"
           [attr.style]="'--grid-colspanAtMediaMinM: 1'"
         >
-          <h2>Avatar</h2>
-          <lu-form-field label="Sourcils" tooltip="Valeur entre 1 et 15">
-            <lu-number-input
-              [step]="1"
-              [min]="1"
-              [max]="15"
-              [(ngModel)]="avatar.eyebrows"
-              [ngModelOptions]="{ standalone: true }"
-              (ngModelChange)="update()"
-            />
-          </lu-form-field>
-          <lu-form-field label="Yeux" tooltip="Valeur entre 1 et 26">
-            <lu-number-input
-              [step]="1"
-              [min]="1"
-              [max]="26"
-              [(ngModel)]="avatar.eyes"
-              [ngModelOptions]="{ standalone: true }"
-              (ngModelChange)="update()"
-            />
-          </lu-form-field>
-          <lu-form-field label="Avec lunettes">
-            <lu-checkbox-input
-              [(ngModel)]="avatar.hasGlasses"
-              [ngModelOptions]="{ standalone: true }"
-              (ngModelChange)="update()"
-            />
-          </lu-form-field>
-          @if (avatar.hasGlasses) {
-            <lu-form-field label="Lunettes" tooltip="Valeur entre 1 et 5">
-              <lu-number-input
-                [step]="1"
-                [min]="1"
-                [max]="5"
-                [(ngModel)]="avatar.glasses"
-                [ngModelOptions]="{ standalone: true }"
-                (ngModelChange)="update()"
-              />
-            </lu-form-field>
-          }
-          <lu-form-field label="Bouche" tooltip="Valeur entre 1 et 30">
-            <lu-number-input
-              [step]="1"
-              [min]="1"
-              [max]="30"
-              [(ngModel)]="avatar.mouth"
-              [ngModelOptions]="{ standalone: true }"
-              (ngModelChange)="update()"
-            />
-          </lu-form-field>
+          <div class="grid pr-u-gap100" style="--grid-columns: 2; --grid-colspan: 1">
+            <div class="grid-column" [attr.style]="'--grid-colspanAtMediaMinM: 2'">
+              <h2>Avatar</h2>
+            </div>
+            <div class="grid-column">
+              <lu-form-field label="Corps" tooltip="Valeur entre 1 et 10">
+                <lu-number-input
+                  [step]="1"
+                  [min]="1"
+                  [max]="10"
+                  [(ngModel)]="avatar.body"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </lu-form-field>
+            </div>
+            <div class="grid-column">
+              <lu-form-field label="Yeux" tooltip="Valeur entre 1 et 5">
+                <lu-number-input
+                  [step]="1"
+                  [min]="1"
+                  [max]="5"
+                  [(ngModel)]="avatar.eyes"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </lu-form-field>
+            </div>
+            <div class="grid-column">
+              <lu-form-field label="Bouche" tooltip="Valeur entre 1 et 4">
+                <lu-number-input
+                  [step]="1"
+                  [min]="1"
+                  [max]="4"
+                  [(ngModel)]="avatar.mouth"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </lu-form-field>
+            </div>
+            <div class="grid-column">
+              <lu-form-field label="Émotion" tooltip="Valeur entre 1 et 5">
+                <lu-number-input
+                  [step]="1"
+                  [min]="1"
+                  [max]="5"
+                  [(ngModel)]="avatar.emotion"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </lu-form-field>
+            </div>
+            <div class="grid-column">
+              <lu-form-field label="Tenue" tooltip="Valeur entre 1 et 4">
+                <lu-number-input
+                  [step]="1"
+                  [min]="1"
+                  [max]="4"
+                  [(ngModel)]="avatar.outfits"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </lu-form-field>
+            </div>
+            <div class="grid-column">
+              <lu-form-field label="Objets" tooltip="Valeur entre 1 et 10">
+                <lu-number-input
+                  [step]="1"
+                  [min]="1"
+                  [max]="10"
+                  [(ngModel)]="avatar.items"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </lu-form-field>
+            </div>
+            <div class="grid-column">
+              <lu-form-field label="Arrière" tooltip="Valeur entre 1 et 2">
+                <lu-number-input
+                  [step]="1"
+                  [min]="1"
+                  [max]="2"
+                  [(ngModel)]="avatar.back"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </lu-form-field>
+            </div>
+          </div>
         </div>
       </div>
     </lu-dialog-content>

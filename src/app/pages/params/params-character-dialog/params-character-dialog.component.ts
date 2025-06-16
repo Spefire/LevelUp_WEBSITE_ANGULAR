@@ -14,10 +14,10 @@ import {
 } from '@lucca-front/ng/dialog';
 import { FormFieldComponent } from '@lucca-front/ng/form-field';
 import { NumberInputComponent } from '@lucca-front/ng/forms';
-import { CheckboxInputComponent } from '@lucca-front/ng/forms';
 import { LuSimpleSelectInputComponent } from '@lucca-front/ng/simple-select';
 
-import { Adjectives, Avatar, Character, getAvatarURL, Nouns } from '@src/models/character.model';
+import { AvatarComponent } from '@src/components/avatar/avatar.component';
+import { Adjectives, Avatar, Character, Nouns } from '@src/models/character.model';
 import { CharacterService } from '@src/services/character.service';
 
 @Component({
@@ -31,7 +31,7 @@ import { CharacterService } from '@src/services/character.service';
     DialogFooterComponent,
     DialogDismissDirective,
     FormFieldComponent,
-    CheckboxInputComponent,
+    AvatarComponent,
     NumberInputComponent,
     LuSimpleSelectInputComponent,
     ButtonComponent,
@@ -47,7 +47,6 @@ export class ParamsCharacterDialogComponent implements OnInit {
 
   public id: number;
   public avatar: Avatar;
-  public avatarURL: string;
   public lastName: string;
   public firstName: string;
   public isAdmin: boolean;
@@ -60,7 +59,6 @@ export class ParamsCharacterDialogComponent implements OnInit {
     this.lastName = this.data.character.lastName;
     this.firstName = this.data.character.firstName;
     this.isAdmin = this.data.character.isAdmin;
-    this.update();
   }
 
   public async confirm() {
@@ -73,9 +71,5 @@ export class ParamsCharacterDialogComponent implements OnInit {
     };
     const result = await this._characterService.saveCharacter(character);
     if (result) this.ref.close(true);
-  }
-
-  public update() {
-    this.avatarURL = getAvatarURL(this.avatar);
   }
 }

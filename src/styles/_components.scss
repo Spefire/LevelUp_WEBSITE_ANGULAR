@@ -105,7 +105,14 @@
     top right !important;
 }
 
+.avatar.mod-XXL {
+  --components-avatar-size: 8rem !important;
+}
+
+.avatar.mod-XXXL {
+  --components-avatar-size: 14rem !important;
+}
+
 .avatar-picture {
-  padding: 5%;
-  background-color: #fbb901 !important;
+  background-color: transparent;
 }

@@ -1,9 +1,21 @@
 export class Avatar {
-  public eyebrows: number;
+  public back: number;
+  public body: number;
+  public emotion: number;
   public eyes: number;
-  public hasGlasses: boolean;
-  public glasses: number;
+  public items: number;
   public mouth: number;
+  public outfits: number;
+
+  constructor() {
+    this.back = 1;
+    this.body = 1;
+    this.emotion = 1;
+    this.eyes = 1;
+    this.items = 1;
+    this.mouth = 1;
+    this.outfits = 1;
+  }
 }
 
 export interface ICharacter {
@@ -12,11 +24,13 @@ export interface ICharacter {
   lastName: string;
   firstName: string;
   isAdmin: boolean;
-  eyebrows: number;
+  back: number;
+  body: number;
+  emotion: number;
   eyes: number;
-  hasGlasses: boolean;
-  glasses: number;
+  items: number;
   mouth: number;
+  outfits: number;
 }
 
 export class Character {
@@ -26,6 +40,14 @@ export class Character {
   public isAdmin: boolean;
   public avatar: Avatar;
 
+  constructor() {
+    this.id = 0;
+    this.lastName = Adjectives[Math.floor(Math.random() * Adjectives.length)];
+    this.firstName = Nouns[Math.floor(Math.random() * Nouns.length)];
+    this.isAdmin = false;
+    this.avatar = new Avatar();
+  }
+
   public static getICharacter(user_id: string, character: Character) {
     const item: ICharacter = {
       id: character.id,
@@ -33,22 +55,26 @@ export class Character {
       lastName: character.lastName,
       firstName: character.firstName,
       isAdmin: character.isAdmin,
-      eyebrows: character.avatar.eyebrows,
+      back: character.avatar.back,
+      body: character.avatar.body,
+      emotion: character.avatar.emotion,
       eyes: character.avatar.eyes,
-      hasGlasses: character.avatar.hasGlasses,
-      glasses: character.avatar.glasses,
+      items: character.avatar.items,
       mouth: character.avatar.mouth,
+      outfits: character.avatar.outfits,
     };
     return item;
   }
 
   public static getCharacter(result: ICharacter) {
     const avatar: Avatar = {
-      eyebrows: result.eyebrows,
+      back: result.back,
+      body: result.body,
+      emotion: result.emotion,
       eyes: result.eyes,
-      hasGlasses: result.hasGlasses,
-      glasses: result.glasses,
+      items: result.items,
       mouth: result.mouth,
+      outfits: result.outfits,
     };
     const character: Character = {
       id: result.id,
@@ -60,21 +86,6 @@ export class Character {
     return character;
   }
 }
-
-export const getAvatarURL = (avatar: Avatar) => {
-  let result = 'https://api.dicebear.com/9.x/adventurer-neutral/svg?backgroundColor[]&';
-  const attributes = [];
-  attributes.push('eyebrows=variant' + (avatar.eyebrows > 9 ? avatar.eyebrows : '0' + avatar.eyebrows));
-  attributes.push('eyes=variant' + (avatar.eyes > 9 ? avatar.eyes : '0' + avatar.eyes));
-  attributes.push('glassesProbability=' + (avatar.hasGlasses ? 100 : 0));
-  attributes.push('glasses=variant' + (avatar.glasses > 9 ? avatar.glasses : '0' + avatar.glasses));
-  attributes.push('mouth=variant' + (avatar.mouth > 9 ? avatar.mouth : '0' + avatar.mouth));
-  attributes.forEach((attribute, index) => {
-    if (index > 0) result += '&';
-    result += attribute;
-  });
-  return result;
-};
 
 export const Adjectives = [
   'Sombre',
