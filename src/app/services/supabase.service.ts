@@ -57,13 +57,13 @@ export class SupabaseService {
   public async login(email: string, password: string) {
     const result = await this._supabase.auth.signInWithPassword({ email, password });
     if (result.error) return { success: '', error: result.error.message };
-    else return { success: 'Vous êtes bien connecté !', error: '' };
+    else return { success: 'Tu es bien connecté !', error: '' };
   }
 
   public async signUp(email: string, password: string) {
     const result = await this._supabase.auth.signUp({ email, password });
     if (result.error) return { success: '', error: result.error.message };
-    else return { success: 'Vous avez reçu un mail sur ' + email + ' pour confirmer votre inscription.', error: '' };
+    else return { success: 'Tu as reçu un mail sur ' + email + ' pour confirmer ton inscription.', error: '' };
   }
 
   public async logout() {
