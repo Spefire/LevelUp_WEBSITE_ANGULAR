@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ButtonComponent } from '@lucca-front/ng/button';
+import { LuDisplayerDirective, LuOptionDirective } from '@lucca-front/ng/core-select';
 import {
   DialogComponent,
   DialogContentComponent,
@@ -13,7 +14,6 @@ import {
   injectDialogRef,
 } from '@lucca-front/ng/dialog';
 import { FormFieldComponent } from '@lucca-front/ng/form-field';
-import { NumberInputComponent } from '@lucca-front/ng/forms';
 import { TextInputComponent } from '@lucca-front/ng/forms';
 import { LuSimpleSelectInputComponent } from '@lucca-front/ng/simple-select';
 
@@ -32,8 +32,9 @@ import { QuestsService } from '@src/services/quests.service';
     DialogDismissDirective,
     FormFieldComponent,
     TextInputComponent,
-    NumberInputComponent,
     LuSimpleSelectInputComponent,
+    LuOptionDirective,
+    LuDisplayerDirective,
     ButtonComponent,
   ],
   templateUrl: './quest-dialog.component.html',
@@ -44,6 +45,11 @@ export class QuestDialogComponent implements OnInit {
 
   public difficulty = Object.values(QuestDifficulty);
   public categories = Object.values(QuestCategory);
+  public xps = [
+    { label: 'Aucun bonus', value: 0 },
+    { label: 'Bonus secondaire', value: 1 },
+    { label: 'Bonus principal', value: 2 },
+  ];
 
   public isCreation: boolean;
   public iQuest: IQuest;

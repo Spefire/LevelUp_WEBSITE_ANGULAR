@@ -55,7 +55,7 @@ export class ParamsCharacterDialogComponent implements OnInit {
 
   public ngOnInit() {
     this.id = this.data.character.id;
-    this.avatar = this.data.character.avatar;
+    this.avatar = Object.assign({}, this.data.character.avatar);
     this.lastName = this.data.character.lastName;
     this.firstName = this.data.character.firstName;
     this.isAdmin = this.data.character.isAdmin;

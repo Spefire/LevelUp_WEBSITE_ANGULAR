@@ -31,8 +31,10 @@ export class DailysListComponent implements OnInit {
   public ngOnInit() {
     this._dailysService.dailys$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(dailys => {
       if (dailys) {
-        this.dailys = dailys.filter(daily => daily.daysOfWeek.includes(this.currentDate().getDay()) && daily.isMandatory);
-        this.optionnalDailys = dailys.filter(daily => daily.daysOfWeek.includes(this.currentDate().getDay()) && !daily.isMandatory);
+        this.dailys = dailys.filter(daily => (!daily.daysOfWeek.length || daily.daysOfWeek.includes(this.currentDate().getDay())) && daily.isMandatory);
+        this.optionnalDailys = dailys.filter(
+          daily => (!daily.daysOfWeek.length || daily.daysOfWeek.includes(this.currentDate().getDay())) && !daily.isMandatory
+        );
       }
     });
   }

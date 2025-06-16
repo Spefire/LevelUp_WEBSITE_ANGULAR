@@ -46,60 +46,96 @@
             class="grid-column card u-displayFlex u-flexDirectionColumn pr-u-gap100"
             [attr.style]="'--grid-colspanAtMediaMinM: 1'"
           >
-            <h2>Attributs gagnés</h2>
-            <lu-form-field label="Force (XP)" tooltip="Valeur entre 0 et 2">
-              <lu-number-input
-                [step]="1"
-                [min]="0"
-                [max]="2"
+            <h2>Bonus XP par attribut</h2>
+            <lu-form-field label="Force" size="S">
+              <lu-simple-select
+                #selectForce
+                [options]="[2, 1, 0]"
                 [(ngModel)]="iQuest.force"
                 [ngModelOptions]="{ standalone: true }"
-              />
+              >
+                <ng-container *luOption="let xp; select: selectForce">
+                  {{ xps[xp].label }} (XP x{{ xps[xp].value }})
+                </ng-container>
+                <ng-container *luDisplayer="let xp; select: selectForce">
+                  {{ xps[xp].label }}
+                </ng-container>
+              </lu-simple-select>
             </lu-form-field>
-            <lu-form-field label="Habileté (XP)" tooltip="Valeur entre 0 et 2">
-              <lu-number-input
-                [step]="1"
-                [min]="0"
-                [max]="2"
+            <lu-form-field label="Habileté" size="S">
+              <lu-simple-select
+                #selectHabilete
+                [options]="[2, 1, 0]"
                 [(ngModel)]="iQuest.habilete"
                 [ngModelOptions]="{ standalone: true }"
-              />
+              >
+                <ng-container *luOption="let xp; select: selectHabilete">
+                  {{ xps[xp].label }} (XP x{{ xps[xp].value }})
+                </ng-container>
+                <ng-container *luDisplayer="let xp; select: selectHabilete">
+                  {{ xps[xp].label }}
+                </ng-container>
+              </lu-simple-select>
             </lu-form-field>
-            <lu-form-field label="Ténacité (XP)" tooltip="Valeur entre 0 et 2">
-              <lu-number-input
-                [step]="1"
-                [min]="0"
-                [max]="2"
+            <lu-form-field label="Ténacité" size="S">
+              <lu-simple-select
+                #selectTenacite
+                [options]="[2, 1, 0]"
                 [(ngModel)]="iQuest.tenacite"
                 [ngModelOptions]="{ standalone: true }"
-              />
+              >
+                <ng-container *luOption="let xp; select: selectTenacite">
+                  {{ xps[xp].label }} (XP x{{ xps[xp].value }})
+                </ng-container>
+                <ng-container *luDisplayer="let xp; select: selectTenacite">
+                  {{ xps[xp].label }}
+                </ng-container>
+              </lu-simple-select>
             </lu-form-field>
-            <lu-form-field label="Intelligence (XP)" tooltip="Valeur entre 0 et 2">
-              <lu-number-input
-                [step]="1"
-                [min]="0"
-                [max]="2"
+            <lu-form-field label="Intelligence" size="S">
+              <lu-simple-select
+                #selectIntelligence
+                [options]="[2, 1, 0]"
                 [(ngModel)]="iQuest.intelligence"
                 [ngModelOptions]="{ standalone: true }"
-              />
+              >
+                <ng-container *luOption="let xp; select: selectIntelligence">
+                  {{ xps[xp].label }} (XP x{{ xps[xp].value }})
+                </ng-container>
+                <ng-container *luDisplayer="let xp; select: selectIntelligence">
+                  {{ xps[xp].label }}
+                </ng-container>
+              </lu-simple-select>
             </lu-form-field>
-            <lu-form-field label="Charisme (XP)" tooltip="Valeur entre 0 et 2">
-              <lu-number-input
-                [step]="1"
-                [min]="0"
-                [max]="2"
+            <lu-form-field label="Charisme" size="S">
+              <lu-simple-select
+                #selectCharisme
+                [options]="[2, 1, 0]"
                 [(ngModel)]="iQuest.charisme"
                 [ngModelOptions]="{ standalone: true }"
-              />
+              >
+                <ng-container *luOption="let xp; select: selectCharisme">
+                  {{ xps[xp].label }} (XP x{{ xps[xp].value }})
+                </ng-container>
+                <ng-container *luDisplayer="let xp; select: selectCharisme">
+                  {{ xps[xp].label }}
+                </ng-container>
+              </lu-simple-select>
             </lu-form-field>
-            <lu-form-field label="Magie (XP)" tooltip="Valeur entre 0 et 2">
-              <lu-number-input
-                [step]="1"
-                [min]="0"
-                [max]="2"
+            <lu-form-field label="Magie" size="S">
+              <lu-simple-select
+                #selectMagie
+                [options]="[2, 1, 0]"
                 [(ngModel)]="iQuest.magie"
                 [ngModelOptions]="{ standalone: true }"
-              />
+              >
+                <ng-container *luOption="let xp; select: selectMagie">
+                  {{ xps[xp].label }} (XP x{{ xps[xp].value }})
+                </ng-container>
+                <ng-container *luDisplayer="let xp; select: selectMagie">
+                  {{ xps[xp].label }}
+                </ng-container>
+              </lu-simple-select>
             </lu-form-field>
           </div>
         </div>

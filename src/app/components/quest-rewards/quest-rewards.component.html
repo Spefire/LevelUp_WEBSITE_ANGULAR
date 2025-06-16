@@ -3,7 +3,7 @@
   @if (reward.value) {
     <lu-tag
       [palette]="forced() ?? Caracteristics[key].color"
-      [label]="Caracteristics[key].code + ' +' + reward.value"
+      [label]="Caracteristics[key].code + (reward.value > 1 ? ' x2' : '')"
     />
   }
 }
